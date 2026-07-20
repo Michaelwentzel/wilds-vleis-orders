@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1F4D3A">
+<title>Wilds Vleis Orders</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:#EFEBE0;color:#1c2b22;-webkit-text-size-adjust:100%}
+.wrap{max-width:480px;margin:0 auto;padding:0 12px 40px}
+header{background:#1F4D3A;color:#fff;padding:14px 16px;position:sticky;top:0;z-index:10;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+header h1{font-size:18px;letter-spacing:.5px}
+header p{font-size:12px;opacity:.85;margin-top:2px}
+.card{background:#fff;border-radius:14px;box-shadow:0 1px 4px rgba(0,0,0,.12);padding:16px;margin-top:14px}
+label{display:block;font-size:13px;font-weight:600;color:#1F4D3A;margin:12px 0 4px}
+input[type=text],input[type=tel],textarea{width:100%;padding:12px;font-size:16px;border:1.5px solid #d8d2c0;border-radius:10px;background:#FFF9E6}
+input:focus,textarea:focus{outline:2px solid #1F4D3A;background:#FFF2CC}
+textarea{min-height:64px;resize:vertical}
+.seg{display:flex;gap:6px;margin-top:4px}
+.seg button{flex:1;padding:11px 4px;font-size:13.5px;font-weight:600;border:1.5px solid #1F4D3A;background:#fff;color:#1F4D3A;border-radius:10px}
+.seg button.on{background:#1F4D3A;color:#fff}
+.cuts{display:grid;grid-template-columns:1fr 110px;gap:8px 10px;align-items:center;margin-top:6px}
+.cuts span{font-size:14.5px;font-weight:600}
+.cuts small{display:block;font-weight:400;color:#777;font-size:11.5px}
+.cuts input{width:100%;padding:10px;font-size:17px;text-align:center;border:1.5px solid #d8d2c0;border-radius:10px;background:#FFF9E6}
+.totals{display:flex;justify-content:space-between;background:#1F4D3A;color:#fff;border-radius:10px;padding:10px 14px;margin-top:14px;font-size:13px}
+.totals b{display:block;font-size:16.5px;margin-top:2px}
+.btn{display:block;width:100%;padding:15px;font-size:16.5px;font-weight:700;border:none;border-radius:12px;margin-top:12px;color:#fff;background:#1F4D3A}
+.btn:active{transform:scale(.985)}
+.btn.wa{background:#128C4A}
+.btn.ghost{background:#fff;color:#1F4D3A;border:1.5px solid #1F4D3A}
+.btn:disabled{background:#9aa89f}
+.sim{margin-top:6px}
+.sim .s-row{display:flex;align-items:center;gap:8px;background:#FFF3CD;border:1px solid #e6d9a8;border-radius:8px;padding:8px 10px;margin-top:5px;font-size:13.5px}
+.sim .pct{font-weight:700;color:#855D00}
+.badge{font-size:11px;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:auto;white-space:nowrap}
+.badge.book{background:#DDF3E4;color:#176B3A}
+.badge.wait{background:#FDE7E7;color:#9B1C1C}
+.warn{background:#FDE7E7;border:1px solid #f2b8b8;color:#9B1C1C;border-radius:8px;padding:9px 11px;font-size:13.5px;margin-top:6px;font-weight:600}
+.recent h2{font-size:14px;color:#1F4D3A;margin:20px 0 2px}
+.recent .note{font-size:12px;color:#666;margin-bottom:4px}
+.r-card{background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.1);padding:12px 14px;margin-top:8px}
+.r-card .r-top{display:flex;justify-content:space-between;align-items:baseline}
+.r-card .r-name{font-weight:700;font-size:15px}
+.r-card .r-val{font-size:13.5px;color:#1F4D3A;font-weight:700}
+.r-card .r-sub{font-size:12.5px;color:#666;margin-top:2px}
+.r-btns{display:flex;gap:8px;margin-top:9px}
+.r-btns button{flex:1;padding:9px;font-size:13px;font-weight:700;border-radius:8px;border:1.5px solid #1F4D3A;background:#fff;color:#1F4D3A}
+.r-btns button.wa{border-color:#128C4A;color:#128C4A}
+.r-btns button:disabled{opacity:.4}
+.empty{font-size:13px;color:#777;padding:14px 4px}
+.footer-note{font-size:12px;color:#777;text-align:center;margin-top:22px;line-height:1.5}
+#pinView{position:fixed;inset:0;background:#1F4D3A;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:50;padding:20px}
+#pinView h2{color:#fff;font-size:20px;margin-bottom:4px}
+#pinView p{color:#cfe0d6;font-size:13px;margin-bottom:18px}
+#pinBox{width:150px;padding:14px;font-size:28px;text-align:center;letter-spacing:8px;border:none;border-radius:12px}
+#pinErr{color:#ffb4b4;font-size:13px;margin-top:10px;min-height:18px;font-weight:600}
+.hide{display:none!important}
+#okView .big{font-size:44px;text-align:center;margin:8px 0}
+#okView h2{text-align:center;color:#176B3A;font-size:18px}
+#okSummary{font-size:14px;line-height:1.65;background:#F3F7F4;border-radius:10px;padding:12px 14px;margin-top:12px;white-space:pre-wrap}
+#waNote{font-size:13px;color:#9B1C1C;text-align:center;margin-top:10px;font-weight:600}
+</style>
+</head>
+<body>
+<div id="pinView">
+  <h2>Wilds Vleis Orders</h2>
+  <p>Enter the PIN to open the order book</p>
+  <input id="pinBox" type="password" inputmode="numeric" maxlength="4" autocomplete="off">
+  <div id="pinErr"></div>
+</div>
+
+<header><h1>WILDS VLEIS &mdash; ORDERS</h1><p>Capture an order, send it on WhatsApp. Excel pulls it in later.</p></header>
+<div class="wrap">
+
+<div class="card" id="formCard">
+  <label for="fName">Customer name</label>
+  <input type="text" id="fName" autocomplete="off" placeholder="e.g. Oom Jaco">
+  <div class="sim" id="simBox"></div>
+
+  <label for="fPhone">Phone / WhatsApp <span style="font-weight:400;color:#888">(needed to send WhatsApp)</span></label>
+  <input type="tel" id="fPhone" autocomplete="off" placeholder="082 123 4567">
+
+  <label>Price type</label>
+  <div class="seg" id="segPrice">
+    <button type="button" data-p="Normal Price" class="on">Normal R150</button>
+    <button type="button" data-p="Special Price">Special R120</button>
+    <button type="button" data-p="Custom Price">Custom</button>
+  </div>
+  <div id="customRow" class="hide">
+    <label for="fCustom">Custom price per kg</label>
+    <input type="tel" id="fCustom" inputmode="decimal" placeholder="135">
+  </div>
+
+  <label>Kilograms per cut</label>
+  <div class="cuts">
+    <span>Steak</span><input id="kg0" inputmode="decimal" placeholder="0">
+    <span>Biltong</span><input id="kg1" inputmode="decimal" placeholder="0">
+    <span>Wors</span><input id="kg2" inputmode="decimal" placeholder="0">
+    <span>Dro&euml;wors</span><input id="kg3" inputmode="decimal" placeholder="0">
+    <span>Patties</span><input id="kg4" inputmode="decimal" placeholder="0">
+    <span>Unspecified<small>cuts confirmed later</small></span><input id="kg5" inputmode="decimal" placeholder="0">
+  </div>
+
+  <label for="fNotes">Notes / packing instructions</label>
+  <textarea id="fNotes"></textarea>
+
+  <div class="totals">
+    <div>Total kg<b id="tKg">0.00</b></div>
+    <div>Rate / kg<b id="tRate">R 150</b></div>
+    <div>Order value<b id="tVal">R 0</b></div>
+  </div>
+
+  <button class="btn" id="btnSave">SAVE ORDER</button>
+  <button class="btn ghost hide" id="btnCancelEdit">Cancel edit</button>
+</div>
+
+<div class="card hide" id="okView">
+  <div class="big">&#9989;</div>
+  <h2 id="okTitle">Order saved</h2>
+  <div id="okSummary"></div>
+  <a id="btnWa" class="btn wa" style="text-align:center;text-decoration:none">SEND ON WHATSAPP</a>
+  <div id="waNote" class="hide">No phone number saved, so WhatsApp cannot be opened for this order.</div>
+  <button class="btn ghost" id="btnNext">CAPTURE NEXT ORDER</button>
+</div>
+
+<div class="recent">
+  <h2>WAITING TO BE PULLED INTO EXCEL (<span id="rCount">0</span>)</h2>
+  <div class="note">These are saved in the database. They disappear from this list once you press PULL WEB ORDERS in the workbook.</div>
+  <div id="rList"><div class="empty">Nothing waiting &mdash; everything is in the book.</div></div>
+</div>
+
+<div class="footer-note">Wilds Vleis order capture &middot; once-off hunt cycle tool<br>Normal R150/kg &middot; Special R120/kg &middot; Custom as agreed</div>
+</div>
+
+<script>
+var API = 'https://tzltugsgcjpvwfsidihp.supabase.co';
+var KEY = 'sb_publishable_5NP4lzAB0dN3WLyXmPlqzw_ZotvJRKy';
+var PIN = '2026';
+var editingId = null;
+var lastSimilar = [];
+var recentRows = [];
+
+function el(id){ return document.getElementById(id); }
+function hdrs(extra){
+  var h = { 'apikey': KEY, 'Authorization': 'Bearer ' + KEY, 'Content-Type': 'application/json' };
+  if (extra) { for (var k in extra) h[k] = extra[k]; }
+  return h;
+}
+function fmtR(n){
+  var s = (Math.round(n * 100) / 100).toLocaleString('en-ZA', { maximumFractionDigits: 2 });
+  return 'R ' + s;
+}
+function parseKg(v){
+  var f = parseFloat(String(v || '').replace(',', '.'));
+  if (isNaN(f) || f < 0) return 0;
+  return f;
+}
+
+/* PIN gate - light protection only; the database enforces the real limits */
+if (localStorage.getItem('wv_pin_ok') === '1') { el('pinView').classList.add('hide'); }
+el('pinBox').addEventListener('input', function(){
+  if (this.value.length === 4) {
+    if (this.value === PIN) {
+      localStorage.setItem('wv_pin_ok', '1');
+      el('pinView').classList.add('hide');
+    } else {
+      el('pinErr').textContent = 'Wrong PIN, try again.';
+      this.value = '';
+    }
+  }
+});
+
+var priceType = 'Normal Price';
+el('segPrice').addEventListener('click', function(e){
+  var b = e.target.closest('button');
+  if (!b) return;
+  var btns = this.querySelectorAll('button');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('on');
+  b.classList.add('on');
+  priceType = b.getAttribute('data-p');
+  el('customRow').classList.toggle('hide', priceType !== 'Custom Price');
+  recalc();
+});
+
+function rate(){
+  if (priceType === 'Special Price') return 120;
+  if (priceType === 'Custom Price') return parseKg(el('fCustom').value);
+  return 150;
+}
+function cutVals(){
+  var a = [];
+  for (var i = 0; i < 6; i++) a.push(parseKg(el('kg' + i).value));
+  return a;
+}
+function recalc(){
+  var kg = cutVals().reduce(function(s, v){ return s + v; }, 0);
+  var r = rate();
+  el('tKg').textContent = kg.toFixed(2);
+  el('tRate').textContent = fmtR(r);
+  el('tVal').textContent = fmtR(kg * r);
+}
+var inputsWatch = ['fCustom','kg0','kg1','kg2','kg3','kg4','kg5'];
+for (var i = 0; i < inputsWatch.length; i++) el(inputsWatch[i]).addEventListener('input', recalc);
+
+var simTimer = null;
+el('fName').addEventListener('input', function(){
+  clearTimeout(simTimer);
+  var v = this.value.trim();
+  if (v.length < 2) { el('simBox').innerHTML = ''; lastSimilar = []; return; }
+  simTimer = setTimeout(function(){ lookupSimilar(v); }, 350);
+});
+function lookupSimilar(v){
+  fetch(API + '/rest/v1/rpc/similar_names', {
+    method: 'POST', headers: hdrs(), body: JSON.stringify({ search: v })
+  }).then(function(r){ return r.json(); }).then(function(list){
+    if (!Array.isArray(list)) list = [];
+    lastSimilar = list;
+    var html = '';
+    for (var i = 0; i < list.length; i++) {
+      var it = list[i];
+      var badge = it.in_excel ? '<span class="badge book">In the book</span>' : '<span class="badge wait">Waiting for Excel</span>';
+      html += '<div class="s-row"><span class="pct">' + it.match_pct + '%</span><span>' + escapeHtml(it.customer_name) + '</span>' + badge + '</div>';
+    }
+    if (html) html = '<div class="warn">Similar customer(s) already exist &mdash; check before saving a duplicate:</div>' + html;
+    el('simBox').innerHTML = html;
+  }).catch(function(){});
+}
+function escapeHtml(s){
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+el('btnSave').addEventListener('click', function(){
+  var name = el('fName').value.trim();
+  var kg = cutVals();
+  var totalKg = kg.reduce(function(s, v){ return s + v; }, 0);
+  if (name.length < 2) { alert('Type the customer name first.'); return; }
+  if (totalKg <= 0) { alert('Enter at least one meat quantity.'); return; }
+  if (priceType === 'Custom Price' && rate() <= 0) { alert('Enter the custom price per kg.'); return; }
+
+  if (!editingId) {
+    for (var i = 0; i < lastSimilar.length; i++) {
+      if (lastSimilar[i].match_pct >= 85) {
+        var ok = confirm('Possible duplicate: ' + lastSimilar[i].customer_name + '\nSave as a NEW order anyway?');
+        if (!ok) return;
+        break;
+      }
+    }
+  }
+
+  var body = {
+    customer_name: name,
+    phone: el('fPhone').value.trim() || null,
+    price_type: priceType,
+    custom_rate: priceType === 'Custom Price' ? rate() : null,
+    steak_kg: kg[0], biltong_kg: kg[1], wors_kg: kg[2],
+    droewors_kg: kg[3], patties_kg: kg[4], unspecified_kg: kg[5],
+    notes: el('fNotes').value.trim() || null
+  };
+
+  var url = API + '/rest/v1/orders';
+  var method = 'POST';
+  if (editingId) { url += '?id=eq.' + editingId; method = 'PATCH'; }
+
+  el('btnSave').disabled = true;
+  fetch(url, { method: method, headers: hdrs({ 'Prefer': 'return=representation' }), body: JSON.stringify(body) })
+    .then(function(r){
+      if (!r.ok) return r.text().then(function(t){ throw new Error(t); });
+      return r.json();
+    })
+    .then(function(rows){
+      var o = Array.isArray(rows) ? rows[0] : rows;
+      showSaved(o, editingId ? 'Order updated' : 'Order saved');
+      clearForm();
+      loadRecent();
+    })
+    .catch(function(e){ alert('Could not save. Check your signal and try again.\n\n' + e.message); })
+    .finally(function(){ el('btnSave').disabled = false; });
+});
+
+function clearForm(){
+  el('fName').value = ''; el('fPhone').value = ''; el('fNotes').value = '';
+  el('fCustom').value = '';
+  for (var i = 0; i < 6; i++) el('kg' + i).value = '';
+  el('simBox').innerHTML = ''; lastSimilar = [];
+  editingId = null;
+  el('btnSave').textContent = 'SAVE ORDER';
+  el('btnCancelEdit').classList.add('hide');
+  var btns = el('segPrice').querySelectorAll('button');
+  for (var j = 0; j < btns.length; j++) btns[j].classList.toggle('on', btns[j].getAttribute('data-p') === 'Normal Price');
+  priceType = 'Normal Price';
+  el('customRow').classList.add('hide');
+  recalc();
+}
+el('btnCancelEdit').addEventListener('click', function(){ clearForm(); el('okView').classList.add('hide'); });
+
+function orderRate(o){
+  if (o.price_type === 'Special Price') return 120;
+  if (o.price_type === 'Custom Price') return Number(o.custom_rate) || 0;
+  return 150;
+}
+function orderKg(o){
+  return Number(o.steak_kg) + Number(o.biltong_kg) + Number(o.wors_kg) + Number(o.droewors_kg) + Number(o.patties_kg) + Number(o.unspecified_kg);
+}
+function waNumber(p){
+  var d = String(p || '').replace(/\D/g, '');
+  if (!d) return null;
+  if (d.length === 11 && d.indexOf('27') === 0) return d;
+  if (d.length === 10 && d.charAt(0) === '0') return '27' + d.substring(1);
+  if (d.length === 9 && d.charAt(0) !== '0') return '27' + d;
+  return d;
+}
+function waMessage(o){
+  var lines = [];
+  lines.push('Hi ' + o.customer_name.split(' ')[0] + ', here is your game meat order:');
+  var cuts = [
+    ['Steak', o.steak_kg], ['Biltong', o.biltong_kg], ['Wors', o.wors_kg],
+    ['Droewors', o.droewors_kg], ['Patties', o.patties_kg]
+  ];
+  for (var i = 0; i < cuts.length; i++) {
+    if (Number(cuts[i][1]) > 0) lines.push('- ' + cuts[i][0] + ': ' + Number(cuts[i][1]) + ' kg');
+  }
+  if (Number(o.unspecified_kg) > 0) lines.push('- Meat (cuts to be confirmed): ' + Number(o.unspecified_kg) + ' kg');
+  var kg = orderKg(o), r = orderRate(o);
+  lines.push('Total: ' + kg + ' kg @ ' + fmtR(r) + '/kg = ' + fmtR(kg * r));
+  if (o.notes) lines.push('Notes: ' + o.notes);
+  lines.push('Please check that everything is correct. I will message you when it is ready for collection. Thanks!');
+  return lines.join('\n');
+}
+function showSaved(o, title){
+  el('okTitle').textContent = title;
+  var kg = orderKg(o), r = orderRate(o);
+  el('okSummary').textContent = o.customer_name + '\nTotal ' + kg + ' kg @ ' + fmtR(r) + '/kg = ' + fmtR(kg * r);
+  var num = waNumber(o.phone);
+  if (num) {
+    el('btnWa').classList.remove('hide');
+    el('waNote').classList.add('hide');
+    el('btnWa').href = 'https://wa.me/' + num + '?text=' + encodeURIComponent(waMessage(o));
+  } else {
+    el('btnWa').classList.add('hide');
+    el('waNote').classList.remove('hide');
+  }
+  el('okView').classList.remove('hide');
+  el('okView').scrollIntoView({ behavior: 'smooth' });
+}
+el('btnNext').addEventListener('click', function(){
+  el('okView').classList.add('hide');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  el('fName').focus();
+});
+
+function loadRecent(){
+  fetch(API + '/rest/v1/orders?select=*&order=created_at.desc&limit=20', { headers: hdrs() })
+    .then(function(r){ return r.json(); })
+    .then(function(rows){
+      if (!Array.isArray(rows)) rows = [];
+      recentRows = rows;
+      el('rCount').textContent = rows.length;
+      if (!rows.length) {
+        el('rList').innerHTML = '<div class="empty">Nothing waiting &mdash; everything is in the book.</div>';
+        return;
+      }
+      var html = '';
+      for (var i = 0; i < rows.length; i++) {
+        var o = rows[i];
+        var kg = orderKg(o), r = orderRate(o);
+        html += '<div class="r-card"><div class="r-top"><span class="r-name">' + escapeHtml(o.customer_name) + '</span>' +
+                '<span class="r-val">' + fmtR(kg * r) + '</span></div>' +
+                '<div class="r-sub">' + kg + ' kg @ ' + fmtR(r) + '/kg' + (o.phone ? ' &middot; ' + escapeHtml(o.phone) : ' &middot; no phone') + '</div>' +
+                '<div class="r-btns"><button data-act="edit" data-i="' + i + '">EDIT</button>' +
+                '<button class="wa" data-act="wa" data-i="' + i + '"' + (o.phone ? '' : ' disabled') + '>WHATSAPP</button></div></div>';
+      }
+      el('rList').innerHTML = html;
+    })
+    .catch(function(){});
+}
+el('rList').addEventListener('click', function(e){
+  var b = e.target.closest('button');
+  if (!b) return;
+  var o = recentRows[Number(b.getAttribute('data-i'))];
+  if (!o) return;
+  if (b.getAttribute('data-act') === 'wa') {
+    var num = waNumber(o.phone);
+    if (num) window.open('https://wa.me/' + num + '?text=' + encodeURIComponent(waMessage(o)), '_blank');
+    return;
+  }
+  editingId = o.id;
+  el('fName').value = o.customer_name;
+  el('fPhone').value = o.phone || '';
+  el('fNotes').value = o.notes || '';
+  var vals = [o.steak_kg, o.biltong_kg, o.wors_kg, o.droewors_kg, o.patties_kg, o.unspecified_kg];
+  for (var i = 0; i < 6; i++) el('kg' + i).value = Number(vals[i]) > 0 ? Number(vals[i]) : '';
+  priceType = o.price_type;
+  var btns = el('segPrice').querySelectorAll('button');
+  for (var j = 0; j < btns.length; j++) btns[j].classList.toggle('on', btns[j].getAttribute('data-p') === priceType);
+  el('customRow').classList.toggle('hide', priceType !== 'Custom Price');
+  el('fCustom').value = o.custom_rate || '';
+  el('btnSave').textContent = 'UPDATE ORDER';
+  el('btnCancelEdit').classList.remove('hide');
+  el('okView').classList.add('hide');
+  el('simBox').innerHTML = ''; lastSimilar = [];
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  recalc();
+});
+
+recalc();
+loadRecent();
+</script>
+</body>
+</html>

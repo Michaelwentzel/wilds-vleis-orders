@@ -1,0 +1,12 @@
+{
+  "name": "Wilds Vleis Orders",
+  "short_name": "Wilds Vleis",
+  "start_url": "/wilds-vleis-orders/",
+  "scope": "/wilds-vleis-orders/",
+  "display": "standalone",
+  "background_color": "#EFEBE0",
+  "theme_color": "#1F4D3A",
+  "icons": [
+    { "src": "/wilds-vleis-orders/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
