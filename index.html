@@ -11,12 +11,15 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:#EFEBE0;color:#1c2b22;-webkit-text-size-adjust:100%}
 .wrap{max-width:480px;margin:0 auto;padding:0 12px 40px}
-header{background:#1F4D3A;color:#fff;padding:14px 16px;position:sticky;top:0;z-index:10;box-shadow:0 2px 6px rgba(0,0,0,.25)}
-header h1{font-size:18px;letter-spacing:.5px}
-header p{font-size:12px;opacity:.85;margin-top:2px}
+header{background:#1F4D3A;color:#fff;padding:12px 16px 0;position:sticky;top:0;z-index:10;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+header h1{font-size:17px;letter-spacing:.5px}
+header p{font-size:11.5px;opacity:.85;margin-top:2px}
+.tabs{display:flex;gap:4px;margin-top:10px}
+.tabs button{flex:1;padding:10px 4px;font-size:13.5px;font-weight:700;border:none;background:transparent;color:#a9c4b5;border-bottom:3px solid transparent}
+.tabs button.on{color:#fff;border-bottom-color:#C9A94E}
 .card{background:#fff;border-radius:14px;box-shadow:0 1px 4px rgba(0,0,0,.12);padding:16px;margin-top:14px}
 label{display:block;font-size:13px;font-weight:600;color:#1F4D3A;margin:12px 0 4px}
-input[type=text],input[type=tel],textarea{width:100%;padding:12px;font-size:16px;border:1.5px solid #d8d2c0;border-radius:10px;background:#FFF9E6}
+input[type=text],input[type=tel],input[type=search],textarea{width:100%;padding:12px;font-size:16px;border:1.5px solid #d8d2c0;border-radius:10px;background:#FFF9E6}
 input:focus,textarea:focus{outline:2px solid #1F4D3A;background:#FFF2CC}
 textarea{min-height:64px;resize:vertical}
 .seg{display:flex;gap:6px;margin-top:4px}
@@ -36,22 +39,38 @@ textarea{min-height:64px;resize:vertical}
 .sim{margin-top:6px}
 .sim .s-row{display:flex;align-items:center;gap:8px;background:#FFF3CD;border:1px solid #e6d9a8;border-radius:8px;padding:8px 10px;margin-top:5px;font-size:13.5px}
 .sim .pct{font-weight:700;color:#855D00}
-.badge{font-size:11px;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:auto;white-space:nowrap}
+.badge{font-size:11px;font-weight:700;padding:2px 7px;border-radius:20px;white-space:nowrap}
 .badge.book{background:#DDF3E4;color:#176B3A}
 .badge.wait{background:#FDE7E7;color:#9B1C1C}
+.sim .badge{margin-left:auto}
 .warn{background:#FDE7E7;border:1px solid #f2b8b8;color:#9B1C1C;border-radius:8px;padding:9px 11px;font-size:13.5px;margin-top:6px;font-weight:600}
-.recent h2{font-size:14px;color:#1F4D3A;margin:20px 0 2px}
-.recent .note{font-size:12px;color:#666;margin-bottom:4px}
+.waitline{font-size:12.5px;color:#855D00;background:#FFF3CD;border:1px solid #e6d9a8;border-radius:8px;padding:8px 11px;margin-top:14px;font-weight:600;text-align:center}
+.sumgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:#1F4D3A;border-radius:12px;padding:14px 10px;color:#fff;text-align:center;margin-top:14px}
+.sumgrid div span{display:block;font-size:11px;opacity:.85}
+.sumgrid div b{font-size:17px;display:block;margin-top:3px}
+.cuttable{width:100%;border-collapse:collapse;margin-top:6px;font-size:14px}
+.cuttable th{text-align:left;font-size:11.5px;color:#666;font-weight:600;padding:0 0 5px}
+.cuttable th:last-child,.cuttable td:last-child{text-align:right}
+.cuttable td{padding:6px 0;border-top:1px solid #eee}
+.cuttable td:last-child{font-weight:700;color:#1F4D3A}
+.cuttable tr.tot td{border-top:2px solid #1F4D3A;font-weight:700}
+h3.sec{font-size:13px;color:#1F4D3A;margin:20px 0 0;letter-spacing:.3px}
+.chips{display:flex;gap:6px;margin-top:8px}
+.chips button{flex:1;padding:8px 4px;font-size:12.5px;font-weight:700;border:1.5px solid #1F4D3A;background:#fff;color:#1F4D3A;border-radius:20px}
+.chips button.on{background:#1F4D3A;color:#fff}
 .r-card{background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.1);padding:12px 14px;margin-top:8px}
-.r-card .r-top{display:flex;justify-content:space-between;align-items:baseline}
+.r-card .r-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
 .r-card .r-name{font-weight:700;font-size:15px}
-.r-card .r-val{font-size:13.5px;color:#1F4D3A;font-weight:700}
+.r-card .r-val{font-size:13.5px;color:#1F4D3A;font-weight:700;white-space:nowrap}
 .r-card .r-sub{font-size:12.5px;color:#666;margin-top:2px}
+.r-card .r-cuts{font-size:12.5px;color:#1c2b22;margin-top:5px}
+.r-card .r-note{font-size:12px;color:#777;margin-top:5px;font-style:italic}
+.r-card .r-meta{margin-top:7px}
 .r-btns{display:flex;gap:8px;margin-top:9px}
 .r-btns button{flex:1;padding:9px;font-size:13px;font-weight:700;border-radius:8px;border:1.5px solid #1F4D3A;background:#fff;color:#1F4D3A}
 .r-btns button.wa{border-color:#128C4A;color:#128C4A}
 .r-btns button:disabled{opacity:.4}
-.empty{font-size:13px;color:#777;padding:14px 4px}
+.empty{font-size:13px;color:#777;padding:14px 4px;text-align:center}
 .footer-note{font-size:12px;color:#777;text-align:center;margin-top:22px;line-height:1.5}
 #pinView{position:fixed;inset:0;background:#1F4D3A;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:50;padding:20px}
 #pinView h2{color:#fff;font-size:20px;margin-bottom:4px}
@@ -73,67 +92,106 @@ textarea{min-height:64px;resize:vertical}
   <div id="pinErr"></div>
 </div>
 
-<header><h1>WILDS VLEIS &mdash; ORDERS</h1><p>Capture an order, send it on WhatsApp. Excel pulls it in later.</p></header>
+<header>
+  <h1>WILDS VLEIS &mdash; ORDERS</h1>
+  <p>Capture an order, send it on WhatsApp. Excel pulls it in later.</p>
+  <div class="tabs">
+    <button id="tabNew" class="on">NEW ORDER</button>
+    <button id="tabAll">ALL ORDERS (<span id="tabCount">0</span>)</button>
+  </div>
+</header>
+
 <div class="wrap">
 
-<div class="card" id="formCard">
-  <label for="fName">Customer name</label>
-  <input type="text" id="fName" autocomplete="off" placeholder="e.g. Oom Jaco">
-  <div class="sim" id="simBox"></div>
+<!-- ============ CAPTURE VIEW ============ -->
+<div id="viewNew">
+  <div class="card" id="formCard">
+    <label for="fName">Customer name</label>
+    <input type="text" id="fName" autocomplete="off" placeholder="e.g. Oom Jaco">
+    <div class="sim" id="simBox"></div>
 
-  <label for="fPhone">Phone / WhatsApp <span style="font-weight:400;color:#888">(needed to send WhatsApp)</span></label>
-  <input type="tel" id="fPhone" autocomplete="off" placeholder="082 123 4567">
+    <label for="fPhone">Phone / WhatsApp <span style="font-weight:400;color:#888">(needed to send WhatsApp)</span></label>
+    <input type="tel" id="fPhone" autocomplete="off" placeholder="082 123 4567">
 
-  <label>Price type</label>
-  <div class="seg" id="segPrice">
-    <button type="button" data-p="Normal Price" class="on">Normal R150</button>
-    <button type="button" data-p="Special Price">Special R120</button>
-    <button type="button" data-p="Custom Price">Custom</button>
+    <label>Price type</label>
+    <div class="seg" id="segPrice">
+      <button type="button" data-p="Normal Price" class="on">Normal R150</button>
+      <button type="button" data-p="Special Price">Special R120</button>
+      <button type="button" data-p="Custom Price">Custom</button>
+    </div>
+    <div id="customRow" class="hide">
+      <label for="fCustom">Custom price per kg</label>
+      <input type="tel" id="fCustom" inputmode="decimal" placeholder="135">
+    </div>
+
+    <label>Kilograms per cut</label>
+    <div class="cuts">
+      <span>Steak</span><input id="kg0" inputmode="decimal" placeholder="0">
+      <span>Biltong</span><input id="kg1" inputmode="decimal" placeholder="0">
+      <span>Wors</span><input id="kg2" inputmode="decimal" placeholder="0">
+      <span>Dro&euml;wors</span><input id="kg3" inputmode="decimal" placeholder="0">
+      <span>Patties</span><input id="kg4" inputmode="decimal" placeholder="0">
+      <span>Unspecified<small>cuts confirmed later</small></span><input id="kg5" inputmode="decimal" placeholder="0">
+    </div>
+
+    <label for="fNotes">Notes / packing instructions</label>
+    <textarea id="fNotes"></textarea>
+
+    <div class="totals">
+      <div>Total kg<b id="tKg">0.00</b></div>
+      <div>Rate / kg<b id="tRate">R 150</b></div>
+      <div>Order value<b id="tVal">R 0</b></div>
+    </div>
+
+    <button class="btn" id="btnSave">SAVE ORDER</button>
+    <button class="btn ghost hide" id="btnCancelEdit">Cancel edit</button>
   </div>
-  <div id="customRow" class="hide">
-    <label for="fCustom">Custom price per kg</label>
-    <input type="tel" id="fCustom" inputmode="decimal" placeholder="135">
+
+  <div class="card hide" id="okView">
+    <div class="big">&#9989;</div>
+    <h2 id="okTitle">Order saved</h2>
+    <div id="okSummary"></div>
+    <a id="btnWa" class="btn wa" style="text-align:center;text-decoration:none">SEND ON WHATSAPP</a>
+    <div id="waNote" class="hide">No phone number saved, so WhatsApp cannot be opened for this order.</div>
+    <button class="btn ghost" id="btnNext">CAPTURE NEXT ORDER</button>
   </div>
 
-  <label>Kilograms per cut</label>
-  <div class="cuts">
-    <span>Steak</span><input id="kg0" inputmode="decimal" placeholder="0">
-    <span>Biltong</span><input id="kg1" inputmode="decimal" placeholder="0">
-    <span>Wors</span><input id="kg2" inputmode="decimal" placeholder="0">
-    <span>Dro&euml;wors</span><input id="kg3" inputmode="decimal" placeholder="0">
-    <span>Patties</span><input id="kg4" inputmode="decimal" placeholder="0">
-    <span>Unspecified<small>cuts confirmed later</small></span><input id="kg5" inputmode="decimal" placeholder="0">
-  </div>
-
-  <label for="fNotes">Notes / packing instructions</label>
-  <textarea id="fNotes"></textarea>
-
-  <div class="totals">
-    <div>Total kg<b id="tKg">0.00</b></div>
-    <div>Rate / kg<b id="tRate">R 150</b></div>
-    <div>Order value<b id="tVal">R 0</b></div>
-  </div>
-
-  <button class="btn" id="btnSave">SAVE ORDER</button>
-  <button class="btn ghost hide" id="btnCancelEdit">Cancel edit</button>
+  <div id="waitLine" class="waitline hide"></div>
 </div>
 
-<div class="card hide" id="okView">
-  <div class="big">&#9989;</div>
-  <h2 id="okTitle">Order saved</h2>
-  <div id="okSummary"></div>
-  <a id="btnWa" class="btn wa" style="text-align:center;text-decoration:none">SEND ON WHATSAPP</a>
-  <div id="waNote" class="hide">No phone number saved, so WhatsApp cannot be opened for this order.</div>
-  <button class="btn ghost" id="btnNext">CAPTURE NEXT ORDER</button>
+<!-- ============ ALL ORDERS VIEW ============ -->
+<div id="viewAll" class="hide">
+  <div class="sumgrid">
+    <div><span>Orders</span><b id="sOrders">0</b></div>
+    <div><span>Total meat</span><b id="sKg">0 kg</b></div>
+    <div><span>Total value</span><b id="sVal">R 0</b></div>
+  </div>
+
+  <div class="card">
+    <h3 class="sec" style="margin-top:0">MEAT REQUIRED BY CUT</h3>
+    <table class="cuttable">
+      <tr><th>Cut</th><th>Kilograms</th></tr>
+      <tr><td>Steak</td><td id="c0">0</td></tr>
+      <tr><td>Biltong</td><td id="c1">0</td></tr>
+      <tr><td>Wors</td><td id="c2">0</td></tr>
+      <tr><td>Dro&euml;wors</td><td id="c3">0</td></tr>
+      <tr><td>Patties</td><td id="c4">0</td></tr>
+      <tr><td>Unspecified</td><td id="c5">0</td></tr>
+      <tr class="tot"><td>Total</td><td id="cTot">0</td></tr>
+    </table>
+  </div>
+
+  <h3 class="sec">EVERY ORDER</h3>
+  <div class="chips">
+    <button data-f="all" class="on">All</button>
+    <button data-f="wait">Waiting</button>
+    <button data-f="book">In the book</button>
+  </div>
+  <input type="search" id="fSearch" placeholder="Search a name..." style="margin-top:8px" autocomplete="off">
+  <div id="allList"><div class="empty">Loading...</div></div>
 </div>
 
-<div class="recent">
-  <h2>WAITING TO BE PULLED INTO EXCEL (<span id="rCount">0</span>)</h2>
-  <div class="note">These are saved in the database. They disappear from this list once you press PULL WEB ORDERS in the workbook.</div>
-  <div id="rList"><div class="empty">Nothing waiting &mdash; everything is in the book.</div></div>
-</div>
-
-<div class="footer-note">Wilds Vleis order capture &middot; once-off hunt cycle tool<br>Normal R150/kg &middot; Special R120/kg &middot; Custom as agreed</div>
+<div class="footer-note">Wilds Vleis order capture &middot; once-off hunt cycle tool<br>Normal R150/kg &middot; Special R120/kg &middot; Custom as agreed<br><span style="font-size:11px">Money paid and collected/delivered are tracked in the Excel book.</span></div>
 </div>
 
 <script>
@@ -142,7 +200,8 @@ var KEY = 'sb_publishable_5NP4lzAB0dN3WLyXmPlqzw_ZotvJRKy';
 var PIN = '2026';
 var editingId = null;
 var lastSimilar = [];
-var recentRows = [];
+var allRows = [];
+var filterMode = 'all';
 
 function el(id){ return document.getElementById(id); }
 function hdrs(extra){
@@ -154,10 +213,16 @@ function fmtR(n){
   var s = (Math.round(n * 100) / 100).toLocaleString('en-ZA', { maximumFractionDigits: 2 });
   return 'R ' + s;
 }
+function fmtKg(n){
+  return (Math.round(n * 100) / 100).toLocaleString('en-ZA', { maximumFractionDigits: 2 });
+}
 function parseKg(v){
   var f = parseFloat(String(v || '').replace(',', '.'));
   if (isNaN(f) || f < 0) return 0;
   return f;
+}
+function escapeHtml(s){
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 /* PIN gate - light protection only; the database enforces the real limits */
@@ -174,6 +239,19 @@ el('pinBox').addEventListener('input', function(){
   }
 });
 
+/* ---------- tabs ---------- */
+function showTab(which){
+  var isNew = (which === 'new');
+  el('viewNew').classList.toggle('hide', !isNew);
+  el('viewAll').classList.toggle('hide', isNew);
+  el('tabNew').classList.toggle('on', isNew);
+  el('tabAll').classList.toggle('on', !isNew);
+  window.scrollTo({ top: 0 });
+}
+el('tabNew').addEventListener('click', function(){ showTab('new'); });
+el('tabAll').addEventListener('click', function(){ showTab('all'); loadOrders(); });
+
+/* ---------- price type ---------- */
 var priceType = 'Normal Price';
 el('segPrice').addEventListener('click', function(e){
   var b = e.target.closest('button');
@@ -206,6 +284,7 @@ function recalc(){
 var inputsWatch = ['fCustom','kg0','kg1','kg2','kg3','kg4','kg5'];
 for (var i = 0; i < inputsWatch.length; i++) el(inputsWatch[i]).addEventListener('input', recalc);
 
+/* ---------- similar names ---------- */
 var simTimer = null;
 el('fName').addEventListener('input', function(){
   clearTimeout(simTimer);
@@ -229,10 +308,8 @@ function lookupSimilar(v){
     el('simBox').innerHTML = html;
   }).catch(function(){});
 }
-function escapeHtml(s){
-  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
 
+/* ---------- save ---------- */
 el('btnSave').addEventListener('click', function(){
   var name = el('fName').value.trim();
   var kg = cutVals();
@@ -275,7 +352,7 @@ el('btnSave').addEventListener('click', function(){
       var o = Array.isArray(rows) ? rows[0] : rows;
       showSaved(o, editingId ? 'Order updated' : 'Order saved');
       clearForm();
-      loadRecent();
+      loadOrders();
     })
     .catch(function(e){ alert('Could not save. Check your signal and try again.\n\n' + e.message); })
     .finally(function(){ el('btnSave').disabled = false; });
@@ -297,13 +374,15 @@ function clearForm(){
 }
 el('btnCancelEdit').addEventListener('click', function(){ clearForm(); el('okView').classList.add('hide'); });
 
+/* ---------- shared order helpers ---------- */
 function orderRate(o){
   if (o.price_type === 'Special Price') return 120;
   if (o.price_type === 'Custom Price') return Number(o.custom_rate) || 0;
   return 150;
 }
 function orderKg(o){
-  return Number(o.steak_kg) + Number(o.biltong_kg) + Number(o.wors_kg) + Number(o.droewors_kg) + Number(o.patties_kg) + Number(o.unspecified_kg);
+  return Number(o.steak_kg) + Number(o.biltong_kg) + Number(o.wors_kg) +
+         Number(o.droewors_kg) + Number(o.patties_kg) + Number(o.unspecified_kg);
 }
 function waNumber(p){
   var d = String(p || '').replace(/\D/g, '');
@@ -313,13 +392,21 @@ function waNumber(p){
   if (d.length === 9 && d.charAt(0) !== '0') return '27' + d;
   return d;
 }
+function cutSummary(o){
+  var parts = [];
+  var cuts = [['Steak', o.steak_kg], ['Biltong', o.biltong_kg], ['Wors', o.wors_kg],
+              ['Droëwors', o.droewors_kg], ['Patties', o.patties_kg]];
+  for (var i = 0; i < cuts.length; i++) {
+    if (Number(cuts[i][1]) > 0) parts.push(cuts[i][0] + ' ' + fmtKg(Number(cuts[i][1])));
+  }
+  if (Number(o.unspecified_kg) > 0) parts.push('Unspecified ' + fmtKg(Number(o.unspecified_kg)));
+  return parts.join(' · ');
+}
 function waMessage(o){
   var lines = [];
   lines.push('Hi ' + o.customer_name.split(' ')[0] + ', here is your game meat order:');
-  var cuts = [
-    ['Steak', o.steak_kg], ['Biltong', o.biltong_kg], ['Wors', o.wors_kg],
-    ['Droewors', o.droewors_kg], ['Patties', o.patties_kg]
-  ];
+  var cuts = [['Steak', o.steak_kg], ['Biltong', o.biltong_kg], ['Wors', o.wors_kg],
+              ['Droewors', o.droewors_kg], ['Patties', o.patties_kg]];
   for (var i = 0; i < cuts.length; i++) {
     if (Number(cuts[i][1]) > 0) lines.push('- ' + cuts[i][0] + ': ' + Number(cuts[i][1]) + ' kg');
   }
@@ -352,41 +439,123 @@ el('btnNext').addEventListener('click', function(){
   el('fName').focus();
 });
 
-function loadRecent(){
-  fetch(API + '/rest/v1/orders?select=*&order=created_at.desc&limit=20', { headers: hdrs() })
+/* ---------- load + render every order ---------- */
+function loadOrders(){
+  fetch(API + '/rest/v1/orders?select=*&order=created_at.asc', { headers: hdrs() })
     .then(function(r){ return r.json(); })
     .then(function(rows){
       if (!Array.isArray(rows)) rows = [];
-      recentRows = rows;
-      el('rCount').textContent = rows.length;
-      if (!rows.length) {
-        el('rList').innerHTML = '<div class="empty">Nothing waiting &mdash; everything is in the book.</div>';
-        return;
-      }
-      var html = '';
-      for (var i = 0; i < rows.length; i++) {
-        var o = rows[i];
-        var kg = orderKg(o), r = orderRate(o);
-        html += '<div class="r-card"><div class="r-top"><span class="r-name">' + escapeHtml(o.customer_name) + '</span>' +
-                '<span class="r-val">' + fmtR(kg * r) + '</span></div>' +
-                '<div class="r-sub">' + kg + ' kg @ ' + fmtR(r) + '/kg' + (o.phone ? ' &middot; ' + escapeHtml(o.phone) : ' &middot; no phone') + '</div>' +
-                '<div class="r-btns"><button data-act="edit" data-i="' + i + '">EDIT</button>' +
-                '<button class="wa" data-act="wa" data-i="' + i + '"' + (o.phone ? '' : ' disabled') + '>WHATSAPP</button></div></div>';
-      }
-      el('rList').innerHTML = html;
+      allRows = rows;
+      renderSummary();
+      renderList();
+      renderWaitLine();
     })
-    .catch(function(){});
+    .catch(function(){
+      el('allList').innerHTML = '<div class="empty">Could not load the orders. Check your signal.</div>';
+    });
 }
-el('rList').addEventListener('click', function(e){
+
+function renderSummary(){
+  var totKg = 0, totVal = 0;
+  var cuts = [0, 0, 0, 0, 0, 0];
+  for (var i = 0; i < allRows.length; i++) {
+    var o = allRows[i];
+    var kg = orderKg(o);
+    totKg += kg;
+    totVal += kg * orderRate(o);
+    cuts[0] += Number(o.steak_kg);
+    cuts[1] += Number(o.biltong_kg);
+    cuts[2] += Number(o.wors_kg);
+    cuts[3] += Number(o.droewors_kg);
+    cuts[4] += Number(o.patties_kg);
+    cuts[5] += Number(o.unspecified_kg);
+  }
+  el('sOrders').textContent = allRows.length;
+  el('sKg').textContent = fmtKg(totKg) + ' kg';
+  el('sVal').textContent = fmtR(totVal);
+  el('tabCount').textContent = allRows.length;
+  for (var c = 0; c < 6; c++) el('c' + c).textContent = fmtKg(cuts[c]) + ' kg';
+  el('cTot').textContent = fmtKg(totKg) + ' kg';
+}
+
+function renderWaitLine(){
+  var waiting = 0;
+  for (var i = 0; i < allRows.length; i++) if (!allRows[i].imported_at) waiting++;
+  var line = el('waitLine');
+  if (waiting > 0) {
+    line.textContent = waiting + (waiting === 1 ? ' order is' : ' orders are') + ' waiting to be pulled into Excel';
+    line.classList.remove('hide');
+  } else {
+    line.classList.add('hide');
+  }
+}
+
+el('fSearch').addEventListener('input', renderList);
+document.querySelector('.chips').addEventListener('click', function(e){
   var b = e.target.closest('button');
   if (!b) return;
-  var o = recentRows[Number(b.getAttribute('data-i'))];
+  var btns = this.querySelectorAll('button');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('on');
+  b.classList.add('on');
+  filterMode = b.getAttribute('data-f');
+  renderList();
+});
+
+function renderList(){
+  var q = el('fSearch').value.trim().toLowerCase();
+  var html = '';
+  var shown = 0;
+  for (var i = 0; i < allRows.length; i++) {
+    var o = allRows[i];
+    var inBook = !!o.imported_at;
+    if (filterMode === 'wait' && inBook) continue;
+    if (filterMode === 'book' && !inBook) continue;
+    if (q && o.customer_name.toLowerCase().indexOf(q) === -1) continue;
+    shown++;
+    var kg = orderKg(o), r = orderRate(o);
+    var badge = inBook ? '<span class="badge book">In the book</span>'
+                       : '<span class="badge wait">Waiting for Excel</span>';
+    var priceTag = (o.price_type !== 'Normal Price')
+                   ? ' <span class="badge book" style="background:#EEE2F7;color:#663399">' + escapeHtml(o.price_type.replace(' Price','')) + '</span>'
+                   : '';
+    html += '<div class="r-card">' +
+              '<div class="r-top"><span class="r-name">' + escapeHtml(o.customer_name) + '</span>' +
+              '<span class="r-val">' + fmtR(kg * r) + '</span></div>' +
+              '<div class="r-sub">' + fmtKg(kg) + ' kg @ ' + fmtR(r) + '/kg' +
+                 (o.phone ? ' · ' + escapeHtml(o.phone) : ' · no phone') + '</div>' +
+              (cutSummary(o) ? '<div class="r-cuts">' + cutSummary(o) + '</div>' : '') +
+              (o.notes ? '<div class="r-note">' + escapeHtml(o.notes) + '</div>' : '') +
+              '<div class="r-meta">' + badge + priceTag + '</div>' +
+              '<div class="r-btns">' +
+                (inBook ? '' : '<button data-act="edit" data-id="' + o.id + '">EDIT</button>') +
+                '<button class="wa" data-act="wa" data-id="' + o.id + '"' + (o.phone ? '' : ' disabled') + '>WHATSAPP</button>' +
+              '</div>' +
+            '</div>';
+  }
+  if (!shown) {
+    html = '<div class="empty">' + (q ? 'No order matches that name.' : 'No orders in this list yet.') + '</div>';
+  }
+  el('allList').innerHTML = html;
+}
+
+function rowById(id){
+  for (var i = 0; i < allRows.length; i++) if (allRows[i].id === id) return allRows[i];
+  return null;
+}
+
+el('allList').addEventListener('click', function(e){
+  var b = e.target.closest('button');
+  if (!b) return;
+  var o = rowById(b.getAttribute('data-id'));
   if (!o) return;
+
   if (b.getAttribute('data-act') === 'wa') {
     var num = waNumber(o.phone);
     if (num) window.open('https://wa.me/' + num + '?text=' + encodeURIComponent(waMessage(o)), '_blank');
     return;
   }
+
+  /* edit - only offered while the order is still waiting for Excel */
   editingId = o.id;
   el('fName').value = o.customer_name;
   el('fPhone').value = o.phone || '';
@@ -402,12 +571,12 @@ el('rList').addEventListener('click', function(e){
   el('btnCancelEdit').classList.remove('hide');
   el('okView').classList.add('hide');
   el('simBox').innerHTML = ''; lastSimilar = [];
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  showTab('new');
   recalc();
 });
 
 recalc();
-loadRecent();
+loadOrders();
 </script>
 </body>
 </html>
