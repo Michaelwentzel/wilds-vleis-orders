@@ -69,7 +69,9 @@ h3.sec{font-size:13px;color:#1F4D3A;margin:20px 0 0;letter-spacing:.3px}
 .r-btns{display:flex;gap:8px;margin-top:9px}
 .r-btns button{flex:1;padding:9px;font-size:13px;font-weight:700;border-radius:8px;border:1.5px solid #1F4D3A;background:#fff;color:#1F4D3A}
 .r-btns button.wa{border-color:#128C4A;color:#128C4A}
+.r-btns button.del{border-color:#9B1C1C;color:#9B1C1C}
 .r-btns button:disabled{opacity:.4}
+.r-hint{font-size:11.5px;color:#888;margin-top:7px;font-style:italic}
 .empty{font-size:13px;color:#777;padding:14px 4px;text-align:center}
 .footer-note{font-size:12px;color:#777;text-align:center;margin-top:22px;line-height:1.5}
 #pinView{position:fixed;inset:0;background:#1F4D3A;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:50;padding:20px}
@@ -529,7 +531,9 @@ function renderList(){
               '<div class="r-btns">' +
                 (inBook ? '' : '<button data-act="edit" data-id="' + o.id + '">EDIT</button>') +
                 '<button class="wa" data-act="wa" data-id="' + o.id + '"' + (o.phone ? '' : ' disabled') + '>WHATSAPP</button>' +
+                (inBook ? '' : '<button class="del" data-act="del" data-id="' + o.id + '">DELETE</button>') +
               '</div>' +
+              (inBook ? '<div class="r-hint">Already in the Excel book &mdash; delete it there if it is cancelled.</div>' : '') +
             '</div>';
   }
   if (!shown) {
@@ -552,6 +556,22 @@ el('allList').addEventListener('click', function(e){
   if (b.getAttribute('data-act') === 'wa') {
     var num = waNumber(o.phone);
     if (num) window.open('https://wa.me/' + num + '?text=' + encodeURIComponent(waMessage(o)), '_blank');
+    return;
+  }
+
+  /* delete - only offered while the order is still waiting for Excel.
+     Once it is in the book, Excel owns it and must delete it there. */
+  if (b.getAttribute('data-act') === 'del') {
+    var kgD = orderKg(o), rD = orderRate(o);
+    if (!confirm('Delete this order completely?\n\n' + o.customer_name + '\n' +
+                 fmtKg(kgD) + ' kg  -  ' + fmtR(kgD * rD) + '\n\nThis cannot be undone.')) return;
+    b.disabled = true;
+    fetch(API + '/rest/v1/orders?id=eq.' + o.id, { method: 'DELETE', headers: hdrs() })
+      .then(function(r){
+        if (!r.ok) return r.text().then(function(t){ throw new Error(t); });
+        loadOrders();
+      })
+      .catch(function(e){ alert('Could not delete. Check your signal.\n\n' + e.message); b.disabled = false; });
     return;
   }
 
