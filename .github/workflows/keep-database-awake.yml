@@ -1,0 +1,27 @@
+# The free database goes to sleep after about a week with no traffic, and
+# then the app fails to load until something wakes it. This pings it every
+# few days so that can never happen mid-cycle. It reads one row and does
+# nothing else.
+
+name: Keep database awake
+
+on:
+  schedule:
+    - cron: "0 7 * * 1,4"   # Mondays and Thursdays, 07:00 UTC
+  workflow_dispatch:         # and a manual "Run workflow" button
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read one order to keep the database active
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
+            "https://tzltugsgcjpvwfsidihp.supabase.co/rest/v1/orders?select=id&limit=1")
+          echo "Database responded with HTTP $code"
+          if [ "$code" != "200" ]; then
+            echo "::error::Database did not respond normally (HTTP $code)"
+            exit 1
+          fi

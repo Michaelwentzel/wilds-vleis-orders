@@ -15,7 +15,7 @@ header{background:#1F4D3A;color:#fff;padding:12px 14px 0;position:sticky;top:0;z
 header h1{font-size:16px;letter-spacing:.5px}
 header p{font-size:11px;opacity:.85;margin-top:2px}
 .tabs{display:flex;gap:2px;margin-top:9px;overflow-x:auto}
-.tabs button{flex:1;min-width:74px;padding:9px 4px;font-size:12.5px;font-weight:700;border:none;background:transparent;color:#a9c4b5;border-bottom:3px solid transparent;white-space:nowrap}
+.tabs button{flex:1;min-width:70px;padding:9px 3px;font-size:12px;font-weight:700;border:none;background:transparent;color:#a9c4b5;border-bottom:3px solid transparent;white-space:nowrap}
 .tabs button.on{color:#fff;border-bottom-color:#C9A94E}
 .card{background:#fff;border-radius:14px;box-shadow:0 1px 4px rgba(0,0,0,.12);padding:16px;margin-top:14px}
 label{display:block;font-size:13px;font-weight:600;color:#1F4D3A;margin:12px 0 4px}
@@ -45,6 +45,7 @@ textarea{min-height:64px;resize:vertical}
 .badge.unpaid{background:#FDE7E7;color:#9B1C1C}
 .badge.got{background:#DDF3E4;color:#176B3A}
 .badge.price{background:#EEE2F7;color:#663399}
+.badge.nophone{background:#FDE7E7;color:#9B1C1C}
 .sim .badge{margin-left:auto;background:#FFF3CD;color:#855D00}
 .warn{background:#FDE7E7;border:1px solid #f2b8b8;color:#9B1C1C;border-radius:8px;padding:9px 11px;font-size:13.5px;margin-top:6px;font-weight:600}
 .sumgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:#1F4D3A;border-radius:12px;padding:13px 8px;color:#fff;text-align:center;margin-top:14px}
@@ -62,10 +63,11 @@ textarea{min-height:64px;resize:vertical}
 .none{color:#999}
 h3.sec{font-size:13px;color:#1F4D3A;margin:20px 0 0;letter-spacing:.3px}
 .chips{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
-.chips button{flex:1;min-width:64px;padding:8px 4px;font-size:12px;font-weight:700;border:1.5px solid #1F4D3A;background:#fff;color:#1F4D3A;border-radius:20px}
+.chips button{flex:1;min-width:60px;padding:8px 4px;font-size:11.5px;font-weight:700;border:1.5px solid #1F4D3A;background:#fff;color:#1F4D3A;border-radius:20px}
 .chips button.on{background:#1F4D3A;color:#fff}
 .r-card{background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.1);padding:12px 14px;margin-top:8px}
 .r-card.done{border-left:5px solid #176B3A}
+.r-card.binned{opacity:.72;border-left:5px solid #9B1C1C}
 .r-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
 .r-name{font-weight:700;font-size:15px}
 .r-val{font-size:13.5px;color:#1F4D3A;font-weight:700;white-space:nowrap}
@@ -80,7 +82,7 @@ h3.sec{font-size:13px;color:#1F4D3A;margin:20px 0 0;letter-spacing:.3px}
 .money-row .bal.owing{color:#9B1C1C}
 .money-row .bal.clear{color:#176B3A}
 .act-row{display:flex;gap:6px;margin-top:9px}
-.act-row button{flex:1;padding:9px 4px;font-size:12.5px;font-weight:700;border-radius:8px;border:1.5px solid #1F4D3A;background:#fff;color:#1F4D3A}
+.act-row button{flex:1;padding:9px 3px;font-size:12px;font-weight:700;border-radius:8px;border:1.5px solid #1F4D3A;background:#fff;color:#1F4D3A}
 .act-row button.got{border-color:#176B3A;color:#176B3A}
 .act-row button.got.on{background:#176B3A;color:#fff}
 .act-row button.wa{border-color:#128C4A;color:#128C4A}
@@ -98,7 +100,11 @@ h3.sec{font-size:13px;color:#1F4D3A;margin:20px 0 0;letter-spacing:.3px}
 #okView h2{text-align:center;color:#176B3A;font-size:18px}
 #okSummary{font-size:14px;line-height:1.65;background:#F3F7F4;border-radius:10px;padding:12px 14px;margin-top:12px;white-space:pre-wrap}
 #waNote{font-size:13px;color:#9B1C1C;text-align:center;margin-top:10px;font-weight:600}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:24px;background:#1F4D3A;color:#fff;padding:11px 18px;border-radius:24px;font-size:13.5px;font-weight:600;z-index:60;box-shadow:0 3px 12px rgba(0,0,0,.3)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:24px;background:#1F4D3A;color:#fff;padding:11px 18px;border-radius:24px;font-size:13.5px;font-weight:600;z-index:60;box-shadow:0 3px 12px rgba(0,0,0,.3);max-width:90%;text-align:center}
+/* offline banner */
+#netBar{display:none;background:#855D00;color:#fff;font-size:12.5px;font-weight:700;padding:7px 12px;text-align:center}
+#netBar.show{display:block}
+#netBar.sending{background:#176B3A}
 /* ---------- print checklist ---------- */
 #printArea{background:#fff;border-radius:12px;padding:12px;margin-top:12px;overflow-x:auto}
 table.chk{width:100%;border-collapse:collapse;font-size:11px}
@@ -111,7 +117,7 @@ table.chk tfoot td{font-weight:700;background:#f2efe6}
 @media print{
   @page{size:landscape;margin:9mm}
   body{background:#fff}
-  header,.tabs,.chips,.footer-note,#pinView,.noprint{display:none!important}
+  header,.tabs,.chips,.footer-note,#pinView,.noprint,#netBar{display:none!important}
   .wrap{max-width:none;padding:0}
   #printArea{box-shadow:none;border-radius:0;padding:0;overflow:visible}
   table.chk{font-size:9.5px}
@@ -132,6 +138,8 @@ table.chk tfoot td{font-weight:700;background:#f2efe6}
   <div id="pinErr"></div>
 </div>
 
+<div id="netBar"></div>
+
 <header>
   <h1>WILDS VLEIS &mdash; ORDERS</h1>
   <p>Everything lives here. Nothing to sync.</p>
@@ -140,6 +148,7 @@ table.chk tfoot td{font-weight:700;background:#f2efe6}
     <button id="tabAll">ORDERS (<span id="tabCount">0</span>)</button>
     <button id="tabMeat">MEAT</button>
     <button id="tabPrint">PRINT</button>
+    <button id="tabMore">MORE</button>
   </div>
 </header>
 
@@ -215,8 +224,9 @@ table.chk tfoot td{font-weight:700;background:#f2efe6}
   <h3 class="sec">EVERY ORDER</h3>
   <div class="chips">
     <button data-f="all" class="on">All</button>
-    <button data-f="owing">Owes money</button>
+    <button data-f="owing">Owes</button>
     <button data-f="notgot">Not collected</button>
+    <button data-f="nophone">No phone</button>
     <button data-f="unspec">Unspecified</button>
   </div>
   <input type="search" id="fSearch" placeholder="Search a name..." style="margin-top:8px" autocomplete="off">
@@ -242,10 +252,10 @@ table.chk tfoot td{font-weight:700;background:#f2efe6}
   <div class="card noprint">
     <h3 class="sec" style="margin-top:0">WORKSHOP CHECKLIST</h3>
     <p style="font-size:12.5px;color:#666;margin-top:6px">
-      The list below prints on one page in landscape, with tick boxes to
-      carry through the workshop. Press the button, then choose Print.
+      Prints on one page in landscape with tick boxes. On a phone, choose
+      "Save as PDF" in the print screen and you can WhatsApp it to yourself.
     </p>
-    <button class="btn" id="btnPrint">PRINT THE CHECKLIST</button>
+    <button class="btn" id="btnPrint">PRINT / SAVE AS PDF</button>
   </div>
   <div id="printArea">
     <div class="print-head">
@@ -253,6 +263,32 @@ table.chk tfoot td{font-weight:700;background:#f2efe6}
       <p id="printSummary"></p>
     </div>
     <table class="chk" id="chkTable"></table>
+  </div>
+</div>
+
+<!-- ============ MORE ============ -->
+<div id="viewMore" class="hide">
+  <div class="card">
+    <h3 class="sec" style="margin-top:0">BACKUP</h3>
+    <p style="font-size:12.5px;color:#666;margin-top:6px">
+      Downloads every order as a spreadsheet file you can open in Excel and
+      keep yourself. Worth doing after a busy day.
+    </p>
+    <button class="btn" id="btnBackup">DOWNLOAD BACKUP (CSV)</button>
+  </div>
+
+  <div class="card">
+    <h3 class="sec" style="margin-top:0">DELETED ORDERS</h3>
+    <p style="font-size:12.5px;color:#666;margin-top:6px">
+      Deleted orders are kept here for 30 days in case you change your mind,
+      then removed for good.
+    </p>
+    <div id="binList"><div class="empty">Nothing deleted.</div></div>
+  </div>
+
+  <div class="card">
+    <h3 class="sec" style="margin-top:0">NEEDS ATTENTION</h3>
+    <div id="attList" style="font-size:13.5px;line-height:1.9;margin-top:6px"></div>
   </div>
 </div>
 
@@ -270,146 +306,174 @@ var CUTS = [
   ['Steak','steak_kg'], ['Biltong','biltong_kg'], ['Wors','wors_kg'],
   ['Droewors','droewors_kg'], ['Patties','patties_kg'], ['Unspecified','unspecified_kg']
 ];
-var editingId = null, lastSimilar = [], allRows = [], production = [], filterMode = 'all';
+var QUEUE_KEY = 'wv_pending_orders';
+var editingId = null, lastSimilar = [], allRows = [], binRows = [], production = [], filterMode = 'all';
 
 function el(id){ return document.getElementById(id); }
 function hdrs(extra){
   var h = { 'apikey': KEY, 'Authorization': 'Bearer ' + KEY, 'Content-Type': 'application/json' };
-  if (extra) { for (var k in extra) h[k] = extra[k]; }
+  if (extra) for (var k in extra) h[k] = extra[k];
   return h;
 }
-function fmtR(n){
-  return 'R ' + (Math.round(n * 100) / 100).toLocaleString('en-ZA', { maximumFractionDigits: 2 });
+function fmtR(n){ return 'R ' + (Math.round(n*100)/100).toLocaleString('en-ZA',{maximumFractionDigits:2}); }
+function fmtKg(n){ return (Math.round(n*100)/100).toLocaleString('en-ZA',{maximumFractionDigits:2}); }
+function num(v){ var f = parseFloat(String(v==null?'':v).replace(',','.')); return (isNaN(f)||f<0)?0:f; }
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function toast(m){
+  var t=document.createElement('div'); t.className='toast'; t.textContent=m;
+  document.body.appendChild(t); setTimeout(function(){ t.remove(); },2200);
 }
-function fmtKg(n){
-  return (Math.round(n * 100) / 100).toLocaleString('en-ZA', { maximumFractionDigits: 2 });
+
+/* ================= OFFLINE QUEUE =================
+   If a save fails because there is no signal, the order is kept on the
+   phone and sent automatically as soon as the signal comes back. Nothing
+   typed is ever lost. */
+function getQueue(){
+  try { return JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]'); } catch(e){ return []; }
 }
-function num(v){
-  var f = parseFloat(String(v == null ? '' : v).replace(',', '.'));
-  if (isNaN(f) || f < 0) return 0;
-  return f;
+function setQueue(q){ localStorage.setItem(QUEUE_KEY, JSON.stringify(q)); paintNet(); }
+function queueOrder(body){ var q = getQueue(); q.push({ body:body, at:Date.now() }); setQueue(q); }
+
+function paintNet(){
+  var bar = el('netBar'), q = getQueue().length;
+  if (!navigator.onLine) {
+    bar.className = 'show';
+    bar.textContent = q ? ('No signal — ' + q + ' order' + (q>1?'s':'') + ' waiting on this phone')
+                        : 'No signal — you can still capture orders';
+  } else if (q) {
+    bar.className = 'show sending';
+    bar.textContent = 'Sending ' + q + ' saved order' + (q>1?'s':'') + '...';
+  } else {
+    bar.className = '';
+    bar.textContent = '';
+  }
 }
-function esc(s){
-  return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function flushQueue(){
+  var q = getQueue();
+  if (!q.length || !navigator.onLine) { paintNet(); return Promise.resolve(); }
+  paintNet();
+  var item = q[0];
+  return fetch(API + '/rest/v1/orders', { method:'POST', headers:hdrs(), body:JSON.stringify(item.body) })
+    .then(function(r){
+      if (!r.ok) throw new Error('server refused');
+      var rest = getQueue(); rest.shift(); setQueue(rest);
+      return flushQueue();
+    })
+    .then(function(){
+      if (!getQueue().length) { toast('Saved orders have gone through'); loadAll(); }
+    })
+    .catch(function(){ paintNet(); });
 }
-function toast(msg){
-  var t = document.createElement('div');
-  t.className = 'toast'; t.textContent = msg;
-  document.body.appendChild(t);
-  setTimeout(function(){ t.remove(); }, 1900);
-}
+window.addEventListener('online', flushQueue);
+window.addEventListener('offline', paintNet);
 
 /* ---------- PIN ---------- */
 if (localStorage.getItem('wv_pin_ok') === '1') el('pinView').classList.add('hide');
 el('pinBox').addEventListener('input', function(){
   if (this.value.length === 4) {
     if (this.value === PIN) { localStorage.setItem('wv_pin_ok','1'); el('pinView').classList.add('hide'); }
-    else { el('pinErr').textContent = 'Wrong PIN, try again.'; this.value = ''; }
+    else { el('pinErr').textContent = 'Wrong PIN, try again.'; this.value=''; }
   }
 });
 
 /* ---------- tabs ---------- */
-var VIEWS = { New:'viewNew', All:'viewAll', Meat:'viewMeat', Print:'viewPrint' };
+var VIEWS = { New:'viewNew', All:'viewAll', Meat:'viewMeat', Print:'viewPrint', More:'viewMore' };
 function showTab(name){
   for (var k in VIEWS) {
     el(VIEWS[k]).classList.toggle('hide', k !== name);
-    el('tab' + k).classList.toggle('on', k === name);
+    el('tab'+k).classList.toggle('on', k === name);
   }
-  window.scrollTo({ top: 0 });
-  if (name === 'Meat') renderMeat();
-  if (name === 'Print') renderChecklist();
+  window.scrollTo({top:0});
+  if (name==='Meat') renderMeat();
+  if (name==='Print') renderChecklist();
+  if (name==='More') { renderBin(); renderAttention(); }
 }
-['New','All','Meat','Print'].forEach(function(n){
-  el('tab' + n).addEventListener('click', function(){
-    showTab(n);
-    if (n === 'All' || n === 'Meat' || n === 'Print') loadAll();
-  });
+['New','All','Meat','Print','More'].forEach(function(n){
+  el('tab'+n).addEventListener('click', function(){ showTab(n); loadAll(); });
 });
 
 /* ---------- order maths ---------- */
 function orderRate(o){
-  if (o.price_type === 'Special Price') return 120;
-  if (o.price_type === 'Custom Price') return num(o.custom_rate);
+  if (o.price_type==='Special Price') return 120;
+  if (o.price_type==='Custom Price') return num(o.custom_rate);
   return 150;
 }
-function orderKg(o){
-  var t = 0;
-  for (var i = 0; i < CUTS.length; i++) t += num(o[CUTS[i][1]]);
-  return t;
-}
-function orderValue(o){ return orderKg(o) * orderRate(o); }
+function orderKg(o){ var t=0; CUTS.forEach(function(c){ t += num(o[c[1]]); }); return t; }
+function orderValue(o){ return orderKg(o)*orderRate(o); }
 function orderBalance(o){ return orderValue(o) - num(o.amount_paid); }
 function payState(o){
   var b = orderBalance(o);
   if (b <= 0.001) return 'Paid';
-  if (num(o.amount_paid) > 0) return 'Part-paid';
-  return 'Unpaid';
+  return num(o.amount_paid) > 0 ? 'Part-paid' : 'Unpaid';
 }
+function hasPhone(o){ return !!(o.phone && String(o.phone).trim()); }
 
-/* ---------- capture form ---------- */
+/* ---------- capture ---------- */
 var priceType = 'Normal Price';
 el('segPrice').addEventListener('click', function(e){
   var b = e.target.closest('button'); if (!b) return;
   this.querySelectorAll('button').forEach(function(x){ x.classList.remove('on'); });
-  b.classList.add('on');
-  priceType = b.getAttribute('data-p');
+  b.classList.add('on'); priceType = b.getAttribute('data-p');
   el('customRow').classList.toggle('hide', priceType !== 'Custom Price');
   recalc();
 });
 function rate(){
-  if (priceType === 'Special Price') return 120;
-  if (priceType === 'Custom Price') return num(el('fCustom').value);
+  if (priceType==='Special Price') return 120;
+  if (priceType==='Custom Price') return num(el('fCustom').value);
   return 150;
 }
-function cutVals(){
-  var a = []; for (var i = 0; i < 6; i++) a.push(num(el('kg' + i).value)); return a;
-}
+function cutVals(){ var a=[]; for (var i=0;i<6;i++) a.push(num(el('kg'+i).value)); return a; }
 function recalc(){
-  var kg = cutVals().reduce(function(s,v){ return s+v; }, 0), r = rate();
+  var kg = cutVals().reduce(function(s,v){return s+v;},0), r = rate();
   el('tKg').textContent = kg.toFixed(2);
   el('tRate').textContent = fmtR(r);
-  el('tVal').textContent = fmtR(kg * r);
+  el('tVal').textContent = fmtR(kg*r);
 }
 ['fCustom','kg0','kg1','kg2','kg3','kg4','kg5'].forEach(function(id){
   el(id).addEventListener('input', recalc);
 });
 
-var simTimer = null;
+var simTimer=null;
 el('fName').addEventListener('input', function(){
   clearTimeout(simTimer);
   var v = this.value.trim();
-  if (v.length < 2) { el('simBox').innerHTML = ''; lastSimilar = []; return; }
+  if (v.length < 2) { el('simBox').innerHTML=''; lastSimilar=[]; return; }
   simTimer = setTimeout(function(){ lookupSimilar(v); }, 350);
 });
 function lookupSimilar(v){
-  fetch(API + '/rest/v1/rpc/similar_names', { method:'POST', headers:hdrs(), body:JSON.stringify({ search:v }) })
-    .then(function(r){ return r.json(); })
+  fetch(API+'/rest/v1/rpc/similar_names',{method:'POST',headers:hdrs(),body:JSON.stringify({search:v})})
+    .then(function(r){return r.json();})
     .then(function(list){
-      if (!Array.isArray(list)) list = [];
-      lastSimilar = list;
-      var html = '';
+      if (!Array.isArray(list)) list=[];
+      lastSimilar=list;
+      var html='';
       list.forEach(function(it){
-        html += '<div class="s-row"><span class="pct">' + it.match_pct + '%</span><span>' +
-                esc(it.customer_name) + '</span><span class="badge">already on the list</span></div>';
+        html += '<div class="s-row"><span class="pct">'+it.match_pct+'%</span><span>'+
+                esc(it.customer_name)+'</span><span class="badge">already on the list</span></div>';
       });
-      if (html) html = '<div class="warn">Similar name(s) already exist &mdash; check before saving a duplicate:</div>' + html;
+      if (html) html = '<div class="warn">Similar name(s) already exist &mdash; check before saving a duplicate:</div>'+html;
       el('simBox').innerHTML = html;
     }).catch(function(){});
 }
 
 el('btnSave').addEventListener('click', function(){
   var name = el('fName').value.trim(), kg = cutVals();
-  var total = kg.reduce(function(s,v){ return s+v; }, 0);
+  var total = kg.reduce(function(s,v){return s+v;},0);
   if (name.length < 2) { alert('Type the customer name first.'); return; }
   if (total <= 0) { alert('Enter at least one meat quantity.'); return; }
-  if (priceType === 'Custom Price' && rate() <= 0) { alert('Enter the custom price per kg.'); return; }
+  if (priceType==='Custom Price' && rate() <= 0) { alert('Enter the custom price per kg.'); return; }
 
   if (!editingId) {
-    for (var i = 0; i < lastSimilar.length; i++) {
+    for (var i=0;i<lastSimilar.length;i++) {
       if (lastSimilar[i].match_pct >= 85) {
-        if (!confirm('Possible duplicate: ' + lastSimilar[i].customer_name + '\nSave as a NEW order anyway?')) return;
+        if (!confirm('Possible duplicate: '+lastSimilar[i].customer_name+'\nSave as a NEW order anyway?')) return;
         break;
       }
+    }
+  }
+  if (!el('fPhone').value.trim() && !editingId) {
+    if (!confirm('No phone number.\n\nWithout it you cannot WhatsApp this order.\nSave anyway?')) {
+      el('fPhone').focus(); return;
     }
   }
 
@@ -417,114 +481,134 @@ el('btnSave').addEventListener('click', function(){
     customer_name: name,
     phone: el('fPhone').value.trim() || null,
     price_type: priceType,
-    custom_rate: priceType === 'Custom Price' ? rate() : null,
+    custom_rate: priceType==='Custom Price' ? rate() : null,
     steak_kg: kg[0], biltong_kg: kg[1], wors_kg: kg[2],
     droewors_kg: kg[3], patties_kg: kg[4], unspecified_kg: kg[5],
     notes: el('fNotes').value.trim() || null
   };
-  var url = API + '/rest/v1/orders', method = 'POST';
-  if (editingId) { url += '?id=eq.' + editingId; method = 'PATCH'; }
+  var url = API+'/rest/v1/orders', method='POST';
+  if (editingId) { url += '?id=eq.'+editingId; method='PATCH'; }
 
   el('btnSave').disabled = true;
-  fetch(url, { method:method, headers:hdrs({ 'Prefer':'return=representation' }), body:JSON.stringify(body) })
-    .then(function(r){ if (!r.ok) return r.text().then(function(t){ throw new Error(t); }); return r.json(); })
+  fetch(url,{method:method,headers:hdrs({'Prefer':'return=representation'}),body:JSON.stringify(body)})
+    .then(function(r){ if(!r.ok) return r.text().then(function(t){throw new Error(t);}); return r.json(); })
     .then(function(rows){
-      var o = Array.isArray(rows) ? rows[0] : rows;
+      var o = Array.isArray(rows)?rows[0]:rows;
       showSaved(o, editingId ? 'Order updated' : 'Order saved');
       clearForm(); loadAll();
     })
-    .catch(function(e){ alert('Could not save. Check your signal and try again.\n\n' + e.message); })
+    .catch(function(){
+      /* No signal (or the server is unreachable) - keep it on the phone. */
+      if (editingId) { alert('Could not save that change. Try again when you have signal.'); return; }
+      queueOrder(body);
+      var fake = JSON.parse(JSON.stringify(body)); fake.amount_paid = 0; fake.collected = false;
+      showSaved(fake, 'Saved on this phone');
+      el('okSummary').textContent += '\n\nNo signal right now. It will send itself as soon as you are back online.';
+      clearForm();
+    })
     .finally(function(){ el('btnSave').disabled = false; });
 });
 
 function clearForm(){
-  ['fName','fPhone','fNotes','fCustom'].forEach(function(id){ el(id).value = ''; });
-  for (var i = 0; i < 6; i++) el('kg' + i).value = '';
-  el('simBox').innerHTML = ''; lastSimilar = []; editingId = null;
-  el('btnSave').textContent = 'SAVE ORDER';
+  ['fName','fPhone','fNotes','fCustom'].forEach(function(id){ el(id).value=''; });
+  for (var i=0;i<6;i++) el('kg'+i).value='';
+  el('simBox').innerHTML=''; lastSimilar=[]; editingId=null;
+  el('btnSave').textContent='SAVE ORDER';
   el('btnCancelEdit').classList.add('hide');
   el('segPrice').querySelectorAll('button').forEach(function(b){
-    b.classList.toggle('on', b.getAttribute('data-p') === 'Normal Price');
+    b.classList.toggle('on', b.getAttribute('data-p')==='Normal Price');
   });
-  priceType = 'Normal Price';
-  el('customRow').classList.add('hide');
-  recalc();
+  priceType='Normal Price'; el('customRow').classList.add('hide'); recalc();
 }
 el('btnCancelEdit').addEventListener('click', function(){ clearForm(); el('okView').classList.add('hide'); });
 
 /* ---------- whatsapp ---------- */
 function waNumber(p){
-  var d = String(p || '').replace(/\D/g, '');
+  var d = String(p||'').replace(/\D/g,'');
   if (!d) return null;
-  if (d.length === 11 && d.indexOf('27') === 0) return d;
-  if (d.length === 10 && d.charAt(0) === '0') return '27' + d.substring(1);
-  if (d.length === 9 && d.charAt(0) !== '0') return '27' + d;
+  if (d.length===11 && d.indexOf('27')===0) return d;
+  if (d.length===10 && d.charAt(0)==='0') return '27'+d.substring(1);
+  if (d.length===9 && d.charAt(0)!=='0') return '27'+d;
   return d;
 }
 function waMessage(o){
-  var lines = ['Hi ' + o.customer_name.split(' ')[0] + ', here is your game meat order:'];
+  var lines = ['Hi '+o.customer_name.split(' ')[0]+', here is your game meat order:'];
   CUTS.forEach(function(c){
-    if (num(o[c[1]]) > 0 && c[0] !== 'Unspecified') lines.push('- ' + c[0] + ': ' + num(o[c[1]]) + ' kg');
+    if (num(o[c[1]])>0 && c[0]!=='Unspecified') lines.push('- '+c[0]+': '+num(o[c[1]])+' kg');
   });
-  if (num(o.unspecified_kg) > 0) lines.push('- Meat (cuts to be confirmed): ' + num(o.unspecified_kg) + ' kg');
+  if (num(o.unspecified_kg)>0) lines.push('- Meat (cuts to be confirmed): '+num(o.unspecified_kg)+' kg');
   var kg = orderKg(o), r = orderRate(o);
-  lines.push('Total: ' + kg + ' kg @ ' + fmtR(r) + '/kg = ' + fmtR(kg * r));
-  if (num(o.amount_paid) > 0) {
-    lines.push('Paid: ' + fmtR(num(o.amount_paid)));
-    if (orderBalance(o) > 0.001) lines.push('Still due: ' + fmtR(orderBalance(o)));
-    else lines.push('Fully paid - thank you!');
+  lines.push('Total: '+kg+' kg @ '+fmtR(r)+'/kg = '+fmtR(kg*r));
+  if (num(o.amount_paid)>0) {
+    lines.push('Paid: '+fmtR(num(o.amount_paid)));
+    lines.push(orderBalance(o)>0.001 ? 'Still due: '+fmtR(orderBalance(o)) : 'Fully paid - thank you!');
   }
-  if (o.notes) lines.push('Notes: ' + o.notes);
+  if (o.notes) lines.push('Notes: '+o.notes);
   lines.push('Please check that everything is correct. I will message you when it is ready for collection. Thanks!');
   return lines.join('\n');
 }
-function showSaved(o, title){
+function showSaved(o,title){
   el('okTitle').textContent = title;
   var kg = orderKg(o), r = orderRate(o);
-  el('okSummary').textContent = o.customer_name + '\nTotal ' + kg + ' kg @ ' + fmtR(r) + '/kg = ' + fmtR(kg * r);
+  el('okSummary').textContent = o.customer_name+'\nTotal '+kg+' kg @ '+fmtR(r)+'/kg = '+fmtR(kg*r);
   var n = waNumber(o.phone);
   el('btnWa').classList.toggle('hide', !n);
   el('waNote').classList.toggle('hide', !!n);
-  if (n) el('btnWa').href = 'https://wa.me/' + n + '?text=' + encodeURIComponent(waMessage(o));
+  if (n) el('btnWa').href = 'https://wa.me/'+n+'?text='+encodeURIComponent(waMessage(o));
   el('okView').classList.remove('hide');
-  el('okView').scrollIntoView({ behavior:'smooth' });
+  el('okView').scrollIntoView({behavior:'smooth'});
 }
 el('btnNext').addEventListener('click', function(){
   el('okView').classList.add('hide');
-  window.scrollTo({ top:0, behavior:'smooth' });
+  window.scrollTo({top:0,behavior:'smooth'});
   el('fName').focus();
 });
 
-/* ---------- load everything ---------- */
+/* ---------- load ---------- */
 function loadAll(){
-  fetch(API + '/rest/v1/orders?select=*&order=created_at.asc', { headers:hdrs() })
-    .then(function(r){ return r.json(); })
+  flushQueue();
+  fetch(API+'/rest/v1/orders?select=*&deleted_at=is.null&order=created_at.asc',{headers:hdrs()})
+    .then(function(r){return r.json();})
     .then(function(rows){
-      allRows = Array.isArray(rows) ? rows : [];
+      allRows = Array.isArray(rows)?rows:[];
       renderSummary(); renderList();
       if (!el('viewMeat').classList.contains('hide')) renderMeat();
       if (!el('viewPrint').classList.contains('hide')) renderChecklist();
+      if (!el('viewMore').classList.contains('hide')) renderAttention();
     })
-    .catch(function(){ el('allList').innerHTML = '<div class="empty">Could not load. Check your signal.</div>'; });
+    .catch(function(){
+      el('allList').innerHTML = '<div class="empty">Could not load the orders. They are safe &mdash; check your signal.</div>';
+    });
 
-  fetch(API + '/rest/v1/production?select=*', { headers:hdrs() })
-    .then(function(r){ return r.json(); })
-    .then(function(rows){ production = Array.isArray(rows) ? rows : []; renderMeat(); })
+  fetch(API+'/rest/v1/orders?select=*&deleted_at=not.is.null&order=deleted_at.desc',{headers:hdrs()})
+    .then(function(r){return r.json();})
+    .then(function(rows){ binRows = Array.isArray(rows)?rows:[]; purgeOldBin(); renderBin(); })
+    .catch(function(){});
+
+  fetch(API+'/rest/v1/production?select=*',{headers:hdrs()})
+    .then(function(r){return r.json();})
+    .then(function(rows){ production = Array.isArray(rows)?rows:[]; renderMeat(); })
     .catch(function(){});
 }
 
+/* anything binned more than 30 days ago goes for good */
+function purgeOldBin(){
+  var cutoff = Date.now() - 30*24*60*60*1000;
+  binRows.filter(function(o){ return new Date(o.deleted_at).getTime() < cutoff; })
+    .forEach(function(o){
+      fetch(API+'/rest/v1/orders?id=eq.'+o.id,{method:'DELETE',headers:hdrs()}).catch(function(){});
+    });
+}
+
 function renderSummary(){
-  var kg = 0, val = 0, paid = 0, got = 0;
-  allRows.forEach(function(o){
-    kg += orderKg(o); val += orderValue(o);
-    paid += num(o.amount_paid); if (o.collected) got++;
-  });
+  var kg=0,val=0,paid=0,got=0;
+  allRows.forEach(function(o){ kg+=orderKg(o); val+=orderValue(o); paid+=num(o.amount_paid); if(o.collected) got++; });
   el('sOrders').textContent = allRows.length;
-  el('sKg').textContent = fmtKg(kg) + ' kg';
+  el('sKg').textContent = fmtKg(kg)+' kg';
   el('sVal').textContent = fmtR(val);
   el('sPaid').textContent = fmtR(paid);
-  el('sOwing').textContent = fmtR(val - paid);
-  el('sGot').textContent = got + ' / ' + allRows.length;
+  el('sOwing').textContent = fmtR(val-paid);
+  el('sGot').textContent = got+' / '+allRows.length;
   el('tabCount').textContent = allRows.length;
 }
 
@@ -536,72 +620,70 @@ document.querySelector('#viewAll .chips').addEventListener('click', function(e){
 });
 
 function cutSummary(o){
-  var parts = [];
+  var p=[];
   CUTS.forEach(function(c){
-    if (num(o[c[1]]) > 0) parts.push((c[0] === 'Droewors' ? 'Droëwors' : c[0]) + ' ' + fmtKg(num(o[c[1]])));
+    if (num(o[c[1]])>0) p.push((c[0]==='Droewors'?'Droëwors':c[0])+' '+fmtKg(num(o[c[1]])));
   });
-  return parts.join(' · ');
+  return p.join(' · ');
 }
 
 function renderList(){
-  var q = el('fSearch').value.trim().toLowerCase(), html = '', shown = 0;
+  var q = el('fSearch').value.trim().toLowerCase(), html='', shown=0;
   allRows.forEach(function(o){
     var bal = orderBalance(o), st = payState(o);
-    if (filterMode === 'owing' && bal <= 0.001) return;
-    if (filterMode === 'notgot' && o.collected) return;
-    if (filterMode === 'unspec' && num(o.unspecified_kg) <= 0) return;
+    if (filterMode==='owing'   && bal <= 0.001) return;
+    if (filterMode==='notgot'  && o.collected) return;
+    if (filterMode==='nophone' && hasPhone(o)) return;
+    if (filterMode==='unspec'  && num(o.unspecified_kg) <= 0) return;
     if (q && o.customer_name.toLowerCase().indexOf(q) === -1) return;
     shown++;
     var kg = orderKg(o), r = orderRate(o);
-    var badges = '<span class="badge ' + (st === 'Paid' ? 'paid' : st === 'Part-paid' ? 'part' : 'unpaid') + '">' + st + '</span>';
+    var badges = '<span class="badge '+(st==='Paid'?'paid':st==='Part-paid'?'part':'unpaid')+'">'+st+'</span>';
     if (o.collected) badges += '<span class="badge got">Collected</span>';
-    if (o.price_type !== 'Normal Price') badges += '<span class="badge price">' + esc(o.price_type.replace(' Price','')) + '</span>';
+    if (!hasPhone(o)) badges += '<span class="badge nophone">No phone</span>';
+    if (o.price_type!=='Normal Price') badges += '<span class="badge price">'+esc(o.price_type.replace(' Price',''))+'</span>';
 
-    html += '<div class="r-card' + (o.collected && bal <= 0.001 ? ' done' : '') + '">' +
-      '<div class="r-top"><span class="r-name">' + esc(o.customer_name) + '</span>' +
-      '<span class="r-val">' + fmtR(kg * r) + '</span></div>' +
-      '<div class="r-sub">' + fmtKg(kg) + ' kg @ ' + fmtR(r) + '/kg' +
-        (o.phone ? ' · ' + esc(o.phone) : ' · no phone') + '</div>' +
-      (cutSummary(o) ? '<div class="r-cuts">' + cutSummary(o) + '</div>' : '') +
-      (o.notes ? '<div class="r-note">' + esc(o.notes) + '</div>' : '') +
-      '<div class="r-meta">' + badges + '</div>' +
-      '<div class="money-row">' +
-        '<label>Paid R</label>' +
-        '<input type="tel" inputmode="decimal" data-act="pay" data-id="' + o.id + '" value="' + (num(o.amount_paid) || '') + '" placeholder="0">' +
-        '<span class="bal ' + (bal > 0.001 ? 'owing' : 'clear') + '">' +
-          (bal > 0.001 ? 'owes ' + fmtR(bal) : 'settled') + '</span>' +
-      '</div>' +
-      '<div class="act-row">' +
-        '<button class="got' + (o.collected ? ' on' : '') + '" data-act="got" data-id="' + o.id + '">' +
-          (o.collected ? '✓ COLLECTED' : 'MARK COLLECTED') + '</button>' +
-        '<button data-act="edit" data-id="' + o.id + '">EDIT</button>' +
-        '<button class="wa" data-act="wa" data-id="' + o.id + '"' + (o.phone ? '' : ' disabled') + '>WA</button>' +
-        '<button class="del" data-act="del" data-id="' + o.id + '">DEL</button>' +
+    html += '<div class="r-card'+(o.collected && bal<=0.001 ? ' done':'')+'">'+
+      '<div class="r-top"><span class="r-name">'+esc(o.customer_name)+'</span>'+
+      '<span class="r-val">'+fmtR(kg*r)+'</span></div>'+
+      '<div class="r-sub">'+fmtKg(kg)+' kg @ '+fmtR(r)+'/kg'+(o.phone?' · '+esc(o.phone):'')+'</div>'+
+      (cutSummary(o)?'<div class="r-cuts">'+cutSummary(o)+'</div>':'')+
+      (o.notes?'<div class="r-note">'+esc(o.notes)+'</div>':'')+
+      '<div class="r-meta">'+badges+'</div>'+
+      '<div class="money-row"><label>Paid R</label>'+
+        '<input type="tel" inputmode="decimal" data-act="pay" data-id="'+o.id+'" value="'+(num(o.amount_paid)||'')+'" placeholder="0">'+
+        '<span class="bal '+(bal>0.001?'owing':'clear')+'">'+(bal>0.001?'owes '+fmtR(bal):'settled')+'</span></div>'+
+      '<div class="act-row">'+
+        '<button class="got'+(o.collected?' on':'')+'" data-act="got" data-id="'+o.id+'">'+(o.collected?'✓ GOT IT':'COLLECTED')+'</button>'+
+        '<button data-act="edit" data-id="'+o.id+'">EDIT</button>'+
+        '<button class="wa" data-act="wa" data-id="'+o.id+'"'+(hasPhone(o)?'':' disabled')+'>WA</button>'+
+        '<button class="del" data-act="del" data-id="'+o.id+'">DEL</button>'+
       '</div></div>';
   });
-  if (!shown) html = '<div class="empty">' + (q ? 'No order matches that name.' : 'Nothing in this list.') + '</div>';
+  if (!shown) html = '<div class="empty">'+(q?'No order matches that name.':'Nothing in this list.')+'</div>';
   el('allList').innerHTML = html;
 }
 
-function rowById(id){
-  for (var i = 0; i < allRows.length; i++) if (allRows[i].id === id) return allRows[i];
-  return null;
-}
+function rowById(id){ for (var i=0;i<allRows.length;i++) if (allRows[i].id===id) return allRows[i]; return null; }
 function patchOrder(id, body, okMsg){
-  return fetch(API + '/rest/v1/orders?id=eq.' + id, { method:'PATCH', headers:hdrs(), body:JSON.stringify(body) })
-    .then(function(r){ if (!r.ok) return r.text().then(function(t){ throw new Error(t); }); if (okMsg) toast(okMsg); loadAll(); })
-    .catch(function(e){ alert('Could not save that.\n\n' + e.message); });
+  return fetch(API+'/rest/v1/orders?id=eq.'+id,{method:'PATCH',headers:hdrs(),body:JSON.stringify(body)})
+    .then(function(r){ if(!r.ok) return r.text().then(function(t){throw new Error(t);}); if(okMsg) toast(okMsg); loadAll(); })
+    .catch(function(){ alert('Could not save that. Check your signal and try again.'); });
 }
 
-/* payment typed straight into the card */
+/* payment typed into the card, with a sanity check on the amount */
 el('allList').addEventListener('change', function(e){
   var inp = e.target.closest('input[data-act="pay"]'); if (!inp) return;
   var o = rowById(inp.getAttribute('data-id')); if (!o) return;
-  var amt = num(inp.value);
-  if (amt > orderValue(o) + 0.001) {
-    if (!confirm('That is more than the order is worth (' + fmtR(orderValue(o)) + ').\nSave it anyway?')) {
-      inp.value = num(o.amount_paid) || ''; return;
-    }
+  var amt = num(inp.value), value = orderValue(o), was = num(o.amount_paid);
+
+  if (amt > value + 0.001) {
+    if (!confirm('That is MORE than the order is worth.\n\n'+o.customer_name+
+                 '\nOrder: '+fmtR(value)+'\nYou typed: '+fmtR(amt)+
+                 '\n\nSave it anyway?')) { inp.value = was || ''; return; }
+  } else if (was > 0 && amt < was - 0.001) {
+    if (!confirm('This lowers what '+o.customer_name+' has paid.\n\nFrom '+fmtR(was)+
+                 ' down to '+fmtR(amt)+'.\n\nIs that right?')) { inp.value = was || ''; return; }
   }
   patchOrder(o.id, { amount_paid: amt }, 'Payment saved');
 });
@@ -611,21 +693,16 @@ el('allList').addEventListener('click', function(e){
   var o = rowById(b.getAttribute('data-id')); if (!o) return;
   var act = b.getAttribute('data-act');
 
-  if (act === 'got') { patchOrder(o.id, { collected: !o.collected }, o.collected ? 'Marked not collected' : 'Marked collected'); return; }
-
-  if (act === 'wa') {
+  if (act==='got') { patchOrder(o.id,{collected:!o.collected}, o.collected?'Marked not collected':'Marked collected'); return; }
+  if (act==='wa') {
     var n = waNumber(o.phone);
-    if (n) window.open('https://wa.me/' + n + '?text=' + encodeURIComponent(waMessage(o)), '_blank');
+    if (n) window.open('https://wa.me/'+n+'?text='+encodeURIComponent(waMessage(o)),'_blank');
     return;
   }
-
-  if (act === 'del') {
-    if (!confirm('Delete this order completely?\n\n' + o.customer_name + '\n' +
-                 fmtKg(orderKg(o)) + ' kg  -  ' + fmtR(orderValue(o)) + '\n\nThis cannot be undone.')) return;
-    b.disabled = true;
-    fetch(API + '/rest/v1/orders?id=eq.' + o.id, { method:'DELETE', headers:hdrs() })
-      .then(function(r){ if (!r.ok) return r.text().then(function(t){ throw new Error(t); }); toast('Order deleted'); loadAll(); })
-      .catch(function(e){ alert('Could not delete.\n\n' + e.message); b.disabled = false; });
+  if (act==='del') {
+    if (!confirm('Delete this order?\n\n'+o.customer_name+'\n'+fmtKg(orderKg(o))+' kg  -  '+
+                 fmtR(orderValue(o))+'\n\nIt goes to Deleted Orders under MORE, where you can\nbring it back for the next 30 days.')) return;
+    patchOrder(o.id, { deleted_at: new Date().toISOString() }, 'Deleted — recoverable under MORE');
     return;
   }
 
@@ -634,110 +711,167 @@ el('allList').addEventListener('click', function(e){
   el('fName').value = o.customer_name;
   el('fPhone').value = o.phone || '';
   el('fNotes').value = o.notes || '';
-  for (var i = 0; i < 6; i++) {
-    var v = num(o[CUTS[i][1]]);
-    el('kg' + i).value = v > 0 ? v : '';
-  }
+  for (var i=0;i<6;i++){ var v = num(o[CUTS[i][1]]); el('kg'+i).value = v>0?v:''; }
   priceType = o.price_type;
   el('segPrice').querySelectorAll('button').forEach(function(x){
-    x.classList.toggle('on', x.getAttribute('data-p') === priceType);
+    x.classList.toggle('on', x.getAttribute('data-p')===priceType);
   });
-  el('customRow').classList.toggle('hide', priceType !== 'Custom Price');
+  el('customRow').classList.toggle('hide', priceType!=='Custom Price');
   el('fCustom').value = o.custom_rate || '';
   el('btnSave').textContent = 'UPDATE ORDER';
   el('btnCancelEdit').classList.remove('hide');
   el('okView').classList.add('hide');
-  el('simBox').innerHTML = ''; lastSimilar = [];
+  el('simBox').innerHTML=''; lastSimilar=[];
   showTab('New'); recalc();
 });
 
-/* ---------- meat produced ---------- */
-function orderedFor(cutKey){
-  var t = 0; allRows.forEach(function(o){ t += num(o[cutKey]); }); return t;
+/* ---------- deleted orders ---------- */
+function renderBin(){
+  if (!binRows.length) { el('binList').innerHTML = '<div class="empty">Nothing deleted.</div>'; return; }
+  var html='';
+  binRows.forEach(function(o){
+    var days = Math.max(0, 30 - Math.floor((Date.now()-new Date(o.deleted_at).getTime())/86400000));
+    html += '<div class="r-card binned"><div class="r-top">'+
+      '<span class="r-name">'+esc(o.customer_name)+'</span>'+
+      '<span class="r-val">'+fmtR(orderValue(o))+'</span></div>'+
+      '<div class="r-sub">'+fmtKg(orderKg(o))+' kg &middot; removed for good in '+days+' day'+(days===1?'':'s')+'</div>'+
+      '<div class="act-row"><button data-restore="'+o.id+'">BRING IT BACK</button></div></div>';
+  });
+  el('binList').innerHTML = html;
 }
+el('binList').addEventListener('click', function(e){
+  var b = e.target.closest('button[data-restore]'); if (!b) return;
+  patchOrder(b.getAttribute('data-restore'), { deleted_at: null }, 'Order restored');
+});
+
+/* ---------- needs attention ---------- */
+function renderAttention(){
+  var noPhone = allRows.filter(function(o){ return !hasPhone(o); });
+  var unspec  = allRows.filter(function(o){ return num(o.unspecified_kg)>0; });
+  var owing   = allRows.filter(function(o){ return orderBalance(o)>0.001; });
+  var notGot  = allRows.filter(function(o){ return !o.collected; });
+  function line(n,txt,good){
+    return '<div>'+(n?'<b style="color:#9B1C1C">'+n+'</b> ':'<b style="color:#176B3A">✓</b> ')+(n?txt:good)+'</div>';
+  }
+  el('attList').innerHTML =
+    line(noPhone.length, 'without a phone number &mdash; you cannot WhatsApp them', 'everyone has a phone number') +
+    line(unspec.length,  'still has meat with no cut chosen', 'every order has its cuts chosen') +
+    line(owing.length,   'still owe money', 'everyone has paid') +
+    line(notGot.length,  'not collected yet', 'everything has been collected') +
+    (noPhone.length ? '<div style="margin-top:8px;font-size:12.5px;color:#666">Missing numbers: '+
+        noPhone.slice(0,8).map(function(o){return esc(o.customer_name);}).join(', ')+
+        (noPhone.length>8?' and '+(noPhone.length-8)+' more':'')+'</div>' : '');
+}
+
+/* ---------- backup ---------- */
+el('btnBackup').addEventListener('click', function(){
+  if (!allRows.length) { alert('Nothing to back up yet.'); return; }
+  var head = ['Customer','Phone','Price type','Rate per kg','Steak kg','Biltong kg','Wors kg',
+              'Droewors kg','Patties kg','Unspecified kg','Total kg','Order value',
+              'Amount paid','Balance','Status','Collected','Notes'];
+  function cell(v){
+    var s = String(v==null?'':v);
+    return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s;
+  }
+  var lines = [head.join(',')];
+  allRows.forEach(function(o){
+    lines.push([o.customer_name, o.phone||'', o.price_type, orderRate(o),
+      num(o.steak_kg), num(o.biltong_kg), num(o.wors_kg), num(o.droewors_kg),
+      num(o.patties_kg), num(o.unspecified_kg), orderKg(o), orderValue(o),
+      num(o.amount_paid), orderBalance(o), payState(o), o.collected?'Yes':'No',
+      o.notes||''].map(cell).join(','));
+  });
+  var kg=0,val=0,paid=0;
+  allRows.forEach(function(o){ kg+=orderKg(o); val+=orderValue(o); paid+=num(o.amount_paid); });
+  lines.push(['TOTAL','','','','','','','','','',kg,val,paid,val-paid,'','',''].map(cell).join(','));
+
+  var stamp = new Date().toISOString().slice(0,10);
+  /* the BOM makes Excel open the accented names correctly */
+  var blob = new Blob(['﻿'+lines.join('\r\n')], {type:'text/csv;charset=utf-8;'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'wilds-vleis-orders-'+stamp+'.csv';
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  toast('Backup downloaded');
+});
+
+/* ---------- meat produced ---------- */
+function orderedFor(k){ var t=0; allRows.forEach(function(o){ t += num(o[k]); }); return t; }
 function renderMeat(){
   var html = '<tr><th>Cut</th><th>Ordered</th><th>Produced</th><th>Short / Over</th></tr>';
-  var totOrd = 0, totProd = 0, ordForCounted = 0, counted = 0;
+  var totOrd=0, totProd=0, ordCounted=0, counted=0;
   CUTS.forEach(function(c){
     var ord = orderedFor(c[1]);
-    var rec = production.filter(function(p){ return p.cut === c[0]; })[0];
+    var rec = production.filter(function(p){ return p.cut===c[0]; })[0];
     var prod = rec && rec.produced_kg != null ? num(rec.produced_kg) : null;
     totOrd += ord;
-    // Only cuts that have actually been counted may feed the total
-    // difference, otherwise the cuts you have not weighed yet look
-    // like a huge shortage.
-    if (prod != null) { totProd += prod; ordForCounted += ord; counted++; }
-    var diff = prod == null ? null : prod - ord;
-    var diffTxt = prod == null ? '<span class="none">not entered</span>'
-      : diff < -0.001 ? '<span class="short">' + fmtKg(diff) + ' kg short</span>'
-      : diff > 0.001 ? '<span class="surp">+' + fmtKg(diff) + ' kg over</span>'
+    if (prod != null) { totProd += prod; ordCounted += ord; counted++; }
+    var d = prod==null ? null : prod-ord;
+    var dTxt = prod==null ? '<span class="none">not entered</span>'
+      : d < -0.001 ? '<span class="short">'+fmtKg(d)+' kg short</span>'
+      : d >  0.001 ? '<span class="surp">+'+fmtKg(d)+' kg over</span>'
       : '<span class="surp">exact</span>';
-    html += '<tr><td>' + (c[0] === 'Droewors' ? 'Droëwors' : c[0]) + '</td>' +
-            '<td>' + fmtKg(ord) + ' kg</td>' +
-            '<td><input type="tel" inputmode="decimal" data-cut="' + c[0] + '" value="' +
-              (prod == null ? '' : prod) + '" placeholder="&mdash;"></td>' +
-            '<td>' + diffTxt + '</td></tr>';
+    html += '<tr><td>'+(c[0]==='Droewors'?'Droëwors':c[0])+'</td><td>'+fmtKg(ord)+' kg</td>'+
+            '<td><input type="tel" inputmode="decimal" data-cut="'+c[0]+'" value="'+(prod==null?'':prod)+'" placeholder="&mdash;"></td>'+
+            '<td>'+dTxt+'</td></tr>';
   });
-
-  var netTxt = '';
-  if (counted > 0) {
-    var net = totProd - ordForCounted;
-    netTxt = net < -0.001 ? '<span class="short">' + fmtKg(net) + ' kg short</span>'
-           : net > 0.001 ? '<span class="surp">+' + fmtKg(net) + ' kg over</span>'
+  var netTxt='';
+  if (counted) {
+    var net = totProd-ordCounted;
+    netTxt = net < -0.001 ? '<span class="short">'+fmtKg(net)+' kg short</span>'
+           : net >  0.001 ? '<span class="surp">+'+fmtKg(net)+' kg over</span>'
            : '<span class="surp">exact</span>';
   }
-  html += '<tr class="tot"><td>Total</td><td>' + fmtKg(totOrd) + ' kg</td><td>' +
-          (counted > 0 ? fmtKg(totProd) + ' kg' : '&mdash;') + '</td><td>' + netTxt + '</td></tr>';
-  if (counted > 0 && counted < CUTS.length) {
-    html += '<tr><td colspan="4" style="border:none;padding-top:8px;font-size:12px;color:#855D00">' +
-            'Only ' + counted + ' of ' + CUTS.length + ' cuts weighed so far &mdash; the total compares just those.' +
-            '</td></tr>';
+  html += '<tr class="tot"><td>Total</td><td>'+fmtKg(totOrd)+' kg</td><td>'+
+          (counted?fmtKg(totProd)+' kg':'&mdash;')+'</td><td>'+netTxt+'</td></tr>';
+  if (counted && counted < CUTS.length) {
+    html += '<tr><td colspan="4" style="border:none;padding-top:8px;font-size:12px;color:#855D00">'+
+            'Only '+counted+' of '+CUTS.length+' cuts weighed so far &mdash; the total compares just those.</td></tr>';
   }
   el('meatTable').innerHTML = html;
 }
 el('meatTable').addEventListener('change', function(e){
   var inp = e.target.closest('input[data-cut]'); if (!inp) return;
-  var cut = inp.getAttribute('data-cut');
-  var val = inp.value.trim() === '' ? null : num(inp.value);
-  fetch(API + '/rest/v1/production?cut=eq.' + encodeURIComponent(cut), {
-    method:'PATCH', headers:hdrs(), body:JSON.stringify({ produced_kg: val, updated_at: new Date().toISOString() })
-  }).then(function(r){
-    if (!r.ok) return r.text().then(function(t){ throw new Error(t); });
-    toast('Saved'); loadAll();
-  }).catch(function(e){ alert('Could not save that.\n\n' + e.message); });
+  var val = inp.value.trim()==='' ? null : num(inp.value);
+  fetch(API+'/rest/v1/production?cut=eq.'+encodeURIComponent(inp.getAttribute('data-cut')),
+    {method:'PATCH',headers:hdrs(),body:JSON.stringify({produced_kg:val,updated_at:new Date().toISOString()})})
+    .then(function(r){ if(!r.ok) throw new Error(); toast('Saved'); loadAll(); })
+    .catch(function(){ alert('Could not save that. Check your signal.'); });
 });
 
-/* ---------- printable checklist ---------- */
+/* ---------- checklist ---------- */
 function renderChecklist(){
-  var kg = 0, val = 0, paid = 0;
-  allRows.forEach(function(o){ kg += orderKg(o); val += orderValue(o); paid += num(o.amount_paid); });
-  el('printSummary').textContent =
-    allRows.length + ' orders  ·  ' + fmtKg(kg) + ' kg  ·  ' + fmtR(val) +
-    '  ·  outstanding ' + fmtR(val - paid) + '  ·  printed ' + new Date().toLocaleDateString('en-ZA');
+  var kg=0,val=0,paid=0;
+  allRows.forEach(function(o){ kg+=orderKg(o); val+=orderValue(o); paid+=num(o.amount_paid); });
+  el('printSummary').textContent = allRows.length+' orders  ·  '+fmtKg(kg)+' kg  ·  '+fmtR(val)+
+    '  ·  outstanding '+fmtR(val-paid)+'  ·  printed '+new Date().toLocaleDateString('en-ZA');
 
-  var h = '<thead><tr><th>#</th><th>Customer</th><th>Phone</th>' +
-          '<th>Steak</th><th>Biltong</th><th>Wors</th><th>Dro&euml;wors</th><th>Patties</th><th>Unspec.</th>' +
-          '<th>Total kg</th><th>Due</th><th>Order<br>correct</th><th>Paid</th><th>Deliv.</th><th>Notes</th></tr></thead><tbody>';
-  var tk = 0, tv = 0;
-  allRows.forEach(function(o, i){
+  var h = '<thead><tr><th>#</th><th>Customer</th><th>Phone</th>'+
+    '<th>Steak</th><th>Biltong</th><th>Wors</th><th>Dro&euml;wors</th><th>Patties</th><th>Unspec.</th>'+
+    '<th>Total kg</th><th>Due</th><th>Order<br>correct</th><th>Paid</th><th>Deliv.</th><th>Notes</th></tr></thead><tbody>';
+  var tk=0,tv=0;
+  allRows.forEach(function(o,i){
     var k = orderKg(o), bal = orderBalance(o);
-    tk += k; tv += bal;
-    h += '<tr><td>' + (i+1) + '</td><td class="nm">' + esc(o.customer_name) + '</td>' +
-         '<td>' + esc(o.phone || '') + '</td>';
-    CUTS.forEach(function(c){ var v = num(o[c[1]]); h += '<td>' + (v > 0 ? fmtKg(v) : '') + '</td>'; });
-    h += '<td><b>' + fmtKg(k) + '</b></td>' +
-         '<td>' + (bal > 0.001 ? fmtR(bal) : '–') + '</td>' +
-         '<td class="box">☐</td>' +
-         '<td class="box">' + (payState(o) === 'Paid' ? '☑' : '☐') + '</td>' +
-         '<td class="box">' + (o.collected ? '☑' : '☐') + '</td>' +
-         '<td class="nt">' + esc(o.notes || '') + '</td></tr>';
+    tk+=k; tv+=bal;
+    h += '<tr><td>'+(i+1)+'</td><td class="nm">'+esc(o.customer_name)+'</td><td>'+esc(o.phone||'')+'</td>';
+    CUTS.forEach(function(c){ var v=num(o[c[1]]); h += '<td>'+(v>0?fmtKg(v):'')+'</td>'; });
+    h += '<td><b>'+fmtKg(k)+'</b></td><td>'+(bal>0.001?fmtR(bal):'–')+'</td>'+
+         '<td class="box">☐</td>'+
+         '<td class="box">'+(payState(o)==='Paid'?'☑':'☐')+'</td>'+
+         '<td class="box">'+(o.collected?'☑':'☐')+'</td>'+
+         '<td class="nt">'+esc(o.notes||'')+'</td></tr>';
   });
-  h += '</tbody><tfoot><tr><td colspan="9">TOTAL</td><td>' + fmtKg(tk) + '</td><td>' + fmtR(tv) +
-       '</td><td colspan="4"></td></tr></tfoot>';
+  h += '</tbody><tfoot><tr><td colspan="9">TOTAL</td><td>'+fmtKg(tk)+'</td><td>'+fmtR(tv)+'</td><td colspan="4"></td></tr></tfoot>';
   el('chkTable').innerHTML = h;
 }
 el('btnPrint').addEventListener('click', function(){ window.print(); });
 
+/* ---------- go ---------- */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(function(){});
+}
+paintNet();
 recalc();
 loadAll();
 </script>
