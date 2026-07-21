@@ -10,12 +10,12 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:#EFEBE0;color:#1c2b22;-webkit-text-size-adjust:100%}
-.wrap{max-width:480px;margin:0 auto;padding:0 12px 40px}
-header{background:#1F4D3A;color:#fff;padding:12px 16px 0;position:sticky;top:0;z-index:10;box-shadow:0 2px 6px rgba(0,0,0,.25)}
-header h1{font-size:17px;letter-spacing:.5px}
-header p{font-size:11.5px;opacity:.85;margin-top:2px}
-.tabs{display:flex;gap:4px;margin-top:10px}
-.tabs button{flex:1;padding:10px 4px;font-size:13.5px;font-weight:700;border:none;background:transparent;color:#a9c4b5;border-bottom:3px solid transparent}
+.wrap{max-width:520px;margin:0 auto;padding:0 12px 44px}
+header{background:#1F4D3A;color:#fff;padding:12px 14px 0;position:sticky;top:0;z-index:10;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+header h1{font-size:16px;letter-spacing:.5px}
+header p{font-size:11px;opacity:.85;margin-top:2px}
+.tabs{display:flex;gap:2px;margin-top:9px;overflow-x:auto}
+.tabs button{flex:1;min-width:74px;padding:9px 4px;font-size:12.5px;font-weight:700;border:none;background:transparent;color:#a9c4b5;border-bottom:3px solid transparent;white-space:nowrap}
 .tabs button.on{color:#fff;border-bottom-color:#C9A94E}
 .card{background:#fff;border-radius:14px;box-shadow:0 1px 4px rgba(0,0,0,.12);padding:16px;margin-top:14px}
 label{display:block;font-size:13px;font-weight:600;color:#1F4D3A;margin:12px 0 4px}
@@ -40,38 +40,52 @@ textarea{min-height:64px;resize:vertical}
 .sim .s-row{display:flex;align-items:center;gap:8px;background:#FFF3CD;border:1px solid #e6d9a8;border-radius:8px;padding:8px 10px;margin-top:5px;font-size:13.5px}
 .sim .pct{font-weight:700;color:#855D00}
 .badge{font-size:11px;font-weight:700;padding:2px 7px;border-radius:20px;white-space:nowrap}
-.badge.book{background:#DDF3E4;color:#176B3A}
-.badge.wait{background:#FDE7E7;color:#9B1C1C}
-.sim .badge{margin-left:auto}
+.badge.paid{background:#DDF3E4;color:#176B3A}
+.badge.part{background:#FFF3CD;color:#855D00}
+.badge.unpaid{background:#FDE7E7;color:#9B1C1C}
+.badge.got{background:#DDF3E4;color:#176B3A}
+.badge.price{background:#EEE2F7;color:#663399}
+.sim .badge{margin-left:auto;background:#FFF3CD;color:#855D00}
 .warn{background:#FDE7E7;border:1px solid #f2b8b8;color:#9B1C1C;border-radius:8px;padding:9px 11px;font-size:13.5px;margin-top:6px;font-weight:600}
-.waitline{font-size:12.5px;color:#855D00;background:#FFF3CD;border:1px solid #e6d9a8;border-radius:8px;padding:8px 11px;margin-top:14px;font-weight:600;text-align:center}
-.sumgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:#1F4D3A;border-radius:12px;padding:14px 10px;color:#fff;text-align:center;margin-top:14px}
-.sumgrid div span{display:block;font-size:11px;opacity:.85}
-.sumgrid div b{font-size:17px;display:block;margin-top:3px}
+.sumgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:#1F4D3A;border-radius:12px;padding:13px 8px;color:#fff;text-align:center;margin-top:14px}
+.sumgrid div span{display:block;font-size:10.5px;opacity:.85}
+.sumgrid div b{font-size:16px;display:block;margin-top:3px}
+.sumgrid.money{background:#2b5c47}
 .cuttable{width:100%;border-collapse:collapse;margin-top:6px;font-size:14px}
 .cuttable th{text-align:left;font-size:11.5px;color:#666;font-weight:600;padding:0 0 5px}
-.cuttable th:last-child,.cuttable td:last-child{text-align:right}
-.cuttable td{padding:6px 0;border-top:1px solid #eee}
-.cuttable td:last-child{font-weight:700;color:#1F4D3A}
+.cuttable th:not(:first-child),.cuttable td:not(:first-child){text-align:right}
+.cuttable td{padding:7px 0;border-top:1px solid #eee}
 .cuttable tr.tot td{border-top:2px solid #1F4D3A;font-weight:700}
+.cuttable input{width:74px;padding:7px;font-size:15px;text-align:right;border:1.5px solid #d8d2c0;border-radius:8px;background:#FFF9E6}
+.short{color:#9B1C1C;font-weight:700}
+.surp{color:#176B3A;font-weight:700}
+.none{color:#999}
 h3.sec{font-size:13px;color:#1F4D3A;margin:20px 0 0;letter-spacing:.3px}
-.chips{display:flex;gap:6px;margin-top:8px}
-.chips button{flex:1;padding:8px 4px;font-size:12.5px;font-weight:700;border:1.5px solid #1F4D3A;background:#fff;color:#1F4D3A;border-radius:20px}
+.chips{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.chips button{flex:1;min-width:64px;padding:8px 4px;font-size:12px;font-weight:700;border:1.5px solid #1F4D3A;background:#fff;color:#1F4D3A;border-radius:20px}
 .chips button.on{background:#1F4D3A;color:#fff}
 .r-card{background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.1);padding:12px 14px;margin-top:8px}
-.r-card .r-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-.r-card .r-name{font-weight:700;font-size:15px}
-.r-card .r-val{font-size:13.5px;color:#1F4D3A;font-weight:700;white-space:nowrap}
-.r-card .r-sub{font-size:12.5px;color:#666;margin-top:2px}
-.r-card .r-cuts{font-size:12.5px;color:#1c2b22;margin-top:5px}
-.r-card .r-note{font-size:12px;color:#777;margin-top:5px;font-style:italic}
-.r-card .r-meta{margin-top:7px}
-.r-btns{display:flex;gap:8px;margin-top:9px}
-.r-btns button{flex:1;padding:9px;font-size:13px;font-weight:700;border-radius:8px;border:1.5px solid #1F4D3A;background:#fff;color:#1F4D3A}
-.r-btns button.wa{border-color:#128C4A;color:#128C4A}
-.r-btns button.del{border-color:#9B1C1C;color:#9B1C1C}
-.r-btns button:disabled{opacity:.4}
-.r-hint{font-size:11.5px;color:#888;margin-top:7px;font-style:italic}
+.r-card.done{border-left:5px solid #176B3A}
+.r-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.r-name{font-weight:700;font-size:15px}
+.r-val{font-size:13.5px;color:#1F4D3A;font-weight:700;white-space:nowrap}
+.r-sub{font-size:12.5px;color:#666;margin-top:2px}
+.r-cuts{font-size:12.5px;margin-top:5px}
+.r-note{font-size:12px;color:#777;margin-top:5px;font-style:italic}
+.r-meta{margin-top:7px;display:flex;gap:5px;flex-wrap:wrap}
+.money-row{display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px dashed #ddd}
+.money-row label{margin:0;font-size:12px;white-space:nowrap}
+.money-row input{width:92px;padding:8px;font-size:15px;text-align:right;border:1.5px solid #d8d2c0;border-radius:8px;background:#FFF9E6}
+.money-row .bal{margin-left:auto;font-size:13px;font-weight:700}
+.money-row .bal.owing{color:#9B1C1C}
+.money-row .bal.clear{color:#176B3A}
+.act-row{display:flex;gap:6px;margin-top:9px}
+.act-row button{flex:1;padding:9px 4px;font-size:12.5px;font-weight:700;border-radius:8px;border:1.5px solid #1F4D3A;background:#fff;color:#1F4D3A}
+.act-row button.got{border-color:#176B3A;color:#176B3A}
+.act-row button.got.on{background:#176B3A;color:#fff}
+.act-row button.wa{border-color:#128C4A;color:#128C4A}
+.act-row button.del{border-color:#9B1C1C;color:#9B1C1C}
+.act-row button:disabled{opacity:.4}
 .empty{font-size:13px;color:#777;padding:14px 4px;text-align:center}
 .footer-note{font-size:12px;color:#777;text-align:center;margin-top:22px;line-height:1.5}
 #pinView{position:fixed;inset:0;background:#1F4D3A;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:50;padding:20px}
@@ -84,6 +98,30 @@ h3.sec{font-size:13px;color:#1F4D3A;margin:20px 0 0;letter-spacing:.3px}
 #okView h2{text-align:center;color:#176B3A;font-size:18px}
 #okSummary{font-size:14px;line-height:1.65;background:#F3F7F4;border-radius:10px;padding:12px 14px;margin-top:12px;white-space:pre-wrap}
 #waNote{font-size:13px;color:#9B1C1C;text-align:center;margin-top:10px;font-weight:600}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:24px;background:#1F4D3A;color:#fff;padding:11px 18px;border-radius:24px;font-size:13.5px;font-weight:600;z-index:60;box-shadow:0 3px 12px rgba(0,0,0,.3)}
+/* ---------- print checklist ---------- */
+#printArea{background:#fff;border-radius:12px;padding:12px;margin-top:12px;overflow-x:auto}
+table.chk{width:100%;border-collapse:collapse;font-size:11px}
+table.chk th{background:#1F4D3A;color:#fff;font-size:9.5px;padding:5px 3px;border:1px solid #1F4D3A;text-align:center}
+table.chk td{border:1px solid #bbb;padding:4px 3px;text-align:center}
+table.chk td.nm{text-align:left;font-weight:600;white-space:nowrap}
+table.chk td.nt{text-align:left;font-size:9.5px;color:#555;max-width:150px}
+table.chk td.box{font-size:15px}
+table.chk tfoot td{font-weight:700;background:#f2efe6}
+@media print{
+  @page{size:landscape;margin:9mm}
+  body{background:#fff}
+  header,.tabs,.chips,.footer-note,#pinView,.noprint{display:none!important}
+  .wrap{max-width:none;padding:0}
+  #printArea{box-shadow:none;border-radius:0;padding:0;overflow:visible}
+  table.chk{font-size:9.5px}
+  table.chk th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .print-head{display:block!important;margin-bottom:6px}
+  tr{page-break-inside:avoid}
+}
+.print-head{display:none}
+.print-head h2{font-size:15px}
+.print-head p{font-size:11px;color:#444;margin-top:2px}
 </style>
 </head>
 <body>
@@ -96,16 +134,18 @@ h3.sec{font-size:13px;color:#1F4D3A;margin:20px 0 0;letter-spacing:.3px}
 
 <header>
   <h1>WILDS VLEIS &mdash; ORDERS</h1>
-  <p>Capture an order, send it on WhatsApp. Excel pulls it in later.</p>
+  <p>Everything lives here. Nothing to sync.</p>
   <div class="tabs">
-    <button id="tabNew" class="on">NEW ORDER</button>
-    <button id="tabAll">ALL ORDERS (<span id="tabCount">0</span>)</button>
+    <button id="tabNew" class="on">NEW</button>
+    <button id="tabAll">ORDERS (<span id="tabCount">0</span>)</button>
+    <button id="tabMeat">MEAT</button>
+    <button id="tabPrint">PRINT</button>
   </div>
 </header>
 
 <div class="wrap">
 
-<!-- ============ CAPTURE VIEW ============ -->
+<!-- ============ CAPTURE ============ -->
 <div id="viewNew">
   <div class="card" id="formCard">
     <label for="fName">Customer name</label>
@@ -157,53 +197,80 @@ h3.sec{font-size:13px;color:#1F4D3A;margin:20px 0 0;letter-spacing:.3px}
     <div id="waNote" class="hide">No phone number saved, so WhatsApp cannot be opened for this order.</div>
     <button class="btn ghost" id="btnNext">CAPTURE NEXT ORDER</button>
   </div>
-
-  <div id="waitLine" class="waitline hide"></div>
 </div>
 
-<!-- ============ ALL ORDERS VIEW ============ -->
+<!-- ============ ORDERS ============ -->
 <div id="viewAll" class="hide">
   <div class="sumgrid">
     <div><span>Orders</span><b id="sOrders">0</b></div>
     <div><span>Total meat</span><b id="sKg">0 kg</b></div>
     <div><span>Total value</span><b id="sVal">R 0</b></div>
   </div>
-
-  <div class="card">
-    <h3 class="sec" style="margin-top:0">MEAT REQUIRED BY CUT</h3>
-    <table class="cuttable">
-      <tr><th>Cut</th><th>Kilograms</th></tr>
-      <tr><td>Steak</td><td id="c0">0</td></tr>
-      <tr><td>Biltong</td><td id="c1">0</td></tr>
-      <tr><td>Wors</td><td id="c2">0</td></tr>
-      <tr><td>Dro&euml;wors</td><td id="c3">0</td></tr>
-      <tr><td>Patties</td><td id="c4">0</td></tr>
-      <tr><td>Unspecified</td><td id="c5">0</td></tr>
-      <tr class="tot"><td>Total</td><td id="cTot">0</td></tr>
-    </table>
+  <div class="sumgrid money">
+    <div><span>Paid</span><b id="sPaid">R 0</b></div>
+    <div><span>Still owing</span><b id="sOwing">R 0</b></div>
+    <div><span>Collected</span><b id="sGot">0 / 0</b></div>
   </div>
 
   <h3 class="sec">EVERY ORDER</h3>
   <div class="chips">
     <button data-f="all" class="on">All</button>
-    <button data-f="wait">Waiting</button>
-    <button data-f="book">In the book</button>
+    <button data-f="owing">Owes money</button>
+    <button data-f="notgot">Not collected</button>
+    <button data-f="unspec">Unspecified</button>
   </div>
   <input type="search" id="fSearch" placeholder="Search a name..." style="margin-top:8px" autocomplete="off">
   <div id="allList"><div class="empty">Loading...</div></div>
 </div>
 
-<div class="footer-note">Wilds Vleis order capture &middot; once-off hunt cycle tool<br>Normal R150/kg &middot; Special R120/kg &middot; Custom as agreed<br><span style="font-size:11px">Money paid and collected/delivered are tracked in the Excel book.</span></div>
+<!-- ============ MEAT ============ -->
+<div id="viewMeat" class="hide">
+  <div class="card">
+    <h3 class="sec" style="margin-top:0">MEAT REQUIRED vs MEAT PRODUCED</h3>
+    <p style="font-size:12.5px;color:#666;margin-top:6px">
+      After processing, type in what actually came back. Anything short shows in red.
+      Leave a cut blank until you know.
+    </p>
+    <table class="cuttable" id="meatTable">
+      <tr><th>Cut</th><th>Ordered</th><th>Produced</th><th>Short / Over</th></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============ PRINT ============ -->
+<div id="viewPrint" class="hide">
+  <div class="card noprint">
+    <h3 class="sec" style="margin-top:0">WORKSHOP CHECKLIST</h3>
+    <p style="font-size:12.5px;color:#666;margin-top:6px">
+      The list below prints on one page in landscape, with tick boxes to
+      carry through the workshop. Press the button, then choose Print.
+    </p>
+    <button class="btn" id="btnPrint">PRINT THE CHECKLIST</button>
+  </div>
+  <div id="printArea">
+    <div class="print-head">
+      <h2>WILDS VLEIS &mdash; ORDER, PAYMENT &amp; DELIVERY CHECKLIST</h2>
+      <p id="printSummary"></p>
+    </div>
+    <table class="chk" id="chkTable"></table>
+  </div>
+</div>
+
+<div class="footer-note">
+  Wilds Vleis &middot; once-off hunt cycle<br>
+  Normal R150/kg &middot; Special R120/kg &middot; Custom as agreed
+</div>
 </div>
 
 <script>
 var API = 'https://tzltugsgcjpvwfsidihp.supabase.co';
 var KEY = 'sb_publishable_5NP4lzAB0dN3WLyXmPlqzw_ZotvJRKy';
 var PIN = '2026';
-var editingId = null;
-var lastSimilar = [];
-var allRows = [];
-var filterMode = 'all';
+var CUTS = [
+  ['Steak','steak_kg'], ['Biltong','biltong_kg'], ['Wors','wors_kg'],
+  ['Droewors','droewors_kg'], ['Patties','patties_kg'], ['Unspecified','unspecified_kg']
+];
+var editingId = null, lastSimilar = [], allRows = [], production = [], filterMode = 'all';
 
 function el(id){ return document.getElementById(id); }
 function hdrs(extra){
@@ -212,81 +279,101 @@ function hdrs(extra){
   return h;
 }
 function fmtR(n){
-  var s = (Math.round(n * 100) / 100).toLocaleString('en-ZA', { maximumFractionDigits: 2 });
-  return 'R ' + s;
+  return 'R ' + (Math.round(n * 100) / 100).toLocaleString('en-ZA', { maximumFractionDigits: 2 });
 }
 function fmtKg(n){
   return (Math.round(n * 100) / 100).toLocaleString('en-ZA', { maximumFractionDigits: 2 });
 }
-function parseKg(v){
-  var f = parseFloat(String(v || '').replace(',', '.'));
+function num(v){
+  var f = parseFloat(String(v == null ? '' : v).replace(',', '.'));
   if (isNaN(f) || f < 0) return 0;
   return f;
 }
-function escapeHtml(s){
-  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+function esc(s){
+  return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function toast(msg){
+  var t = document.createElement('div');
+  t.className = 'toast'; t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(function(){ t.remove(); }, 1900);
 }
 
-/* PIN gate - light protection only; the database enforces the real limits */
-if (localStorage.getItem('wv_pin_ok') === '1') { el('pinView').classList.add('hide'); }
+/* ---------- PIN ---------- */
+if (localStorage.getItem('wv_pin_ok') === '1') el('pinView').classList.add('hide');
 el('pinBox').addEventListener('input', function(){
   if (this.value.length === 4) {
-    if (this.value === PIN) {
-      localStorage.setItem('wv_pin_ok', '1');
-      el('pinView').classList.add('hide');
-    } else {
-      el('pinErr').textContent = 'Wrong PIN, try again.';
-      this.value = '';
-    }
+    if (this.value === PIN) { localStorage.setItem('wv_pin_ok','1'); el('pinView').classList.add('hide'); }
+    else { el('pinErr').textContent = 'Wrong PIN, try again.'; this.value = ''; }
   }
 });
 
 /* ---------- tabs ---------- */
-function showTab(which){
-  var isNew = (which === 'new');
-  el('viewNew').classList.toggle('hide', !isNew);
-  el('viewAll').classList.toggle('hide', isNew);
-  el('tabNew').classList.toggle('on', isNew);
-  el('tabAll').classList.toggle('on', !isNew);
+var VIEWS = { New:'viewNew', All:'viewAll', Meat:'viewMeat', Print:'viewPrint' };
+function showTab(name){
+  for (var k in VIEWS) {
+    el(VIEWS[k]).classList.toggle('hide', k !== name);
+    el('tab' + k).classList.toggle('on', k === name);
+  }
   window.scrollTo({ top: 0 });
+  if (name === 'Meat') renderMeat();
+  if (name === 'Print') renderChecklist();
 }
-el('tabNew').addEventListener('click', function(){ showTab('new'); });
-el('tabAll').addEventListener('click', function(){ showTab('all'); loadOrders(); });
+['New','All','Meat','Print'].forEach(function(n){
+  el('tab' + n).addEventListener('click', function(){
+    showTab(n);
+    if (n === 'All' || n === 'Meat' || n === 'Print') loadAll();
+  });
+});
 
-/* ---------- price type ---------- */
+/* ---------- order maths ---------- */
+function orderRate(o){
+  if (o.price_type === 'Special Price') return 120;
+  if (o.price_type === 'Custom Price') return num(o.custom_rate);
+  return 150;
+}
+function orderKg(o){
+  var t = 0;
+  for (var i = 0; i < CUTS.length; i++) t += num(o[CUTS[i][1]]);
+  return t;
+}
+function orderValue(o){ return orderKg(o) * orderRate(o); }
+function orderBalance(o){ return orderValue(o) - num(o.amount_paid); }
+function payState(o){
+  var b = orderBalance(o);
+  if (b <= 0.001) return 'Paid';
+  if (num(o.amount_paid) > 0) return 'Part-paid';
+  return 'Unpaid';
+}
+
+/* ---------- capture form ---------- */
 var priceType = 'Normal Price';
 el('segPrice').addEventListener('click', function(e){
-  var b = e.target.closest('button');
-  if (!b) return;
-  var btns = this.querySelectorAll('button');
-  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('on');
+  var b = e.target.closest('button'); if (!b) return;
+  this.querySelectorAll('button').forEach(function(x){ x.classList.remove('on'); });
   b.classList.add('on');
   priceType = b.getAttribute('data-p');
   el('customRow').classList.toggle('hide', priceType !== 'Custom Price');
   recalc();
 });
-
 function rate(){
   if (priceType === 'Special Price') return 120;
-  if (priceType === 'Custom Price') return parseKg(el('fCustom').value);
+  if (priceType === 'Custom Price') return num(el('fCustom').value);
   return 150;
 }
 function cutVals(){
-  var a = [];
-  for (var i = 0; i < 6; i++) a.push(parseKg(el('kg' + i).value));
-  return a;
+  var a = []; for (var i = 0; i < 6; i++) a.push(num(el('kg' + i).value)); return a;
 }
 function recalc(){
-  var kg = cutVals().reduce(function(s, v){ return s + v; }, 0);
-  var r = rate();
+  var kg = cutVals().reduce(function(s,v){ return s+v; }, 0), r = rate();
   el('tKg').textContent = kg.toFixed(2);
   el('tRate').textContent = fmtR(r);
   el('tVal').textContent = fmtR(kg * r);
 }
-var inputsWatch = ['fCustom','kg0','kg1','kg2','kg3','kg4','kg5'];
-for (var i = 0; i < inputsWatch.length; i++) el(inputsWatch[i]).addEventListener('input', recalc);
+['fCustom','kg0','kg1','kg2','kg3','kg4','kg5'].forEach(function(id){
+  el(id).addEventListener('input', recalc);
+});
 
-/* ---------- similar names ---------- */
 var simTimer = null;
 el('fName').addEventListener('input', function(){
   clearTimeout(simTimer);
@@ -295,36 +382,32 @@ el('fName').addEventListener('input', function(){
   simTimer = setTimeout(function(){ lookupSimilar(v); }, 350);
 });
 function lookupSimilar(v){
-  fetch(API + '/rest/v1/rpc/similar_names', {
-    method: 'POST', headers: hdrs(), body: JSON.stringify({ search: v })
-  }).then(function(r){ return r.json(); }).then(function(list){
-    if (!Array.isArray(list)) list = [];
-    lastSimilar = list;
-    var html = '';
-    for (var i = 0; i < list.length; i++) {
-      var it = list[i];
-      var badge = it.in_excel ? '<span class="badge book">In the book</span>' : '<span class="badge wait">Waiting for Excel</span>';
-      html += '<div class="s-row"><span class="pct">' + it.match_pct + '%</span><span>' + escapeHtml(it.customer_name) + '</span>' + badge + '</div>';
-    }
-    if (html) html = '<div class="warn">Similar customer(s) already exist &mdash; check before saving a duplicate:</div>' + html;
-    el('simBox').innerHTML = html;
-  }).catch(function(){});
+  fetch(API + '/rest/v1/rpc/similar_names', { method:'POST', headers:hdrs(), body:JSON.stringify({ search:v }) })
+    .then(function(r){ return r.json(); })
+    .then(function(list){
+      if (!Array.isArray(list)) list = [];
+      lastSimilar = list;
+      var html = '';
+      list.forEach(function(it){
+        html += '<div class="s-row"><span class="pct">' + it.match_pct + '%</span><span>' +
+                esc(it.customer_name) + '</span><span class="badge">already on the list</span></div>';
+      });
+      if (html) html = '<div class="warn">Similar name(s) already exist &mdash; check before saving a duplicate:</div>' + html;
+      el('simBox').innerHTML = html;
+    }).catch(function(){});
 }
 
-/* ---------- save ---------- */
 el('btnSave').addEventListener('click', function(){
-  var name = el('fName').value.trim();
-  var kg = cutVals();
-  var totalKg = kg.reduce(function(s, v){ return s + v; }, 0);
+  var name = el('fName').value.trim(), kg = cutVals();
+  var total = kg.reduce(function(s,v){ return s+v; }, 0);
   if (name.length < 2) { alert('Type the customer name first.'); return; }
-  if (totalKg <= 0) { alert('Enter at least one meat quantity.'); return; }
+  if (total <= 0) { alert('Enter at least one meat quantity.'); return; }
   if (priceType === 'Custom Price' && rate() <= 0) { alert('Enter the custom price per kg.'); return; }
 
   if (!editingId) {
     for (var i = 0; i < lastSimilar.length; i++) {
       if (lastSimilar[i].match_pct >= 85) {
-        var ok = confirm('Possible duplicate: ' + lastSimilar[i].customer_name + '\nSave as a NEW order anyway?');
-        if (!ok) return;
+        if (!confirm('Possible duplicate: ' + lastSimilar[i].customer_name + '\nSave as a NEW order anyway?')) return;
         break;
       }
     }
@@ -339,53 +422,37 @@ el('btnSave').addEventListener('click', function(){
     droewors_kg: kg[3], patties_kg: kg[4], unspecified_kg: kg[5],
     notes: el('fNotes').value.trim() || null
   };
-
-  var url = API + '/rest/v1/orders';
-  var method = 'POST';
+  var url = API + '/rest/v1/orders', method = 'POST';
   if (editingId) { url += '?id=eq.' + editingId; method = 'PATCH'; }
 
   el('btnSave').disabled = true;
-  fetch(url, { method: method, headers: hdrs({ 'Prefer': 'return=representation' }), body: JSON.stringify(body) })
-    .then(function(r){
-      if (!r.ok) return r.text().then(function(t){ throw new Error(t); });
-      return r.json();
-    })
+  fetch(url, { method:method, headers:hdrs({ 'Prefer':'return=representation' }), body:JSON.stringify(body) })
+    .then(function(r){ if (!r.ok) return r.text().then(function(t){ throw new Error(t); }); return r.json(); })
     .then(function(rows){
       var o = Array.isArray(rows) ? rows[0] : rows;
       showSaved(o, editingId ? 'Order updated' : 'Order saved');
-      clearForm();
-      loadOrders();
+      clearForm(); loadAll();
     })
     .catch(function(e){ alert('Could not save. Check your signal and try again.\n\n' + e.message); })
     .finally(function(){ el('btnSave').disabled = false; });
 });
 
 function clearForm(){
-  el('fName').value = ''; el('fPhone').value = ''; el('fNotes').value = '';
-  el('fCustom').value = '';
+  ['fName','fPhone','fNotes','fCustom'].forEach(function(id){ el(id).value = ''; });
   for (var i = 0; i < 6; i++) el('kg' + i).value = '';
-  el('simBox').innerHTML = ''; lastSimilar = [];
-  editingId = null;
+  el('simBox').innerHTML = ''; lastSimilar = []; editingId = null;
   el('btnSave').textContent = 'SAVE ORDER';
   el('btnCancelEdit').classList.add('hide');
-  var btns = el('segPrice').querySelectorAll('button');
-  for (var j = 0; j < btns.length; j++) btns[j].classList.toggle('on', btns[j].getAttribute('data-p') === 'Normal Price');
+  el('segPrice').querySelectorAll('button').forEach(function(b){
+    b.classList.toggle('on', b.getAttribute('data-p') === 'Normal Price');
+  });
   priceType = 'Normal Price';
   el('customRow').classList.add('hide');
   recalc();
 }
 el('btnCancelEdit').addEventListener('click', function(){ clearForm(); el('okView').classList.add('hide'); });
 
-/* ---------- shared order helpers ---------- */
-function orderRate(o){
-  if (o.price_type === 'Special Price') return 120;
-  if (o.price_type === 'Custom Price') return Number(o.custom_rate) || 0;
-  return 150;
-}
-function orderKg(o){
-  return Number(o.steak_kg) + Number(o.biltong_kg) + Number(o.wors_kg) +
-         Number(o.droewors_kg) + Number(o.patties_kg) + Number(o.unspecified_kg);
-}
+/* ---------- whatsapp ---------- */
 function waNumber(p){
   var d = String(p || '').replace(/\D/g, '');
   if (!d) return null;
@@ -394,27 +461,19 @@ function waNumber(p){
   if (d.length === 9 && d.charAt(0) !== '0') return '27' + d;
   return d;
 }
-function cutSummary(o){
-  var parts = [];
-  var cuts = [['Steak', o.steak_kg], ['Biltong', o.biltong_kg], ['Wors', o.wors_kg],
-              ['Droëwors', o.droewors_kg], ['Patties', o.patties_kg]];
-  for (var i = 0; i < cuts.length; i++) {
-    if (Number(cuts[i][1]) > 0) parts.push(cuts[i][0] + ' ' + fmtKg(Number(cuts[i][1])));
-  }
-  if (Number(o.unspecified_kg) > 0) parts.push('Unspecified ' + fmtKg(Number(o.unspecified_kg)));
-  return parts.join(' · ');
-}
 function waMessage(o){
-  var lines = [];
-  lines.push('Hi ' + o.customer_name.split(' ')[0] + ', here is your game meat order:');
-  var cuts = [['Steak', o.steak_kg], ['Biltong', o.biltong_kg], ['Wors', o.wors_kg],
-              ['Droewors', o.droewors_kg], ['Patties', o.patties_kg]];
-  for (var i = 0; i < cuts.length; i++) {
-    if (Number(cuts[i][1]) > 0) lines.push('- ' + cuts[i][0] + ': ' + Number(cuts[i][1]) + ' kg');
-  }
-  if (Number(o.unspecified_kg) > 0) lines.push('- Meat (cuts to be confirmed): ' + Number(o.unspecified_kg) + ' kg');
+  var lines = ['Hi ' + o.customer_name.split(' ')[0] + ', here is your game meat order:'];
+  CUTS.forEach(function(c){
+    if (num(o[c[1]]) > 0 && c[0] !== 'Unspecified') lines.push('- ' + c[0] + ': ' + num(o[c[1]]) + ' kg');
+  });
+  if (num(o.unspecified_kg) > 0) lines.push('- Meat (cuts to be confirmed): ' + num(o.unspecified_kg) + ' kg');
   var kg = orderKg(o), r = orderRate(o);
   lines.push('Total: ' + kg + ' kg @ ' + fmtR(r) + '/kg = ' + fmtR(kg * r));
+  if (num(o.amount_paid) > 0) {
+    lines.push('Paid: ' + fmtR(num(o.amount_paid)));
+    if (orderBalance(o) > 0.001) lines.push('Still due: ' + fmtR(orderBalance(o)));
+    else lines.push('Fully paid - thank you!');
+  }
   if (o.notes) lines.push('Notes: ' + o.notes);
   lines.push('Please check that everything is correct. I will message you when it is ready for collection. Thanks!');
   return lines.join('\n');
@@ -423,122 +482,104 @@ function showSaved(o, title){
   el('okTitle').textContent = title;
   var kg = orderKg(o), r = orderRate(o);
   el('okSummary').textContent = o.customer_name + '\nTotal ' + kg + ' kg @ ' + fmtR(r) + '/kg = ' + fmtR(kg * r);
-  var num = waNumber(o.phone);
-  if (num) {
-    el('btnWa').classList.remove('hide');
-    el('waNote').classList.add('hide');
-    el('btnWa').href = 'https://wa.me/' + num + '?text=' + encodeURIComponent(waMessage(o));
-  } else {
-    el('btnWa').classList.add('hide');
-    el('waNote').classList.remove('hide');
-  }
+  var n = waNumber(o.phone);
+  el('btnWa').classList.toggle('hide', !n);
+  el('waNote').classList.toggle('hide', !!n);
+  if (n) el('btnWa').href = 'https://wa.me/' + n + '?text=' + encodeURIComponent(waMessage(o));
   el('okView').classList.remove('hide');
-  el('okView').scrollIntoView({ behavior: 'smooth' });
+  el('okView').scrollIntoView({ behavior:'smooth' });
 }
 el('btnNext').addEventListener('click', function(){
   el('okView').classList.add('hide');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top:0, behavior:'smooth' });
   el('fName').focus();
 });
 
-/* ---------- load + render every order ---------- */
-function loadOrders(){
-  fetch(API + '/rest/v1/orders?select=*&order=created_at.asc', { headers: hdrs() })
+/* ---------- load everything ---------- */
+function loadAll(){
+  fetch(API + '/rest/v1/orders?select=*&order=created_at.asc', { headers:hdrs() })
     .then(function(r){ return r.json(); })
     .then(function(rows){
-      if (!Array.isArray(rows)) rows = [];
-      allRows = rows;
-      renderSummary();
-      renderList();
-      renderWaitLine();
+      allRows = Array.isArray(rows) ? rows : [];
+      renderSummary(); renderList();
+      if (!el('viewMeat').classList.contains('hide')) renderMeat();
+      if (!el('viewPrint').classList.contains('hide')) renderChecklist();
     })
-    .catch(function(){
-      el('allList').innerHTML = '<div class="empty">Could not load the orders. Check your signal.</div>';
-    });
+    .catch(function(){ el('allList').innerHTML = '<div class="empty">Could not load. Check your signal.</div>'; });
+
+  fetch(API + '/rest/v1/production?select=*', { headers:hdrs() })
+    .then(function(r){ return r.json(); })
+    .then(function(rows){ production = Array.isArray(rows) ? rows : []; renderMeat(); })
+    .catch(function(){});
 }
 
 function renderSummary(){
-  var totKg = 0, totVal = 0;
-  var cuts = [0, 0, 0, 0, 0, 0];
-  for (var i = 0; i < allRows.length; i++) {
-    var o = allRows[i];
-    var kg = orderKg(o);
-    totKg += kg;
-    totVal += kg * orderRate(o);
-    cuts[0] += Number(o.steak_kg);
-    cuts[1] += Number(o.biltong_kg);
-    cuts[2] += Number(o.wors_kg);
-    cuts[3] += Number(o.droewors_kg);
-    cuts[4] += Number(o.patties_kg);
-    cuts[5] += Number(o.unspecified_kg);
-  }
+  var kg = 0, val = 0, paid = 0, got = 0;
+  allRows.forEach(function(o){
+    kg += orderKg(o); val += orderValue(o);
+    paid += num(o.amount_paid); if (o.collected) got++;
+  });
   el('sOrders').textContent = allRows.length;
-  el('sKg').textContent = fmtKg(totKg) + ' kg';
-  el('sVal').textContent = fmtR(totVal);
+  el('sKg').textContent = fmtKg(kg) + ' kg';
+  el('sVal').textContent = fmtR(val);
+  el('sPaid').textContent = fmtR(paid);
+  el('sOwing').textContent = fmtR(val - paid);
+  el('sGot').textContent = got + ' / ' + allRows.length;
   el('tabCount').textContent = allRows.length;
-  for (var c = 0; c < 6; c++) el('c' + c).textContent = fmtKg(cuts[c]) + ' kg';
-  el('cTot').textContent = fmtKg(totKg) + ' kg';
-}
-
-function renderWaitLine(){
-  var waiting = 0;
-  for (var i = 0; i < allRows.length; i++) if (!allRows[i].imported_at) waiting++;
-  var line = el('waitLine');
-  if (waiting > 0) {
-    line.textContent = waiting + (waiting === 1 ? ' order is' : ' orders are') + ' waiting to be pulled into Excel';
-    line.classList.remove('hide');
-  } else {
-    line.classList.add('hide');
-  }
 }
 
 el('fSearch').addEventListener('input', renderList);
-document.querySelector('.chips').addEventListener('click', function(e){
-  var b = e.target.closest('button');
-  if (!b) return;
-  var btns = this.querySelectorAll('button');
-  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('on');
-  b.classList.add('on');
-  filterMode = b.getAttribute('data-f');
-  renderList();
+document.querySelector('#viewAll .chips').addEventListener('click', function(e){
+  var b = e.target.closest('button'); if (!b) return;
+  this.querySelectorAll('button').forEach(function(x){ x.classList.remove('on'); });
+  b.classList.add('on'); filterMode = b.getAttribute('data-f'); renderList();
 });
 
+function cutSummary(o){
+  var parts = [];
+  CUTS.forEach(function(c){
+    if (num(o[c[1]]) > 0) parts.push((c[0] === 'Droewors' ? 'Droëwors' : c[0]) + ' ' + fmtKg(num(o[c[1]])));
+  });
+  return parts.join(' · ');
+}
+
 function renderList(){
-  var q = el('fSearch').value.trim().toLowerCase();
-  var html = '';
-  var shown = 0;
-  for (var i = 0; i < allRows.length; i++) {
-    var o = allRows[i];
-    var inBook = !!o.imported_at;
-    if (filterMode === 'wait' && inBook) continue;
-    if (filterMode === 'book' && !inBook) continue;
-    if (q && o.customer_name.toLowerCase().indexOf(q) === -1) continue;
+  var q = el('fSearch').value.trim().toLowerCase(), html = '', shown = 0;
+  allRows.forEach(function(o){
+    var bal = orderBalance(o), st = payState(o);
+    if (filterMode === 'owing' && bal <= 0.001) return;
+    if (filterMode === 'notgot' && o.collected) return;
+    if (filterMode === 'unspec' && num(o.unspecified_kg) <= 0) return;
+    if (q && o.customer_name.toLowerCase().indexOf(q) === -1) return;
     shown++;
     var kg = orderKg(o), r = orderRate(o);
-    var badge = inBook ? '<span class="badge book">In the book</span>'
-                       : '<span class="badge wait">Waiting for Excel</span>';
-    var priceTag = (o.price_type !== 'Normal Price')
-                   ? ' <span class="badge book" style="background:#EEE2F7;color:#663399">' + escapeHtml(o.price_type.replace(' Price','')) + '</span>'
-                   : '';
-    html += '<div class="r-card">' +
-              '<div class="r-top"><span class="r-name">' + escapeHtml(o.customer_name) + '</span>' +
-              '<span class="r-val">' + fmtR(kg * r) + '</span></div>' +
-              '<div class="r-sub">' + fmtKg(kg) + ' kg @ ' + fmtR(r) + '/kg' +
-                 (o.phone ? ' · ' + escapeHtml(o.phone) : ' · no phone') + '</div>' +
-              (cutSummary(o) ? '<div class="r-cuts">' + cutSummary(o) + '</div>' : '') +
-              (o.notes ? '<div class="r-note">' + escapeHtml(o.notes) + '</div>' : '') +
-              '<div class="r-meta">' + badge + priceTag + '</div>' +
-              '<div class="r-btns">' +
-                (inBook ? '' : '<button data-act="edit" data-id="' + o.id + '">EDIT</button>') +
-                '<button class="wa" data-act="wa" data-id="' + o.id + '"' + (o.phone ? '' : ' disabled') + '>WHATSAPP</button>' +
-                (inBook ? '' : '<button class="del" data-act="del" data-id="' + o.id + '">DELETE</button>') +
-              '</div>' +
-              (inBook ? '<div class="r-hint">Already in the Excel book &mdash; delete it there if it is cancelled.</div>' : '') +
-            '</div>';
-  }
-  if (!shown) {
-    html = '<div class="empty">' + (q ? 'No order matches that name.' : 'No orders in this list yet.') + '</div>';
-  }
+    var badges = '<span class="badge ' + (st === 'Paid' ? 'paid' : st === 'Part-paid' ? 'part' : 'unpaid') + '">' + st + '</span>';
+    if (o.collected) badges += '<span class="badge got">Collected</span>';
+    if (o.price_type !== 'Normal Price') badges += '<span class="badge price">' + esc(o.price_type.replace(' Price','')) + '</span>';
+
+    html += '<div class="r-card' + (o.collected && bal <= 0.001 ? ' done' : '') + '">' +
+      '<div class="r-top"><span class="r-name">' + esc(o.customer_name) + '</span>' +
+      '<span class="r-val">' + fmtR(kg * r) + '</span></div>' +
+      '<div class="r-sub">' + fmtKg(kg) + ' kg @ ' + fmtR(r) + '/kg' +
+        (o.phone ? ' · ' + esc(o.phone) : ' · no phone') + '</div>' +
+      (cutSummary(o) ? '<div class="r-cuts">' + cutSummary(o) + '</div>' : '') +
+      (o.notes ? '<div class="r-note">' + esc(o.notes) + '</div>' : '') +
+      '<div class="r-meta">' + badges + '</div>' +
+      '<div class="money-row">' +
+        '<label>Paid R</label>' +
+        '<input type="tel" inputmode="decimal" data-act="pay" data-id="' + o.id + '" value="' + (num(o.amount_paid) || '') + '" placeholder="0">' +
+        '<span class="bal ' + (bal > 0.001 ? 'owing' : 'clear') + '">' +
+          (bal > 0.001 ? 'owes ' + fmtR(bal) : 'settled') + '</span>' +
+      '</div>' +
+      '<div class="act-row">' +
+        '<button class="got' + (o.collected ? ' on' : '') + '" data-act="got" data-id="' + o.id + '">' +
+          (o.collected ? '✓ COLLECTED' : 'MARK COLLECTED') + '</button>' +
+        '<button data-act="edit" data-id="' + o.id + '">EDIT</button>' +
+        '<button class="wa" data-act="wa" data-id="' + o.id + '"' + (o.phone ? '' : ' disabled') + '>WA</button>' +
+        '<button class="del" data-act="del" data-id="' + o.id + '">DEL</button>' +
+      '</div></div>';
+  });
+  if (!shown) html = '<div class="empty">' + (q ? 'No order matches that name.' : 'Nothing in this list.') + '</div>';
   el('allList').innerHTML = html;
 }
 
@@ -546,57 +587,145 @@ function rowById(id){
   for (var i = 0; i < allRows.length; i++) if (allRows[i].id === id) return allRows[i];
   return null;
 }
+function patchOrder(id, body, okMsg){
+  return fetch(API + '/rest/v1/orders?id=eq.' + id, { method:'PATCH', headers:hdrs(), body:JSON.stringify(body) })
+    .then(function(r){ if (!r.ok) return r.text().then(function(t){ throw new Error(t); }); if (okMsg) toast(okMsg); loadAll(); })
+    .catch(function(e){ alert('Could not save that.\n\n' + e.message); });
+}
+
+/* payment typed straight into the card */
+el('allList').addEventListener('change', function(e){
+  var inp = e.target.closest('input[data-act="pay"]'); if (!inp) return;
+  var o = rowById(inp.getAttribute('data-id')); if (!o) return;
+  var amt = num(inp.value);
+  if (amt > orderValue(o) + 0.001) {
+    if (!confirm('That is more than the order is worth (' + fmtR(orderValue(o)) + ').\nSave it anyway?')) {
+      inp.value = num(o.amount_paid) || ''; return;
+    }
+  }
+  patchOrder(o.id, { amount_paid: amt }, 'Payment saved');
+});
 
 el('allList').addEventListener('click', function(e){
-  var b = e.target.closest('button');
-  if (!b) return;
-  var o = rowById(b.getAttribute('data-id'));
-  if (!o) return;
+  var b = e.target.closest('button'); if (!b) return;
+  var o = rowById(b.getAttribute('data-id')); if (!o) return;
+  var act = b.getAttribute('data-act');
 
-  if (b.getAttribute('data-act') === 'wa') {
-    var num = waNumber(o.phone);
-    if (num) window.open('https://wa.me/' + num + '?text=' + encodeURIComponent(waMessage(o)), '_blank');
+  if (act === 'got') { patchOrder(o.id, { collected: !o.collected }, o.collected ? 'Marked not collected' : 'Marked collected'); return; }
+
+  if (act === 'wa') {
+    var n = waNumber(o.phone);
+    if (n) window.open('https://wa.me/' + n + '?text=' + encodeURIComponent(waMessage(o)), '_blank');
     return;
   }
 
-  /* delete - only offered while the order is still waiting for Excel.
-     Once it is in the book, Excel owns it and must delete it there. */
-  if (b.getAttribute('data-act') === 'del') {
-    var kgD = orderKg(o), rD = orderRate(o);
+  if (act === 'del') {
     if (!confirm('Delete this order completely?\n\n' + o.customer_name + '\n' +
-                 fmtKg(kgD) + ' kg  -  ' + fmtR(kgD * rD) + '\n\nThis cannot be undone.')) return;
+                 fmtKg(orderKg(o)) + ' kg  -  ' + fmtR(orderValue(o)) + '\n\nThis cannot be undone.')) return;
     b.disabled = true;
-    fetch(API + '/rest/v1/orders?id=eq.' + o.id, { method: 'DELETE', headers: hdrs() })
-      .then(function(r){
-        if (!r.ok) return r.text().then(function(t){ throw new Error(t); });
-        loadOrders();
-      })
-      .catch(function(e){ alert('Could not delete. Check your signal.\n\n' + e.message); b.disabled = false; });
+    fetch(API + '/rest/v1/orders?id=eq.' + o.id, { method:'DELETE', headers:hdrs() })
+      .then(function(r){ if (!r.ok) return r.text().then(function(t){ throw new Error(t); }); toast('Order deleted'); loadAll(); })
+      .catch(function(e){ alert('Could not delete.\n\n' + e.message); b.disabled = false; });
     return;
   }
 
-  /* edit - only offered while the order is still waiting for Excel */
+  /* edit */
   editingId = o.id;
   el('fName').value = o.customer_name;
   el('fPhone').value = o.phone || '';
   el('fNotes').value = o.notes || '';
-  var vals = [o.steak_kg, o.biltong_kg, o.wors_kg, o.droewors_kg, o.patties_kg, o.unspecified_kg];
-  for (var i = 0; i < 6; i++) el('kg' + i).value = Number(vals[i]) > 0 ? Number(vals[i]) : '';
+  for (var i = 0; i < 6; i++) {
+    var v = num(o[CUTS[i][1]]);
+    el('kg' + i).value = v > 0 ? v : '';
+  }
   priceType = o.price_type;
-  var btns = el('segPrice').querySelectorAll('button');
-  for (var j = 0; j < btns.length; j++) btns[j].classList.toggle('on', btns[j].getAttribute('data-p') === priceType);
+  el('segPrice').querySelectorAll('button').forEach(function(x){
+    x.classList.toggle('on', x.getAttribute('data-p') === priceType);
+  });
   el('customRow').classList.toggle('hide', priceType !== 'Custom Price');
   el('fCustom').value = o.custom_rate || '';
   el('btnSave').textContent = 'UPDATE ORDER';
   el('btnCancelEdit').classList.remove('hide');
   el('okView').classList.add('hide');
   el('simBox').innerHTML = ''; lastSimilar = [];
-  showTab('new');
-  recalc();
+  showTab('New'); recalc();
 });
 
+/* ---------- meat produced ---------- */
+function orderedFor(cutKey){
+  var t = 0; allRows.forEach(function(o){ t += num(o[cutKey]); }); return t;
+}
+function renderMeat(){
+  var html = '<tr><th>Cut</th><th>Ordered</th><th>Produced</th><th>Short / Over</th></tr>';
+  var totOrd = 0, totProd = 0, anyProd = false;
+  CUTS.forEach(function(c){
+    var ord = orderedFor(c[1]);
+    var rec = production.filter(function(p){ return p.cut === c[0]; })[0];
+    var prod = rec && rec.produced_kg != null ? num(rec.produced_kg) : null;
+    totOrd += ord;
+    if (prod != null) { totProd += prod; anyProd = true; }
+    var diff = prod == null ? null : prod - ord;
+    var diffTxt = prod == null ? '<span class="none">not entered</span>'
+      : diff < -0.001 ? '<span class="short">' + fmtKg(diff) + ' kg short</span>'
+      : diff > 0.001 ? '<span class="surp">+' + fmtKg(diff) + ' kg over</span>'
+      : '<span class="surp">exact</span>';
+    html += '<tr><td>' + (c[0] === 'Droewors' ? 'Droëwors' : c[0]) + '</td>' +
+            '<td>' + fmtKg(ord) + ' kg</td>' +
+            '<td><input type="tel" inputmode="decimal" data-cut="' + c[0] + '" value="' +
+              (prod == null ? '' : prod) + '" placeholder="&mdash;"></td>' +
+            '<td>' + diffTxt + '</td></tr>';
+  });
+  html += '<tr class="tot"><td>Total</td><td>' + fmtKg(totOrd) + ' kg</td><td>' +
+          (anyProd ? fmtKg(totProd) + ' kg' : '&mdash;') + '</td><td>' +
+          (anyProd ? (totProd - totOrd < -0.001 ? '<span class="short">' + fmtKg(totProd-totOrd) + ' kg short</span>'
+                    : '<span class="surp">+' + fmtKg(totProd-totOrd) + ' kg</span>') : '') + '</td></tr>';
+  el('meatTable').innerHTML = html;
+}
+el('meatTable').addEventListener('change', function(e){
+  var inp = e.target.closest('input[data-cut]'); if (!inp) return;
+  var cut = inp.getAttribute('data-cut');
+  var val = inp.value.trim() === '' ? null : num(inp.value);
+  fetch(API + '/rest/v1/production?cut=eq.' + encodeURIComponent(cut), {
+    method:'PATCH', headers:hdrs(), body:JSON.stringify({ produced_kg: val, updated_at: new Date().toISOString() })
+  }).then(function(r){
+    if (!r.ok) return r.text().then(function(t){ throw new Error(t); });
+    toast('Saved'); loadAll();
+  }).catch(function(e){ alert('Could not save that.\n\n' + e.message); });
+});
+
+/* ---------- printable checklist ---------- */
+function renderChecklist(){
+  var kg = 0, val = 0, paid = 0;
+  allRows.forEach(function(o){ kg += orderKg(o); val += orderValue(o); paid += num(o.amount_paid); });
+  el('printSummary').textContent =
+    allRows.length + ' orders  ·  ' + fmtKg(kg) + ' kg  ·  ' + fmtR(val) +
+    '  ·  outstanding ' + fmtR(val - paid) + '  ·  printed ' + new Date().toLocaleDateString('en-ZA');
+
+  var h = '<thead><tr><th>#</th><th>Customer</th><th>Phone</th>' +
+          '<th>Steak</th><th>Biltong</th><th>Wors</th><th>Dro&euml;wors</th><th>Patties</th><th>Unspec.</th>' +
+          '<th>Total kg</th><th>Due</th><th>Order<br>correct</th><th>Paid</th><th>Deliv.</th><th>Notes</th></tr></thead><tbody>';
+  var tk = 0, tv = 0;
+  allRows.forEach(function(o, i){
+    var k = orderKg(o), bal = orderBalance(o);
+    tk += k; tv += bal;
+    h += '<tr><td>' + (i+1) + '</td><td class="nm">' + esc(o.customer_name) + '</td>' +
+         '<td>' + esc(o.phone || '') + '</td>';
+    CUTS.forEach(function(c){ var v = num(o[c[1]]); h += '<td>' + (v > 0 ? fmtKg(v) : '') + '</td>'; });
+    h += '<td><b>' + fmtKg(k) + '</b></td>' +
+         '<td>' + (bal > 0.001 ? fmtR(bal) : '–') + '</td>' +
+         '<td class="box">☐</td>' +
+         '<td class="box">' + (payState(o) === 'Paid' ? '☑' : '☐') + '</td>' +
+         '<td class="box">' + (o.collected ? '☑' : '☐') + '</td>' +
+         '<td class="nt">' + esc(o.notes || '') + '</td></tr>';
+  });
+  h += '</tbody><tfoot><tr><td colspan="9">TOTAL</td><td>' + fmtKg(tk) + '</td><td>' + fmtR(tv) +
+       '</td><td colspan="4"></td></tr></tfoot>';
+  el('chkTable').innerHTML = h;
+}
+el('btnPrint').addEventListener('click', function(){ window.print(); });
+
 recalc();
-loadOrders();
+loadAll();
 </script>
 </body>
 </html>
