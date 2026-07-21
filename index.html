@@ -657,13 +657,16 @@ function orderedFor(cutKey){
 }
 function renderMeat(){
   var html = '<tr><th>Cut</th><th>Ordered</th><th>Produced</th><th>Short / Over</th></tr>';
-  var totOrd = 0, totProd = 0, anyProd = false;
+  var totOrd = 0, totProd = 0, ordForCounted = 0, counted = 0;
   CUTS.forEach(function(c){
     var ord = orderedFor(c[1]);
     var rec = production.filter(function(p){ return p.cut === c[0]; })[0];
     var prod = rec && rec.produced_kg != null ? num(rec.produced_kg) : null;
     totOrd += ord;
-    if (prod != null) { totProd += prod; anyProd = true; }
+    // Only cuts that have actually been counted may feed the total
+    // difference, otherwise the cuts you have not weighed yet look
+    // like a huge shortage.
+    if (prod != null) { totProd += prod; ordForCounted += ord; counted++; }
     var diff = prod == null ? null : prod - ord;
     var diffTxt = prod == null ? '<span class="none">not entered</span>'
       : diff < -0.001 ? '<span class="short">' + fmtKg(diff) + ' kg short</span>'
@@ -675,10 +678,21 @@ function renderMeat(){
               (prod == null ? '' : prod) + '" placeholder="&mdash;"></td>' +
             '<td>' + diffTxt + '</td></tr>';
   });
+
+  var netTxt = '';
+  if (counted > 0) {
+    var net = totProd - ordForCounted;
+    netTxt = net < -0.001 ? '<span class="short">' + fmtKg(net) + ' kg short</span>'
+           : net > 0.001 ? '<span class="surp">+' + fmtKg(net) + ' kg over</span>'
+           : '<span class="surp">exact</span>';
+  }
   html += '<tr class="tot"><td>Total</td><td>' + fmtKg(totOrd) + ' kg</td><td>' +
-          (anyProd ? fmtKg(totProd) + ' kg' : '&mdash;') + '</td><td>' +
-          (anyProd ? (totProd - totOrd < -0.001 ? '<span class="short">' + fmtKg(totProd-totOrd) + ' kg short</span>'
-                    : '<span class="surp">+' + fmtKg(totProd-totOrd) + ' kg</span>') : '') + '</td></tr>';
+          (counted > 0 ? fmtKg(totProd) + ' kg' : '&mdash;') + '</td><td>' + netTxt + '</td></tr>';
+  if (counted > 0 && counted < CUTS.length) {
+    html += '<tr><td colspan="4" style="border:none;padding-top:8px;font-size:12px;color:#855D00">' +
+            'Only ' + counted + ' of ' + CUTS.length + ' cuts weighed so far &mdash; the total compares just those.' +
+            '</td></tr>';
+  }
   el('meatTable').innerHTML = html;
 }
 el('meatTable').addEventListener('change', function(e){
