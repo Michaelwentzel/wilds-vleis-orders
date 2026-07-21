@@ -46,6 +46,47 @@ textarea{min-height:64px;resize:vertical}
 .badge.got{background:#DDF3E4;color:#176B3A}
 .badge.price{background:#EEE2F7;color:#663399}
 .badge.nophone{background:#FDE7E7;color:#9B1C1C}
+.badge.conf{background:#DDF3E4;color:#176B3A}
+.badge.unconf{background:#FFF3CD;color:#855D00}
+.badge.told{background:#E4ECF7;color:#2b4c7e}
+/* ---- collection screen: big targets, one hand, cold shed ---- */
+#colHits{margin-top:8px}
+.hit{display:flex;justify-content:space-between;align-items:center;gap:10px;
+     background:#fff;border:1.5px solid #d8d2c0;border-radius:12px;
+     padding:15px 14px;margin-top:8px;font-size:17px;font-weight:700}
+.hit small{display:block;font-size:12.5px;font-weight:400;color:#666;margin-top:3px}
+.hit .owe{font-size:14px;white-space:nowrap}
+.hit .owe.owing{color:#9B1C1C}
+.hit .owe.clear{color:#176B3A}
+.hit.done{opacity:.6}
+#colDetail .who{font-size:24px;font-weight:800;color:#1F4D3A}
+#colDetail .whosub{font-size:13.5px;color:#666;margin-top:3px}
+.getlist{margin-top:14px}
+.getlist div{display:flex;justify-content:space-between;font-size:19px;
+             padding:10px 0;border-bottom:1px solid #eee}
+.getlist div b{font-weight:800}
+.getlist div.tot{border-bottom:none;border-top:2px solid #1F4D3A;font-size:21px;font-weight:800;margin-top:4px}
+.owebox{background:#FDE7E7;border-radius:12px;padding:14px;margin-top:14px;text-align:center}
+.owebox.clear{background:#DDF3E4}
+.owebox span{display:block;font-size:12.5px;color:#555}
+.owebox b{display:block;font-size:30px;font-weight:800;margin-top:3px;color:#9B1C1C}
+.owebox.clear b{color:#176B3A}
+.bigbtn{display:block;width:100%;padding:19px;font-size:18px;font-weight:800;
+        border:none;border-radius:14px;margin-top:10px;color:#fff;background:#1F4D3A}
+.bigbtn.pay{background:#176B3A}
+.bigbtn.both{background:#C9A94E;color:#1c2b22}
+.bigbtn.off{background:#fff;color:#1F4D3A;border:2px solid #1F4D3A}
+.bigbtn:disabled{background:#c8cfc9;color:#fff}
+.payseg{display:flex;gap:8px;margin-top:10px}
+.payseg button{flex:1;padding:13px 4px;font-size:15px;font-weight:700;
+               border:1.5px solid #1F4D3A;background:#fff;color:#1F4D3A;border-radius:10px}
+.payseg button.on{background:#1F4D3A;color:#fff}
+.ready-row{display:flex;justify-content:space-between;align-items:center;gap:8px;
+           padding:11px 0;border-bottom:1px solid #eee;font-size:14.5px}
+.ready-row button{padding:9px 14px;font-size:12.5px;font-weight:700;border-radius:8px;
+                  border:1.5px solid #128C4A;background:#fff;color:#128C4A;white-space:nowrap}
+.ready-row.sent{opacity:.55}
+.ready-row.sent button{border-color:#999;color:#999}
 .sim .badge{margin-left:auto;background:#FFF3CD;color:#855D00}
 .warn{background:#FDE7E7;border:1px solid #f2b8b8;color:#9B1C1C;border-radius:8px;padding:9px 11px;font-size:13.5px;margin-top:6px;font-weight:600}
 .sumgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:#1F4D3A;border-radius:12px;padding:13px 8px;color:#fff;text-align:center;margin-top:14px}
@@ -145,6 +186,7 @@ table.chk tfoot td{font-weight:700;background:#f2efe6}
   <p>Everything lives here. Nothing to sync.</p>
   <div class="tabs">
     <button id="tabNew" class="on">NEW</button>
+    <button id="tabCollect">COLLECT</button>
     <button id="tabAll">ORDERS (<span id="tabCount">0</span>)</button>
     <button id="tabMeat">MEAT</button>
     <button id="tabPrint">PRINT</button>
@@ -208,6 +250,29 @@ table.chk tfoot td{font-weight:700;background:#f2efe6}
   </div>
 </div>
 
+<!-- ============ COLLECT (built for a queue of people) ============ -->
+<div id="viewCollect" class="hide">
+  <div id="colSearchPane">
+    <div class="card">
+      <h3 class="sec" style="margin-top:0">WHO IS HERE?</h3>
+      <input type="search" id="colSearch" placeholder="Start typing a name..." autocomplete="off"
+             style="margin-top:8px;font-size:18px;padding:14px">
+      <div id="colHits"></div>
+    </div>
+
+    <div class="card">
+      <h3 class="sec" style="margin-top:0">TELL PEOPLE THE MEAT IS READY</h3>
+      <p style="font-size:12.5px;color:#666;margin-top:6px">
+        Works through everyone who has not collected yet. Tap a name, WhatsApp
+        opens with the message written &mdash; press send, come back, tap the next.
+      </p>
+      <div id="readyList"></div>
+    </div>
+  </div>
+
+  <div id="colDetail" class="hide"></div>
+</div>
+
 <!-- ============ ORDERS ============ -->
 <div id="viewAll" class="hide">
   <div class="sumgrid">
@@ -226,6 +291,7 @@ table.chk tfoot td{font-weight:700;background:#f2efe6}
     <button data-f="all" class="on">All</button>
     <button data-f="owing">Owes</button>
     <button data-f="notgot">Not collected</button>
+    <button data-f="unconf">Not confirmed</button>
     <button data-f="nophone">No phone</button>
     <button data-f="unspec">Unspecified</button>
   </div>
@@ -244,6 +310,16 @@ table.chk tfoot td{font-weight:700;background:#f2efe6}
     <table class="cuttable" id="meatTable">
       <tr><th>Cut</th><th>Ordered</th><th>Produced</th><th>Short / Over</th></tr>
     </table>
+  </div>
+
+  <div class="card">
+    <h3 class="sec" style="margin-top:0">SEND THE ORDER TO THE PROCESSOR</h3>
+    <p style="font-size:12.5px;color:#666;margin-top:6px">
+      Sends the kilograms needed per cut, so you do not have to read them off
+      the screen and retype them.
+    </p>
+    <button class="btn wa" id="btnProcessor">SEND CUT TOTALS ON WHATSAPP</button>
+    <button class="btn ghost" id="btnCopyTotals">COPY THE TOTALS INSTEAD</button>
   </div>
 </div>
 
@@ -287,8 +363,21 @@ table.chk tfoot td{font-weight:700;background:#f2efe6}
   </div>
 
   <div class="card">
+    <h3 class="sec" style="margin-top:0">CASH UP</h3>
+    <p style="font-size:12.5px;color:#666;margin-top:6px">
+      What should be in the tin, and what should be in the bank.
+    </p>
+    <table class="cuttable" id="cashTable"></table>
+  </div>
+
+  <div class="card">
     <h3 class="sec" style="margin-top:0">NEEDS ATTENTION</h3>
     <div id="attList" style="font-size:13.5px;line-height:1.9;margin-top:6px"></div>
+  </div>
+
+  <div class="card">
+    <h3 class="sec" style="margin-top:0">THE NUMBERS</h3>
+    <table class="cuttable" id="statTable"></table>
   </div>
 </div>
 
@@ -377,7 +466,8 @@ el('pinBox').addEventListener('input', function(){
 });
 
 /* ---------- tabs ---------- */
-var VIEWS = { New:'viewNew', All:'viewAll', Meat:'viewMeat', Print:'viewPrint', More:'viewMore' };
+var VIEWS = { New:'viewNew', Collect:'viewCollect', All:'viewAll',
+              Meat:'viewMeat', Print:'viewPrint', More:'viewMore' };
 function showTab(name){
   for (var k in VIEWS) {
     el(VIEWS[k]).classList.toggle('hide', k !== name);
@@ -386,9 +476,10 @@ function showTab(name){
   window.scrollTo({top:0});
   if (name==='Meat') renderMeat();
   if (name==='Print') renderChecklist();
-  if (name==='More') { renderBin(); renderAttention(); }
+  if (name==='More') { renderBin(); renderAttention(); renderCashUp(); renderStats(); }
+  if (name==='Collect') { backToSearch(); renderReady(); }
 }
-['New','All','Meat','Print','More'].forEach(function(n){
+['New','Collect','All','Meat','Print','More'].forEach(function(n){
   el('tab'+n).addEventListener('click', function(){ showTab(n); loadAll(); });
 });
 
@@ -633,14 +724,19 @@ function renderList(){
     var bal = orderBalance(o), st = payState(o);
     if (filterMode==='owing'   && bal <= 0.001) return;
     if (filterMode==='notgot'  && o.collected) return;
+    if (filterMode==='unconf'  && o.confirmed) return;
     if (filterMode==='nophone' && hasPhone(o)) return;
     if (filterMode==='unspec'  && num(o.unspecified_kg) <= 0) return;
     if (q && o.customer_name.toLowerCase().indexOf(q) === -1) return;
     shown++;
     var kg = orderKg(o), r = orderRate(o);
-    var badges = '<span class="badge '+(st==='Paid'?'paid':st==='Part-paid'?'part':'unpaid')+'">'+st+'</span>';
+    var badges = '<span class="badge '+(st==='Paid'?'paid':st==='Part-paid'?'part':'unpaid')+'">'+st+
+                 (o.payment_method && num(o.amount_paid)>0 ? ' · '+esc(o.payment_method) : '')+'</span>';
     if (o.collected) badges += '<span class="badge got">Collected</span>';
+    badges += o.confirmed ? '<span class="badge conf">✓ Confirmed</span>'
+                          : '<span class="badge unconf">Not confirmed</span>';
     if (!hasPhone(o)) badges += '<span class="badge nophone">No phone</span>';
+    if (o.notified_at && !o.collected) badges += '<span class="badge told">Told it\'s ready</span>';
     if (o.price_type!=='Normal Price') badges += '<span class="badge price">'+esc(o.price_type.replace(' Price',''))+'</span>';
 
     html += '<div class="r-card'+(o.collected && bal<=0.001 ? ' done':'')+'">'+
@@ -655,10 +751,15 @@ function renderList(){
         '<span class="bal '+(bal>0.001?'owing':'clear')+'">'+(bal>0.001?'owes '+fmtR(bal):'settled')+'</span></div>'+
       '<div class="act-row">'+
         '<button class="got'+(o.collected?' on':'')+'" data-act="got" data-id="'+o.id+'">'+(o.collected?'✓ GOT IT':'COLLECTED')+'</button>'+
+        '<button class="got'+(o.confirmed?' on':'')+'" data-act="conf" data-id="'+o.id+'">'+(o.confirmed?'✓ OK':'CONFIRM')+'</button>'+
         '<button data-act="edit" data-id="'+o.id+'">EDIT</button>'+
         '<button class="wa" data-act="wa" data-id="'+o.id+'"'+(hasPhone(o)?'':' disabled')+'>WA</button>'+
         '<button class="del" data-act="del" data-id="'+o.id+'">DEL</button>'+
-      '</div></div>';
+      '</div>'+
+      (num(o.unspecified_kg)>0 ?
+        '<div class="act-row"><button style="border-color:#855D00;color:#855D00" '+
+        'data-act="unspec" data-id="'+o.id+'">CHOOSE CUTS FOR THE '+fmtKg(num(o.unspecified_kg))+' KG</button></div>' : '')+
+      '</div>';
   });
   if (!shown) html = '<div class="empty">'+(q?'No order matches that name.':'Nothing in this list.')+'</div>';
   el('allList').innerHTML = html;
@@ -694,6 +795,8 @@ el('allList').addEventListener('click', function(e){
   var act = b.getAttribute('data-act');
 
   if (act==='got') { patchOrder(o.id,{collected:!o.collected}, o.collected?'Marked not collected':'Marked collected'); return; }
+  if (act==='conf') { patchOrder(o.id,{confirmed:!o.confirmed}, o.confirmed?'Confirmation removed':'Order confirmed'); return; }
+  if (act==='unspec') { resolveUnspecified(o.id); return; }
   if (act==='wa') {
     var n = waNumber(o.phone);
     if (n) window.open('https://wa.me/'+n+'?text='+encodeURIComponent(waMessage(o)),'_blank');
@@ -725,6 +828,170 @@ el('allList').addEventListener('click', function(e){
   showTab('New'); recalc();
 });
 
+/* ================= COLLECTION SCREEN =================
+   Built for the busiest moment: someone is standing in front of you and
+   there is a queue behind them. Big search, big buttons, one hand. */
+var colId = null, colMethod = 'Cash';
+
+function backToSearch(){
+  colId = null;
+  el('colDetail').classList.add('hide');
+  el('colSearchPane').classList.remove('hide');
+  el('colSearch').value = '';
+  el('colHits').innerHTML = '';
+}
+
+el('colSearch').addEventListener('input', function(){
+  var q = this.value.trim().toLowerCase();
+  if (!q) { el('colHits').innerHTML = ''; return; }
+  var hits = allRows.filter(function(o){
+    return o.customer_name.toLowerCase().indexOf(q) !== -1 ||
+           String(o.phone||'').replace(/\D/g,'').indexOf(q.replace(/\D/g,'')) !== -1 && q.replace(/\D/g,'') !== '';
+  }).slice(0, 8);
+
+  if (!hits.length) { el('colHits').innerHTML = '<div class="empty">Nobody by that name.</div>'; return; }
+  el('colHits').innerHTML = hits.map(function(o){
+    var bal = orderBalance(o), settled = bal <= 0.001 && o.collected;
+    return '<div class="hit'+(settled?' done':'')+'" data-open="'+o.id+'">'+
+      '<span>'+esc(o.customer_name)+
+        '<small>'+fmtKg(orderKg(o))+' kg'+(o.collected?' · already collected':'')+'</small></span>'+
+      '<span class="owe '+(bal>0.001?'owing':'clear')+'">'+
+        (bal>0.001 ? fmtR(bal) : 'paid')+'</span></div>';
+  }).join('');
+});
+el('colHits').addEventListener('click', function(e){
+  var row = e.target.closest('[data-open]'); if (!row) return;
+  openCollect(row.getAttribute('data-open'));
+});
+
+function openCollect(id){
+  var o = rowById(id); if (!o) return;
+  colId = id;
+  colMethod = o.payment_method || 'Cash';
+  el('colSearchPane').classList.add('hide');
+  el('colDetail').classList.remove('hide');
+  paintCollect();
+  window.scrollTo({top:0});
+}
+
+function paintCollect(){
+  var o = rowById(colId); if (!o) { backToSearch(); return; }
+  var bal = orderBalance(o), owes = bal > 0.001;
+
+  var cuts = '';
+  CUTS.forEach(function(c){
+    var v = num(o[c[1]]);
+    if (v > 0) cuts += '<div><span>'+(c[0]==='Droewors'?'Droëwors':c[0])+'</span><b>'+fmtKg(v)+' kg</b></div>';
+  });
+  cuts += '<div class="tot"><span>Total</span><b>'+fmtKg(orderKg(o))+' kg</b></div>';
+
+  el('colDetail').innerHTML =
+    '<div class="card">'+
+      '<div class="who">'+esc(o.customer_name)+'</div>'+
+      '<div class="whosub">'+fmtKg(orderKg(o))+' kg @ '+fmtR(orderRate(o))+'/kg'+
+        (o.phone?' · '+esc(o.phone):'')+'</div>'+
+      (o.notes ? '<div class="warn" style="margin-top:10px">'+esc(o.notes)+'</div>' : '')+
+      '<div class="getlist">'+cuts+'</div>'+
+      '<div class="owebox'+(owes?'':' clear')+'">'+
+        '<span>'+(owes?'STILL OWES':'PAID IN FULL')+'</span>'+
+        '<b>'+(owes?fmtR(bal):fmtR(orderValue(o)))+'</b>'+
+      '</div>'+
+      (owes ?
+        '<div class="payseg" id="colPaySeg">'+
+          ['Cash','EFT','Other'].map(function(m){
+            return '<button data-m="'+m+'"'+(colMethod===m?' class="on"':'')+'>'+m+'</button>';
+          }).join('')+
+        '</div>'+
+        '<button class="bigbtn pay" data-act="payfull">TOOK '+fmtR(bal)+'</button>'
+        : '')+
+      '<button class="bigbtn'+(o.collected?' off':'')+'" data-act="hand">'+
+        (o.collected ? '✓ ALREADY HANDED OVER' : 'HANDED THE MEAT OVER')+'</button>'+
+      (owes && !o.collected ?
+        '<button class="bigbtn both" data-act="both">PAID '+fmtR(bal)+' AND TOOK IT</button>' : '')+
+      '<button class="bigbtn off" data-act="back">BACK TO THE LIST</button>'+
+    '</div>';
+}
+
+el('colDetail').addEventListener('click', function(e){
+  var seg = e.target.closest('#colPaySeg button');
+  if (seg) {
+    colMethod = seg.getAttribute('data-m');
+    el('colPaySeg').querySelectorAll('button').forEach(function(b){
+      b.classList.toggle('on', b === seg);
+    });
+    return;
+  }
+  var b = e.target.closest('button[data-act]'); if (!b) return;
+  var act = b.getAttribute('data-act');
+  var o = rowById(colId); if (!o) return;
+
+  if (act === 'back') { backToSearch(); return; }
+
+  b.disabled = true;
+  var body = {};
+  if (act === 'payfull' || act === 'both') {
+    body.amount_paid = orderValue(o);
+    body.payment_method = colMethod;
+  }
+  if (act === 'hand' || act === 'both') body.collected = !(act === 'hand' && o.collected);
+
+  fetch(API+'/rest/v1/orders?id=eq.'+o.id, {method:'PATCH',headers:hdrs(),body:JSON.stringify(body)})
+    .then(function(r){ if(!r.ok) throw new Error(); return refreshRows(); })
+    .then(function(){
+      toast(act==='both' ? 'Paid and handed over' : act==='payfull' ? 'Payment taken' : 'Handed over');
+      if (act === 'both') backToSearch(); else paintCollect();
+    })
+    .catch(function(){ alert('Could not save that. Check your signal and try again.'); b.disabled = false; });
+});
+
+/* reload just the rows, without repainting the screen you are looking at */
+function refreshRows(){
+  return fetch(API+'/rest/v1/orders?select=*&deleted_at=is.null&order=created_at.asc',{headers:hdrs()})
+    .then(function(r){ return r.json(); })
+    .then(function(rows){
+      allRows = Array.isArray(rows)?rows:[];
+      renderSummary(); renderList(); renderReady();
+    });
+}
+
+/* ---------- "your meat is ready" list ---------- */
+function renderReady(){
+  var pending = allRows.filter(function(o){ return !o.collected; });
+  if (!pending.length) {
+    el('readyList').innerHTML = '<div class="empty">Everyone has collected.</div>';
+    return;
+  }
+  var withPhone = pending.filter(hasPhone), without = pending.length - withPhone.length;
+  var html = withPhone.map(function(o){
+    var told = !!o.notified_at;
+    return '<div class="ready-row'+(told?' sent':'')+'">'+
+      '<span>'+esc(o.customer_name)+(told?' · told':'')+'</span>'+
+      '<button data-ready="'+o.id+'">'+(told?'AGAIN':'WHATSAPP')+'</button></div>';
+  }).join('');
+  if (!withPhone.length) html = '';
+  if (without) {
+    html += '<div style="font-size:12.5px;color:#9B1C1C;margin-top:10px;font-weight:600">'+
+            without+' of them have no phone number, so you will have to phone or tell them.</div>';
+  }
+  el('readyList').innerHTML = html || '<div class="empty">Nobody to message.</div>';
+}
+el('readyList').addEventListener('click', function(e){
+  var b = e.target.closest('button[data-ready]'); if (!b) return;
+  var o = rowById(b.getAttribute('data-ready')); if (!o) return;
+  var n = waNumber(o.phone); if (!n) return;
+
+  var bal = orderBalance(o);
+  var msg = 'Hi '+o.customer_name.split(' ')[0]+', your game meat is ready.\n' +
+            fmtKg(orderKg(o))+' kg in total.' +
+            (bal > 0.001 ? '\nStill to pay: '+fmtR(bal) : '\nAlready paid, thank you.') +
+            '\nLet me know when you can fetch it. Thanks!';
+  window.open('https://wa.me/'+n+'?text='+encodeURIComponent(msg), '_blank');
+
+  fetch(API+'/rest/v1/orders?id=eq.'+o.id, {method:'PATCH',headers:hdrs(),
+        body:JSON.stringify({ notified_at: new Date().toISOString() })})
+    .then(function(){ return refreshRows(); }).catch(function(){});
+});
+
 /* ---------- deleted orders ---------- */
 function renderBin(){
   if (!binRows.length) { el('binList').innerHTML = '<div class="empty">Nothing deleted.</div>'; return; }
@@ -753,8 +1020,10 @@ function renderAttention(){
   function line(n,txt,good){
     return '<div>'+(n?'<b style="color:#9B1C1C">'+n+'</b> ':'<b style="color:#176B3A">✓</b> ')+(n?txt:good)+'</div>';
   }
+  var unconf = allRows.filter(function(o){ return !o.confirmed; });
   el('attList').innerHTML =
     line(noPhone.length, 'without a phone number &mdash; you cannot WhatsApp them', 'everyone has a phone number') +
+    line(unconf.length,  'not confirmed by the customer yet', 'every order has been confirmed') +
     line(unspec.length,  'still has meat with no cut chosen', 'every order has its cuts chosen') +
     line(owing.length,   'still owe money', 'everyone has paid') +
     line(notGot.length,  'not collected yet', 'everything has been collected') +
@@ -763,12 +1032,104 @@ function renderAttention(){
         (noPhone.length>8?' and '+(noPhone.length-8)+' more':'')+'</div>' : '');
 }
 
+/* ---------- message for the processor ---------- */
+function processorText(){
+  var lines = ['Game meat order — kilograms needed per cut:'];
+  var tot = 0;
+  CUTS.forEach(function(c){
+    var v = orderedFor(c[1]);
+    tot += v;
+    if (v > 0 && c[0] !== 'Unspecified') lines.push('- '+c[0]+': '+fmtKg(v)+' kg');
+  });
+  var uns = orderedFor('unspecified_kg');
+  if (uns > 0) lines.push('- Still to be decided: '+fmtKg(uns)+' kg');
+  lines.push('Total: '+fmtKg(tot)+' kg across '+allRows.length+' orders.');
+  return lines.join('\n');
+}
+el('btnProcessor').addEventListener('click', function(){
+  window.open('https://wa.me/?text='+encodeURIComponent(processorText()), '_blank');
+});
+el('btnCopyTotals').addEventListener('click', function(){
+  var t = processorText();
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(t).then(function(){ toast('Totals copied'); })
+      .catch(function(){ alert(t); });
+  } else { alert(t); }
+});
+
+/* ---------- cash up ---------- */
+function renderCashUp(){
+  var by = { Cash:0, EFT:0, Other:0, Unrecorded:0 };
+  allRows.forEach(function(o){
+    var p = num(o.amount_paid);
+    if (p <= 0) return;
+    var m = o.payment_method;
+    if (m === 'Cash' || m === 'EFT' || m === 'Other') by[m] += p; else by.Unrecorded += p;
+  });
+  var owed = allRows.reduce(function(s,o){ return s + Math.max(0, orderBalance(o)); }, 0);
+  var taken = by.Cash + by.EFT + by.Other + by.Unrecorded;
+
+  el('cashTable').innerHTML =
+    '<tr><th>Where</th><th>Amount</th></tr>'+
+    '<tr><td>Cash — should be in the tin</td><td><b>'+fmtR(by.Cash)+'</b></td></tr>'+
+    '<tr><td>EFT — should be in the bank</td><td><b>'+fmtR(by.EFT)+'</b></td></tr>'+
+    (by.Other ? '<tr><td>Other</td><td>'+fmtR(by.Other)+'</td></tr>' : '')+
+    (by.Unrecorded ? '<tr><td>Taken, method not recorded</td><td>'+fmtR(by.Unrecorded)+'</td></tr>' : '')+
+    '<tr class="tot"><td>Taken so far</td><td>'+fmtR(taken)+'</td></tr>'+
+    '<tr><td>Still owed to you</td><td class="'+(owed>0.001?'short':'surp')+'">'+fmtR(owed)+'</td></tr>';
+}
+
+/* ---------- the numbers ---------- */
+function renderStats(){
+  if (!allRows.length) { el('statTable').innerHTML = ''; return; }
+  var kg = 0, val = 0, biggest = allRows[0];
+  allRows.forEach(function(o){
+    kg += orderKg(o); val += orderValue(o);
+    if (orderValue(o) > orderValue(biggest)) biggest = o;
+  });
+  var special = allRows.filter(function(o){ return o.price_type !== 'Normal Price'; }).length;
+  var confirmed = allRows.filter(function(o){ return o.confirmed; }).length;
+  el('statTable').innerHTML =
+    '<tr><th>&nbsp;</th><th>&nbsp;</th></tr>'+
+    '<tr><td>Orders</td><td><b>'+allRows.length+'</b></td></tr>'+
+    '<tr><td>Average order</td><td>'+fmtKg(kg/allRows.length)+' kg · '+fmtR(val/allRows.length)+'</td></tr>'+
+    '<tr><td>Biggest order</td><td>'+esc(biggest.customer_name)+' · '+fmtR(orderValue(biggest))+'</td></tr>'+
+    '<tr><td>On a special or custom price</td><td>'+special+'</td></tr>'+
+    '<tr><td>Confirmed by the customer</td><td>'+confirmed+' of '+allRows.length+'</td></tr>';
+}
+
+/* ---------- turn "unspecified" into real cuts ---------- */
+function resolveUnspecified(id){
+  var o = rowById(id); if (!o) return;
+  var left = num(o.unspecified_kg);
+  if (left <= 0) return;
+  var picks = {}, names = CUTS.slice(0,5);
+
+  for (var i = 0; i < names.length; i++) {
+    if (left <= 0.001) break;
+    var ans = prompt(o.customer_name+' — '+fmtKg(left)+' kg still to place.\n\n'+
+                     'How many kg of '+(names[i][0]==='Droewors'?'Droëwors':names[i][0])+'?\n'+
+                     '(leave blank for none, Cancel to stop)', '');
+    if (ans === null) return;
+    var v = num(ans);
+    if (v > left + 0.001) { alert('That is more than the '+fmtKg(left)+' kg left over.'); i--; continue; }
+    if (v > 0) { picks[names[i][1]] = v; left -= v; }
+  }
+
+  if (left > 0.001) {
+    if (!confirm(fmtKg(left)+' kg would still be unplaced.\n\nSave what you have chosen anyway?')) return;
+  }
+  var body = { unspecified_kg: left };
+  names.forEach(function(c){ if (picks[c[1]]) body[c[1]] = num(o[c[1]]) + picks[c[1]]; });
+  patchOrder(o.id, body, 'Cuts chosen');
+}
+
 /* ---------- backup ---------- */
 el('btnBackup').addEventListener('click', function(){
   if (!allRows.length) { alert('Nothing to back up yet.'); return; }
   var head = ['Customer','Phone','Price type','Rate per kg','Steak kg','Biltong kg','Wors kg',
               'Droewors kg','Patties kg','Unspecified kg','Total kg','Order value',
-              'Amount paid','Balance','Status','Collected','Notes'];
+              'Amount paid','Paid by','Balance','Status','Confirmed','Collected','Notes'];
   function cell(v){
     var s = String(v==null?'':v);
     return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s;
@@ -778,12 +1139,13 @@ el('btnBackup').addEventListener('click', function(){
     lines.push([o.customer_name, o.phone||'', o.price_type, orderRate(o),
       num(o.steak_kg), num(o.biltong_kg), num(o.wors_kg), num(o.droewors_kg),
       num(o.patties_kg), num(o.unspecified_kg), orderKg(o), orderValue(o),
-      num(o.amount_paid), orderBalance(o), payState(o), o.collected?'Yes':'No',
+      num(o.amount_paid), o.payment_method||'', orderBalance(o), payState(o),
+      o.confirmed?'Yes':'No', o.collected?'Yes':'No',
       o.notes||''].map(cell).join(','));
   });
   var kg=0,val=0,paid=0;
   allRows.forEach(function(o){ kg+=orderKg(o); val+=orderValue(o); paid+=num(o.amount_paid); });
-  lines.push(['TOTAL','','','','','','','','','',kg,val,paid,val-paid,'','',''].map(cell).join(','));
+  lines.push(['TOTAL','','','','','','','','','',kg,val,paid,'',val-paid,'','','',''].map(cell).join(','));
 
   var stamp = new Date().toISOString().slice(0,10);
   /* the BOM makes Excel open the accented names correctly */
@@ -857,7 +1219,7 @@ function renderChecklist(){
     h += '<tr><td>'+(i+1)+'</td><td class="nm">'+esc(o.customer_name)+'</td><td>'+esc(o.phone||'')+'</td>';
     CUTS.forEach(function(c){ var v=num(o[c[1]]); h += '<td>'+(v>0?fmtKg(v):'')+'</td>'; });
     h += '<td><b>'+fmtKg(k)+'</b></td><td>'+(bal>0.001?fmtR(bal):'–')+'</td>'+
-         '<td class="box">☐</td>'+
+         '<td class="box">'+(o.confirmed?'☑':'☐')+'</td>'+
          '<td class="box">'+(payState(o)==='Paid'?'☑':'☐')+'</td>'+
          '<td class="box">'+(o.collected?'☑':'☐')+'</td>'+
          '<td class="nt">'+esc(o.notes||'')+'</td></tr>';
