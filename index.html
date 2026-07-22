@@ -46,8 +46,6 @@ textarea{min-height:64px;resize:vertical}
 .badge.got{background:#DDF3E4;color:#176B3A}
 .badge.price{background:#EEE2F7;color:#663399}
 .badge.nophone{background:#FDE7E7;color:#9B1C1C}
-.badge.conf{background:#DDF3E4;color:#176B3A}
-.badge.unconf{background:#FFF3CD;color:#855D00}
 .badge.told{background:#E4ECF7;color:#2b4c7e}
 /* ---- collection screen: big targets, one hand, cold shed ---- */
 #colHits{margin-top:8px}
@@ -291,7 +289,6 @@ table.chk tfoot td{font-weight:700;background:#f2efe6}
     <button data-f="all" class="on">All</button>
     <button data-f="owing">Owes</button>
     <button data-f="notgot">Not collected</button>
-    <button data-f="unconf">Not confirmed</button>
     <button data-f="nophone">No phone</button>
     <button data-f="unspec">Unspecified</button>
   </div>
@@ -754,7 +751,6 @@ function renderList(){
     var bal = orderBalance(o), st = payState(o);
     if (filterMode==='owing'   && bal <= 0.001) return;
     if (filterMode==='notgot'  && o.collected) return;
-    if (filterMode==='unconf'  && o.confirmed) return;
     if (filterMode==='nophone' && hasPhone(o)) return;
     if (filterMode==='unspec'  && num(o.unspecified_kg) <= 0) return;
     if (q && o.customer_name.toLowerCase().indexOf(q) === -1) return;
@@ -763,8 +759,6 @@ function renderList(){
     var badges = '<span class="badge '+(st==='Paid'?'paid':st==='Part-paid'?'part':'unpaid')+'">'+st+
                  (o.payment_method && num(o.amount_paid)>0 ? ' · '+esc(o.payment_method) : '')+'</span>';
     if (o.collected) badges += '<span class="badge got">Collected</span>';
-    badges += o.confirmed ? '<span class="badge conf">✓ Confirmed</span>'
-                          : '<span class="badge unconf">Not confirmed</span>';
     if (!hasPhone(o)) badges += '<span class="badge nophone">No phone</span>';
     if (o.notified_at && !o.collected) badges += '<span class="badge told">Told it\'s ready</span>';
     if (o.price_type!=='Normal Price') badges += '<span class="badge price">'+esc(o.price_type.replace(' Price',''))+'</span>';
@@ -781,7 +775,6 @@ function renderList(){
         '<span class="bal '+(bal>0.001?'owing':'clear')+'">'+(bal>0.001?'owes '+fmtR(bal):'settled')+'</span></div>'+
       '<div class="act-row">'+
         '<button class="got'+(o.collected?' on':'')+'" data-act="got" data-id="'+o.id+'">'+(o.collected?'✓ GOT IT':'COLLECTED')+'</button>'+
-        '<button class="got'+(o.confirmed?' on':'')+'" data-act="conf" data-id="'+o.id+'">'+(o.confirmed?'✓ OK':'CONFIRM')+'</button>'+
         '<button data-act="edit" data-id="'+o.id+'">EDIT</button>'+
         '<button class="wa" data-act="wa" data-id="'+o.id+'"'+(hasPhone(o)?'':' disabled')+'>WA</button>'+
         '<button class="del" data-act="del" data-id="'+o.id+'">DEL</button>'+
@@ -825,7 +818,6 @@ el('allList').addEventListener('click', function(e){
   var act = b.getAttribute('data-act');
 
   if (act==='got') { patchOrder(o.id,{collected:!o.collected}, o.collected?'Marked not collected':'Marked collected'); return; }
-  if (act==='conf') { patchOrder(o.id,{confirmed:!o.confirmed}, o.confirmed?'Confirmation removed':'Order confirmed'); return; }
   if (act==='unspec') { resolveUnspecified(o.id); return; }
   if (act==='wa') {
     var n = waNumber(o.phone);
@@ -1051,10 +1043,8 @@ function renderAttention(){
   function line(n,txt,good){
     return '<div>'+(n?'<b style="color:#9B1C1C">'+n+'</b> ':'<b style="color:#176B3A">✓</b> ')+(n?txt:good)+'</div>';
   }
-  var unconf = allRows.filter(function(o){ return !o.confirmed; });
   el('attList').innerHTML =
     line(noPhone.length, 'without a phone number &mdash; you cannot WhatsApp them', 'everyone has a phone number') +
-    line(unconf.length,  'not confirmed by the customer yet', 'every order has been confirmed') +
     line(unspec.length,  'still has meat with no cut chosen', 'every order has its cuts chosen') +
     line(owing.length,   'still owe money', 'everyone has paid') +
     line(notGot.length,  'not collected yet', 'everything has been collected') +
@@ -1119,14 +1109,12 @@ function renderStats(){
     if (orderValue(o) > orderValue(biggest)) biggest = o;
   });
   var special = allRows.filter(function(o){ return o.price_type !== 'Normal Price'; }).length;
-  var confirmed = allRows.filter(function(o){ return o.confirmed; }).length;
   el('statTable').innerHTML =
     '<tr><th>&nbsp;</th><th>&nbsp;</th></tr>'+
     '<tr><td>Orders</td><td><b>'+allRows.length+'</b></td></tr>'+
     '<tr><td>Average order</td><td>'+fmtKg(kg/allRows.length)+' kg · '+fmtR(val/allRows.length)+'</td></tr>'+
     '<tr><td>Biggest order</td><td>'+esc(biggest.customer_name)+' · '+fmtR(orderValue(biggest))+'</td></tr>'+
-    '<tr><td>On a special or custom price</td><td>'+special+'</td></tr>'+
-    '<tr><td>Confirmed by the customer</td><td>'+confirmed+' of '+allRows.length+'</td></tr>';
+    '<tr><td>On a special or custom price</td><td>'+special+'</td></tr>';
 }
 
 /* ---------- turn "unspecified" into real cuts ---------- */
@@ -1160,7 +1148,7 @@ el('btnBackup').addEventListener('click', function(){
   if (!allRows.length) { alert('Nothing to back up yet.'); return; }
   var head = ['Customer','Phone','Price type','Rate per kg','Steak kg','Biltong kg','Wors kg',
               'Droewors kg','Patties kg','Unspecified kg','Total kg','Order value',
-              'Amount paid','Paid by','Balance','Status','Confirmed','Collected','Notes'];
+              'Amount paid','Paid by','Balance','Status','Collected','Notes'];
   function cell(v){
     var s = String(v==null?'':v);
     return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s;
@@ -1171,12 +1159,12 @@ el('btnBackup').addEventListener('click', function(){
       num(o.steak_kg), num(o.biltong_kg), num(o.wors_kg), num(o.droewors_kg),
       num(o.patties_kg), num(o.unspecified_kg), orderKg(o), orderValue(o),
       num(o.amount_paid), o.payment_method||'', orderBalance(o), payState(o),
-      o.confirmed?'Yes':'No', o.collected?'Yes':'No',
+      o.collected?'Yes':'No',
       o.notes||''].map(cell).join(','));
   });
   var kg=0,val=0,paid=0;
   allRows.forEach(function(o){ kg+=orderKg(o); val+=orderValue(o); paid+=num(o.amount_paid); });
-  lines.push(['TOTAL','','','','','','','','','',kg,val,paid,'',val-paid,'','','',''].map(cell).join(','));
+  lines.push(['TOTAL','','','','','','','','','',kg,val,paid,'',val-paid,'','',''].map(cell).join(','));
 
   var stamp = new Date().toISOString().slice(0,10);
   /* the BOM makes Excel open the accented names correctly */
@@ -1250,7 +1238,7 @@ function renderChecklist(){
     h += '<tr><td>'+(i+1)+'</td><td class="nm">'+esc(o.customer_name)+'</td><td>'+esc(o.phone||'')+'</td>';
     CUTS.forEach(function(c){ var v=num(o[c[1]]); h += '<td>'+(v>0?fmtKg(v):'')+'</td>'; });
     h += '<td><b>'+fmtKg(k)+'</b></td><td>'+(bal>0.001?fmtR(bal):'–')+'</td>'+
-         '<td class="box">'+(o.confirmed?'☑':'☐')+'</td>'+
+         '<td class="box">☐</td>'+
          '<td class="box">'+(payState(o)==='Paid'?'☑':'☐')+'</td>'+
          '<td class="box">'+(o.collected?'☑':'☐')+'</td>'+
          '<td class="nt">'+esc(o.notes||'')+'</td></tr>';
