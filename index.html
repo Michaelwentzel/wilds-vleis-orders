@@ -396,6 +396,35 @@ var CUTS = [
   ['Droewors','droewors_kg'], ['Patties','patties_kg'], ['Unspecified','unspecified_kg']
 ];
 var QUEUE_KEY = 'wv_pending_orders';
+
+/* Payment terms and banking details are NOT kept in this file - they are
+   fetched from the database so they are not sitting in a public code
+   repository. They are read-only there, so nothing using this app can
+   alter the account number. To change them, edit the settings table. */
+var PAY_BY = '', BANK_LINES = [];
+function loadSettings(){
+  return fetch(API + '/rest/v1/settings?select=key,value', { headers: hdrs() })
+    .then(function(r){ return r.json(); })
+    .then(function(rows){
+      if (!Array.isArray(rows)) return;
+      rows.forEach(function(s){
+        if (s.key === 'pay_by') PAY_BY = s.value;
+        if (s.key === 'bank_details') BANK_LINES = String(s.value).split('\n');
+      });
+    })
+    .catch(function(){});
+}
+function payBlock(o, amount){
+  var out = ['', 'Amount payable: ' + fmtR(amount)];
+  if (PAY_BY) out.push('Please pay before ' + PAY_BY + '.');
+  if (BANK_LINES.length) {
+    out.push('');
+    out.push('Account details:');
+    out = out.concat(BANK_LINES);
+    out.push('Reference: ' + o.customer_name);
+  }
+  return out;
+}
 var editingId = null, lastSimilar = [], allRows = [], binRows = [], production = [], filterMode = 'all';
 
 function el(id){ return document.getElementById(id); }
@@ -636,6 +665,7 @@ function waMessage(o){
   }
   if (o.notes) lines.push('Notes: '+o.notes);
   lines.push('Please check that everything is correct. I will message you when it is ready for collection. Thanks!');
+  if (orderBalance(o) > 0.001) lines = lines.concat(payBlock(o, orderBalance(o)));
   return lines.join('\n');
 }
 function showSaved(o,title){
@@ -981,11 +1011,12 @@ el('readyList').addEventListener('click', function(e){
   var n = waNumber(o.phone); if (!n) return;
 
   var bal = orderBalance(o);
-  var msg = 'Hi '+o.customer_name.split(' ')[0]+', your game meat is ready.\n' +
-            fmtKg(orderKg(o))+' kg in total.' +
-            (bal > 0.001 ? '\nStill to pay: '+fmtR(bal) : '\nAlready paid, thank you.') +
-            '\nLet me know when you can fetch it. Thanks!';
-  window.open('https://wa.me/'+n+'?text='+encodeURIComponent(msg), '_blank');
+  var lines = ['Hi '+o.customer_name.split(' ')[0]+', your game meat is ready.',
+               fmtKg(orderKg(o))+' kg in total.'];
+  lines.push(bal > 0.001 ? 'Still to pay: '+fmtR(bal) : 'Already paid, thank you.');
+  lines.push('Let me know when you can fetch it. Thanks!');
+  if (bal > 0.001) lines = lines.concat(payBlock(o, bal));
+  window.open('https://wa.me/'+n+'?text='+encodeURIComponent(lines.join('\n')), '_blank');
 
   fetch(API+'/rest/v1/orders?id=eq.'+o.id, {method:'PATCH',headers:hdrs(),
         body:JSON.stringify({ notified_at: new Date().toISOString() })})
@@ -1235,6 +1266,7 @@ if ('serviceWorker' in navigator) {
 }
 paintNet();
 recalc();
+loadSettings();
 loadAll();
 </script>
 </body>
